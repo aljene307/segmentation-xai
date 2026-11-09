@@ -232,3 +232,43 @@ paramètres dans `models/preparation.json`).
 - **Vérification de stabilité** : relancer `scripts/preparer.py` recalcule les paramètres et
   s'arrête s'ils diffèrent du fichier enregistré ; un test vérifie aussi qu'ils sont exactement
   ceux appris sur les 80 %.
+
+## 2026-11-09 – Étape 4 : règles de l'ACP, fixées avant tout calcul
+
+Ces règles sont écrites et poussées avant le calcul de la moindre valeur propre. La règle de
+non-retour de l'étape 3 s'applique aussi à elles.
+
+- **Apprentissage et projection** : l'ACP normée est apprise sur les 64 805 clients
+  d'apprentissage préparés (étape 3). Ses axes (coefficients) et ses valeurs propres sont
+  enregistrés dans `models/acp.json` (texte, LF). Les 20 % mis de côté et tout nouveau client
+  sont préparés puis projetés avec ces paramètres, sans rien réapprendre.
+- **Sens des axes** : convention fixe pour un résultat reproductible ; sur chaque axe, la
+  variable au plus grand coefficient en valeur absolue est du côté positif.
+- **Nombre d'axes retenus** = le plus grand de ces deux nombres :
+  (a) le nombre d'axes de valeur propre strictement supérieure à 1 (Kaiser) ;
+  (b) le plus petit nombre d'axes dont la part cumulée de l'information atteint 70 %.
+  Le coude est tracé et commenté, mais ne décide pas (subjectif). Si les trois règles
+  divergent, le désaccord est expliqué dans le rapport. 70 % plutôt que 80 % : les variables
+  sont peu corrélées (au plus 0,47), les valeurs propres seront probablement plates, et 80 %
+  risquerait de garder presque tous les axes.
+- **Lecture des axes** : cercles des corrélations, tableau des corrélations variables–axes,
+  cos² (et leur somme sur les axes retenus = qualité de représentation de chaque variable),
+  contributions des variables aux axes.
+- **Nom de chaque axe retenu** : il vient des variables dont la corrélation avec l'axe vaut au
+  moins 0,5 en valeur absolue ; si aucune n'y arrive, des 2 plus fortes. Les deux pôles
+  (côté + et côté −) sont décrits. Le nom est une interprétation et ne modifie aucun calcul.
+- **Axe du temps** : un axe retenu est déclaré « axe du temps » si (a) la Récence y a une
+  corrélation d'au moins 0,5 en valeur absolue ET (c) les coordonnées des clients sur cet axe
+  sont corrélées à la date d'achat (colonne de description `premier_achat`, hors ACP) avec au
+  moins 0,5 en valeur absolue. Les autres variables qui pèsent sur cet axe (par exemple les
+  délais) sont décrites, sans être une condition. Pour chaque axe retenu, sa corrélation avec la
+  date d'achat est donnée, même faible. Si un axe du temps est trouvé, rien n'est modifié ; il
+  est signalé dans son nom et dans l'interprétation des segments (module 5).
+- **Données utilisées à l'étape 5** : K-Means (plusieurs initialisations) et CAH de Ward
+  (dendrogramme, corrélation cophénétique) sur les **8 variables préparées** ; classification
+  mixte (CAH sur un échantillon, puis consolidation par K-Means sur tous les clients
+  d'apprentissage à partir des centres de la CAH) et HDBSCAN sur les **axes retenus** de l'ACP.
+  Les axes **ne sont pas restandardisés** : leurs coordonnées gardent leur étalement (égal à la
+  valeur propre), sinon un petit axe pèserait autant que le premier. La taille de l'échantillon
+  de la CAH sera fixée au début de l'étape 5 d'après la mémoire libre mesurée, avec la graine 42,
+  sur les 80 % seulement.
