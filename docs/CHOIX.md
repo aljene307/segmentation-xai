@@ -849,3 +849,38 @@ Justification des seuils : ils correspondent à environ deux erreurs-types d'éc
 des groupes de la taille attendue dans les 20 % (environ 16 200 clients ; S4 environ 480,
 S3 environ 1 470), arrondis vers le haut. Une attente non atteinte ne déclenche aucune
 modification : elle est expliquée.
+
+## 2026-11-09 – Évaluation finale sur les 20 % : résultats (ouverture unique)
+
+Calculée une seule fois le 2026-11-09 à 15:40, au commit `fb081cd` (celui des attentes).
+Détail dans `reports/evaluation_finale.md` et `reports/evaluation_finale.json`. Un second
+lancement a été tenté pour vérifier le verrou : il a été refusé (« l'évaluation finale a déjà
+été faite »). Avant l'ouverture, un mode `--verification` a fait tourner le même code sur les
+80 % seulement : il a retrouvé exactement les valeurs déjà publiées (satisfaits 78,0 %, ARI
+0,0670, NMI 0,0393, fidélité 87,42 %, etc.).
+
+**Attentes atteintes : 12 sur 12.** Rien n'a été modifié après l'ouverture.
+
+- E1 parts des segments : 40,10 / 32,00 / 15,76 / 9,15 / 2,98 % (écart maximal 0,16 point).
+- E2 silhouette : 0,2008 contre 0,1997.
+- E3 atypiques (déjà observé) : 4,94 % (4,38 à 5,46 % par segment).
+- E4 frontière (déjà observé) : 13,15 % contre 13,26 %.
+- E5 fidélité de l'arbre (déjà observé) : 87,75 % contre 87,42 %.
+- E6 clients sans avis : 0,70 %.
+- E7 satisfaits : 78,24 % contre 78,01 %.
+- E8 satisfaits par segment : S0 85,8 ; S1 85,0 ; S2 54,2 ; S3 64,1 ; S4 72,8 % (écart maximal
+  1,2 point, sur S4).
+- E9 ordre : S0 > S1 > S4 > S3 > S2, identique aux 80 %.
+- E10 ARI 0,0694 ; NMI 0,0421.
+- E11 lien retard / note : 82,4 % de satisfaits à l'heure contre 23,1 % en retard (59,3 points).
+- E12 hypothèse S3 : −35,3 points (181 clients à plusieurs vendeurs contre 1 287 à un seul) ;
+  la piste est confirmée sur des clients jamais vus, avec un intervalle large vu l'effectif.
+
+Lecture : la segmentation, sa préparation, son arbre et ses indicateurs se transposent à des
+clients jamais vus, et le lien entre segments et satisfaction se reproduit. Les mises en garde
+restent valables : S2 est lié à la note par construction ; les indices externes sont faibles par
+nature ; les attentes E3 à E5 portaient sur des valeurs déjà observées.
+
+Défaut de présentation connu, non corrigé : le tableau « Détail par segment » du rapport
+utilise le point décimal au lieu de la virgule. Le fichier ne peut pas être réécrit (ouverture
+unique) ; le défaut est seulement d'affichage.

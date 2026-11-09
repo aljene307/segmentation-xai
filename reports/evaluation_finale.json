@@ -1,0 +1,269 @@
+{
+  "date": "2026-11-09T15:40:13",
+  "commit": "fb081cd5dd17cdf38bf71bfc4a42c7f9ab9b25bb",
+  "mesures_80": {
+    "clients": 64805,
+    "parts": [
+      0.4025615307460844,
+      0.3193889360388859,
+      0.15734896998688372,
+      0.09090347966977856,
+      0.02979708355836741
+    ],
+    "silhouette": 0.19967496723030667,
+    "atypiques": 0.05002700408919065,
+    "atypiques_par_segment": [
+      0.050022999080036795,
+      0.05000483138467485,
+      0.05001471020888497,
+      0.0500763877100662,
+      0.050233039875712066
+    ],
+    "frontiere": 0.13258236247203148,
+    "fidelite_arbre": 0.8742072370959031,
+    "clients_avec_avis": 64374,
+    "sans_avis": 0.00665072139495404,
+    "satisfaits": 0.7801286233572561,
+    "satisfaits_par_segment": [
+      0.8571373531111539,
+      0.8402990146109413,
+      0.549130650769995,
+      0.6365351629502572,
+      0.7405096203848154
+    ],
+    "clients_avec_avis_par_segment": [
+      25955,
+      20601,
+      10065,
+      5830,
+      1923
+    ],
+    "ordre_satisfaction": [
+      0,
+      1,
+      4,
+      3,
+      2
+    ],
+    "ari": 0.06697501743294651,
+    "nmi": 0.039318610052987285,
+    "satisfaits_a_l_heure": 0.8197859802006644,
+    "satisfaits_en_retard": 0.2490498546836575,
+    "ecart_retard": 0.5707361255170069,
+    "s3_plusieurs_vendeurs": 738,
+    "s3_un_vendeur": 5092,
+    "s3_ecart": -0.2804356480328353
+  },
+  "mesures_20": {
+    "clients": 16201,
+    "parts": [
+      0.40102462810937595,
+      0.3199802481328313,
+      0.15764458984013333,
+      0.09153755940991297,
+      0.029812974507746434
+    ],
+    "silhouette": 0.20080166734471458,
+    "atypiques": 0.049441392506635394,
+    "atypiques_par_segment": [
+      0.051716176696937045,
+      0.04378858024691358,
+      0.05168363351605325,
+      0.05461901550910317,
+      0.051759834368530024
+    ],
+    "frontiere": 0.13153509042651687,
+    "fidelite_arbre": 0.8774766989691994,
+    "clients_avec_avis": 16088,
+    "sans_avis": 0.006974878093944814,
+    "satisfaits": 0.7823843858776728,
+    "satisfaits_par_segment": [
+      0.858271375464684,
+      0.8499225406661503,
+      0.5420969023034155,
+      0.6410081743869209,
+      0.7282157676348547
+    ],
+    "clients_avec_avis_par_segment": [
+      6456,
+      5164,
+      2518,
+      1468,
+      482
+    ],
+    "ordre_satisfaction": [
+      0,
+      1,
+      4,
+      3,
+      2
+    ],
+    "ari": 0.06936406055337385,
+    "nmi": 0.042115915492806855,
+    "satisfaits_a_l_heure": 0.823887180858174,
+    "satisfaits_en_retard": 0.23090586145648312,
+    "ecart_retard": 0.5929813194016909,
+    "s3_plusieurs_vendeurs": 181,
+    "s3_un_vendeur": 1287,
+    "s3_ecart": -0.3530459718305022
+  },
+  "verdicts": [
+    {
+      "code": "E1",
+      "mesure": "part de chaque segment (%)",
+      "valeur_80": [
+        40.26,
+        31.94,
+        15.73,
+        9.09,
+        2.98
+      ],
+      "valeur_20": [
+        40.1,
+        32.0,
+        15.76,
+        9.15,
+        2.98
+      ],
+      "attente": "écart ≤ 1,0 point par segment",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E2",
+      "mesure": "silhouette (8 000 clients)",
+      "valeur_80": 0.1997,
+      "valeur_20": 0.2008,
+      "attente": "écart ≤ 0,02",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E3",
+      "mesure": "atypiques (%) : total ; par segment",
+      "valeur_80": 5.0,
+      "valeur_20": [
+        4.94,
+        5.17,
+        4.38,
+        5.17,
+        5.46,
+        5.18
+      ],
+      "attente": "total entre 4,0 et 6,0 % ; chaque segment entre 3,0 et 7,0 %",
+      "atteinte": true,
+      "statut": "déjà observé"
+    },
+    {
+      "code": "E4",
+      "mesure": "clients à la frontière (%)",
+      "valeur_80": 13.26,
+      "valeur_20": 13.15,
+      "attente": "écart ≤ 1,5 point",
+      "atteinte": true,
+      "statut": "déjà observé"
+    },
+    {
+      "code": "E5",
+      "mesure": "fidélité de l'arbre (%)",
+      "valeur_80": 87.42,
+      "valeur_20": 87.75,
+      "attente": "au moins 85 % et écart ≤ 2 points",
+      "atteinte": true,
+      "statut": "déjà observé"
+    },
+    {
+      "code": "E6",
+      "mesure": "clients sans avis (%)",
+      "valeur_80": 0.67,
+      "valeur_20": 0.7,
+      "attente": "au plus 1,5 %",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E7",
+      "mesure": "satisfaits, tous segments (%)",
+      "valeur_80": 78.01,
+      "valeur_20": 78.24,
+      "attente": "écart ≤ 2 points",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E8",
+      "mesure": "satisfaits par segment (%)",
+      "valeur_80": [
+        85.71,
+        84.03,
+        54.91,
+        63.65,
+        74.05
+      ],
+      "valeur_20": [
+        85.83,
+        84.99,
+        54.21,
+        64.1,
+        72.82
+      ],
+      "attente": "écart ≤ 3 points (S0 à S3), ≤ 5 points (S4)",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E9",
+      "mesure": "ordre des segments (du plus au moins satisfait)",
+      "valeur_80": [
+        "S0",
+        "S1",
+        "S4",
+        "S3",
+        "S2"
+      ],
+      "valeur_20": [
+        "S0",
+        "S1",
+        "S4",
+        "S3",
+        "S2"
+      ],
+      "attente": "S2 dernier, S3 avant-dernier ; S0 et S1 ≥ 80 %",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E10",
+      "mesure": "ARI ; NMI",
+      "valeur_80": [
+        0.067,
+        0.0393
+      ],
+      "valeur_20": [
+        0.0694,
+        0.0421
+      ],
+      "attente": "ARI entre 0,04 et 0,10 ; NMI entre 0,02 et 0,06",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E11",
+      "mesure": "satisfaits à l'heure moins en retard (points)",
+      "valeur_80": 57.07,
+      "valeur_20": 59.3,
+      "attente": "au moins 40 points",
+      "atteinte": true,
+      "statut": "inédit"
+    },
+    {
+      "code": "E12",
+      "mesure": "S3 : plusieurs vendeurs moins un seul (points)",
+      "valeur_80": -28.04,
+      "valeur_20": -35.3,
+      "attente": "au plus −10 points",
+      "atteinte": true,
+      "statut": "inédit"
+    }
+  ]
+}
