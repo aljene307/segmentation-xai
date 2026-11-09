@@ -930,3 +930,27 @@ unique) ; le défaut est seulement d'affichage.
   dans le dossier du fichier principal, car Streamlit Cloud cherche d'abord à cet endroit puis à
   la racine (un fichier `requirements-app.txt` serait ignoré et le `requirements.txt` lourd de la
   racine serait installé).
+
+## 2026-11-09 – API déployée sur Render
+
+- **Adresse** : https://segmentation-xai-api.onrender.com (documentation interactive : `/docs`).
+  Service web gratuit de Render, région Frankfurt, Python 3.11.9 (`PYTHON_VERSION`),
+  construction `pip install -r requirements-api.txt`, démarrage
+  `uvicorn api.main:app --host 0.0.0.0 --port $PORT`, contrôle de santé `/health`.
+- **Avant le déploiement**, test sur un clone neuf du dépôt (commit `52cf794`) : fichiers de
+  modèle en LF, données brutes absentes, environnement vide avec `requirements-api.txt` seul
+  (ni scikit-learn, ni scipy, ni matplotlib), `/health` et `/expliquer` corrects, environ 85 Mo.
+- **Vérifications du service déployé** (2026-11-09, depuis le PC) : `/health` répond `ok` avec
+  les 4 empreintes identiques à celles du dépôt ; `/exemples` renvoie les 10 exemples, identiques
+  au dépôt ; pour les **10 exemples**, `/expliquer` sur Render donne le même segment, la même
+  distance (à 10⁻⁹ près), le même statut atypique / frontière et la même règle de l'arbre que la
+  chaîne locale (10 sur 10) ; une part de frais de port de 1,4 renvoie bien l'erreur 422 en
+  français ; environ 174 ms par explication, service réveillé.
+- **Mémoire sur Render** : elle ne peut pas être lue depuis l'extérieur (`/health` ne l'expose
+  pas) ; elle se lit dans l'onglet « Metrics » du service sur le tableau de bord Render. Mesure
+  locale de référence : environ 85 Mo pour 512 Mo disponibles.
+- **Mise en veille** : sur l'offre gratuite, le service s'endort après 15 minutes sans requête ;
+  le premier appel suivant prend environ 30 à 60 secondes. L'application devra le signaler.
+- **Encodage** : les réponses sont en UTF-8 (norme de JSON). Windows PowerShell 5.1
+  (`Invoke-RestMethod`) les décode à tort en Latin-1 quand l'en-tête ne précise pas le jeu de
+  caractères ; navigateurs, `requests` et Streamlit ne sont pas concernés.
