@@ -345,3 +345,187 @@ avant tout calcul »), sans modification. Détail dans `reports/acp.md`, paramè
 - **Noms des axes retenus** (validés ; interprétation, ne modifie aucun calcul ; dans
   `config.NOMS_AXES`) : F1 « Valeur de l'achat », F2 « Expérience de livraison », F3 « Taille du
   panier », F4 « Ancienneté de l'achat (axe du temps) », F5 « Réachat (plutôt qu'achat groupé) ».
+
+## 2026-11-09 – Règles du choix de k, de la note d'avis et de l'évaluation externe
+
+Ces règles sont écrites, commitées et poussées **avant tout calcul de partition** (étape 5) et
+avant toute lecture de la table des avis. La règle de non-retour s'applique à elles : toute
+modification exige une raison écrite et datée, qui ne peut pas être l'apparence des segments ni
+la valeur d'un indice.
+
+### Méthode de référence pour la segmentation finale
+
+- **K-Means sur les 8 variables préparées**, appris sur les 64 805 clients d'apprentissage.
+- **Pourquoi pas la classification mixte, que le cours met en avant.** Sur un jeu où les
+  premiers axes de l'ACP résument très bien les données, la classification mixte est préférable :
+  elle travaille sur l'essentiel et écarte le bruit des derniers axes. Ici, deux constats de
+  l'étape 4 vont contre ce choix :
+  - **les mensualités sont mal représentées sur les 5 axes retenus** (qualité 0,44) : leur part
+    propre est surtout sur F6 (cos² 0,52), qui est écarté. Une segmentation sur les axes perdrait
+    donc une partie de l'information sur le paiement en plusieurs fois, qui est utile aux
+    équipes commerciales ;
+  - **le nombre d'axes est fragile** : la part cumulée à F4 (69,97 %) est collée au seuil de
+    70 %, et la règle aurait donné 4 axes dans 22 tirages bootstrap sur 50. Une segmentation
+    finale qui dépendrait de ce choix hériterait de cette fragilité.
+  K-Means sur les 8 variables utilise toute l'information et ne dépend pas du nombre d'axes. Il
+  traite tous les clients, et un nouveau client s'affecte simplement au centre le plus proche.
+- **La classification mixte reste calculée et comparée** (avec 5 axes, et avec 4 axes en
+  contrôle de sensibilité), comme la CAH de Ward et HDBSCAN. Le tableau comparatif montrera
+  l'accord entre la mixte et K-Means (ARI) ; si l'accord est élevé, les deux voies mènent aux
+  mêmes segments. Ces méthodes ne décident pas du nombre de segments.
+
+### Règle de choix de k (k de 2 à 8), appliquée à la méthode de référence
+
+1. **Calculs pour chaque k de 2 à 8** :
+   - indices internes : R² (= 1 − inertie intra-classe / inertie totale), silhouette (sur un
+     échantillon fixe de 8 000 clients d'apprentissage, graine 42, le même pour tous les k),
+     Calinski-Harabasz et Davies-Bouldin (sur les 64 805 clients) ;
+   - stabilité par bootstrap, calcul exact, pour chaque k :
+     1. la **partition de référence** est celle de K-Means (20 initialisations, graine 42) sur
+        les 64 805 clients d'apprentissage ;
+     2. **50 tirages** : chaque tirage prend 64 805 clients d'apprentissage au hasard **avec
+        remise** (un client peut être tiré plusieurs fois, d'autres pas du tout), avec un
+        générateur initialisé une fois par la graine 42 ;
+     3. sur chaque tirage, **K-Means est refait** (k-means++, 10 initialisations, graine propre
+        au tirage, dérivée du générateur) ;
+     4. **tous les 64 805 clients d'apprentissage** (et pas seulement ceux du tirage) sont
+        affectés au centre le plus proche **parmi les centres du tirage** ;
+     5. **ARI** entre cette partition et la partition de référence ; on retient l'ARI moyen sur
+        les 50 tirages (et son minimum, donné pour information) ;
+     6. **Jaccard par segment** : pour chaque segment de référence A et chaque segment B de la
+        partition du tirage, Jaccard(A, B) = (nombre de clients dans A et B) / (nombre de
+        clients dans A ou B). Le segment A est **apparié au segment B du tirage avec le Jaccard
+        le plus élevé** (deux segments de référence peuvent être appariés au même B : c'est
+        alors un signe d'instabilité, qui abaisse leur Jaccard). On retient, pour chaque segment
+        de référence, le Jaccard moyen sur les 50 tirages.
+     L'ARI compare toute la partition et ne dépend pas des numéros des segments ; le Jaccard
+     dit quel segment est fragile.
+2. **Admissibilité** (conditions obligatoires) : un k est admissible si
+   (a) chaque segment contient au moins **2 % des clients d'apprentissage** (1 297 clients) ;
+   (b) l'**ARI bootstrap moyen vaut au moins 0,80** ;
+   (c) chaque segment a un **Jaccard moyen d'au moins 0,60**.
+   Raisons : 2 % est la plus petite taille qui reste actionnable pour une campagne, sans exclure
+   d'avance un segment de clients qui recommandent (3 % des clients). Pour le Jaccard, on suit
+   Hennig (2007, « Cluster-wise assessment of cluster stability », *Computational Statistics &
+   Data Analysis*) : un Jaccard moyen inférieur ou égal à 0,5 indique un segment « dissous » ;
+   de 0,6 à 0,75, le segment montre une tendance (un motif réel, aux contours mal définis) ;
+   au-dessus de 0,75, il est stable ; au-dessus de 0,85, très stable. **0,60 est donc une
+   exigence modérée** : elle accepte un segment qui ne fait que montrer une tendance. Ce choix
+   est assumé et adapté à nos données : l'ACP a montré un nuage continu, sans groupes séparés,
+   et des frontières nettes n'y sont pas attendues. Exiger 0,75 risquerait de n'admettre aucun
+   k ; la règle 5 couvre de toute façon ce cas. Pour l'ARI, 0,80 demande que la partition
+   d'ensemble soit très largement reproduite d'un tirage à l'autre.
+3. **Choix parmi les k admissibles** : chaque k reçoit un rang pour la silhouette (la plus
+   haute = rang 1), Calinski-Harabasz (le plus haut = rang 1) et Davies-Bouldin (le plus bas =
+   rang 1). **Le k dont la somme des trois rangs est la plus petite est retenu** ; en cas
+   d'égalité, le plus petit k. Le R² est tracé et commenté (il augmente toujours avec k), sans
+   rang.
+4. **Utilité métier** : les segments du k retenu sont décrits (effectifs, médianes). Un seul
+   motif de refus est admis : deux segments ne peuvent pas recevoir d'actions différentes.
+   Dans ce cas, on passe au k admissible suivant dans l'ordre des sommes de rangs. Ce refus
+   doit être écrit dans ce journal avec ses raisons métier (jamais une valeur d'indice), et
+   poussé avant le calcul des indices externes.
+5. **Si aucun k n'est admissible** : parmi les k qui respectent la condition (a), on retient
+   celui dont l'ARI bootstrap moyen est le plus haut (égalité : le plus petit k), et on le dit
+   clairement.
+6. **Désaccords entre indices** : le rapport indique quel k chaque indice préfère et explique
+   pourquoi ils divergent ; la décision reste celle de la règle.
+
+### Règle qui ramène la note d'avis au client
+
+La table des avis n'est chargée qu'après le choix de k, commité et poussé.
+
+- Seuls comptent les avis des commandes retenues du client (livrées, achetées du 2017-01-01 au
+  2018-06-30).
+- **Une note par commande** : si une commande a plusieurs avis, on prend le plus récent (date
+  de réponse, puis date de création, puis `review_id` par ordre alphabétique).
+- **Note du client = moyenne des notes de ses commandes.** Pour 97 % des clients (une seule
+  commande), c'est simplement la note de cette commande.
+- **Étiquette principale : « satisfait » si la note du client vaut au moins 4**, « non
+  satisfait » sinon (deux classes). Raison : c'est la mesure de satisfaction usuelle (les deux
+  meilleures notes), plus robuste qu'une note à 5 niveaux pour un client à plusieurs commandes.
+- **Clients sans avis** : exclus du calcul des indices externes (aucune valeur inventée) ; leur
+  nombre et leur part dans chaque segment sont donnés.
+
+### Évaluation externe (seulement après le choix de k)
+
+- Indices calculés entre la partition retenue (64 805 clients d'apprentissage, clients sans
+  avis exclus) et l'étiquette « satisfait » : **ARI, NMI, V-measure** (avec ses deux parts,
+  homogénéité et complétude).
+- **Par segment** : part de satisfaits, note moyenne, part de notes à 1, nombre de clients avec
+  avis, part de clients sans avis.
+- Les mêmes indices sont donnés pour les autres méthodes au même k, à titre de comparaison ;
+  ils ne changent aucune décision.
+- Attendu, écrit d'avance : avec une étiquette à deux classes et des segments de comportement,
+  l'ARI et la NMI seront faibles par nature ; les taux par segment seront les plus parlants. Et
+  les variables de délai, qui entrent dans le clustering, sont liées à la note : une partie du
+  lien entre segments et satisfaction vient de là, ce qui sera dit.
+- Les avis des 20 % mis de côté ne sont regardés qu'à la vérification finale.
+
+### Paramètres de l'étape 5, fixés d'avance
+
+- **Échantillon commun** : 8 000 clients d'apprentissage tirés avec la graine 42 (ordre aléatoire
+  fixé). Il sert aux silhouettes de toutes les méthodes et de tous les k.
+- **Échantillon de la CAH** : les 6 000 premiers clients de cet échantillon commun (échantillons
+  emboîtés), pour la CAH de Ward, la CAH de la classification mixte et la corrélation
+  cophénétique. **Mémoire mesurée** (le 2026-11-09, sur données aléatoires de même forme, pour
+  ne calculer aucune partition avant le push de ces règles) : pic de **28 × n² octets**, soit
+  **1,79 Go pour 8 000 clients** et 1,01 Go pour 6 000 (scipy fait des copies internes du
+  tableau des distances ; une première estimation de 12 × n² octets, écrite dans le brouillon de
+  cette entrée, était fausse). La mémoire libre, mesurée avec Chrome ouvert, a varié de 1,8 Go à
+  6,7 Go dans la journée.
+  **Règle fixe : l'échantillon de la CAH compte toujours 6 000 clients**, les 6 000 premiers de
+  l'échantillon de 8 000 des silhouettes. Avant le calcul, le script mesure la mémoire libre ;
+  **si elle est inférieure à 2,0 Go, il refuse de démarrer** avec un message clair (fermer des
+  programmes et relancer), **sans changer la taille**. La mesure est écrite dans le rapport.
+  Raisons :
+  - **reproductibilité** : une taille qui dépendrait de la mémoire libre donnerait des résultats
+    différents selon le PC et le moment ; avec une taille fixe, le même code donne toujours la
+    même CAH ;
+  - **6 000 plutôt que 8 000** : pic de 1,01 Go, soit la moitié des 2,0 Go exigés ; 8 000
+    (1,79 Go) ne tiendrait pas dans la mémoire libre la plus basse observée (1,8 Go) ;
+  - **la CAH sert seulement à comparer**, pas à décider k (la règle de k s'applique à K-Means sur
+    les 64 805 clients) : un échantillon de 6 000 clients suffit pour le dendrogramme, la
+    corrélation cophénétique et la comparaison avec K-Means. Pour la classification mixte, la
+    CAH ne fournit que les centres de départ ; la consolidation par K-Means porte ensuite sur les
+    64 805 clients.
+- **K-Means** : initialisation k-means++, 20 initialisations, 300 itérations au plus, graine 42,
+  sur les 64 805 clients et les 8 variables préparées.
+- **CAH de Ward** : distance euclidienne, sur l'échantillon de la CAH et les 8 variables ;
+  dendrogramme (30 dernières fusions) ; corrélation cophénétique.
+- **Classification mixte** : CAH de Ward sur l'échantillon de la CAH, coordonnées F1–F5 non
+  restandardisées ; coupe en k segments ; centres = moyennes des segments ; consolidation par
+  K-Means (1 initialisation, à partir de ces centres) sur les 64 805 clients, dans l'espace
+  F1–F5.
+- **HDBSCAN** : sur les 64 805 clients, coordonnées F1–F5 ; taille minimale d'un groupe =
+  1 297 clients (2 %, comme la taille minimale d'un segment) ; `min_samples` = 25 ; méthode de
+  sélection par défaut (« eom »). Aucun réglage après coup. Si le calcul dépasse la mémoire ou
+  30 minutes, il est refait sur l'échantillon commun de 8 000 clients (taille minimale 160,
+  soit 2 %), et c'est écrit ici. La part de clients classés « bruit » est donnée.
+- **Contrôle de sensibilité** : la classification mixte est refaite avec 4 axes (F1–F4) au lieu
+  de 5, même échantillon, mêmes k. On mesure l'accord entre les deux partitions (ARI) pour
+  chaque k. C'est une description : la décision de 5 axes ne change pas.
+- **Tableau comparatif** : pour chaque méthode, au k retenu (et indices pour k de 2 à 8) :
+  données utilisées, nombre de clients, nombre de segments, taille du plus petit segment, part
+  de bruit, R², silhouette, Calinski-Harabasz et Davies-Bouldin **calculés dans le même espace
+  (les 8 variables préparées, silhouette sur l'échantillon commun)** pour que les méthodes
+  soient comparables, corrélation cophénétique (CAH), accord avec la méthode de référence (ARI),
+  temps de calcul, mémoire, possibilité d'affecter un nouveau client, dépendance au choix du
+  nombre d'axes.
+- **Temps de calcul estimé** (mesuré le 2026-11-09 sur données aléatoires de même forme, sur ce
+  PC, Chrome ouvert) : une initialisation de K-Means sur 64 805 × 8 prend de 0,04 s (k = 2) à
+  0,16 s (k = 7), soit environ 0,6 s pour k = 2 à 8.
+  - K-Means de référence, 20 initialisations, k = 2 à 8 : environ 12 s ;
+  - **bootstrap** : 50 tirages × 7 valeurs de k × **10** initialisations (la règle fixe 10, et
+    non 20, dans le bootstrap) = 3 500 initialisations, environ **5 minutes**, plus les
+    affectations et les ARI/Jaccard (quelques secondes). Avec 20 initialisations, ce serait
+    environ 10 minutes ;
+  - CAH de Ward avec corrélation cophénétique : environ 1,5 s pour 6 000 clients (trois CAH :
+    8 variables, F1–F5, et F1–F4 pour la sensibilité) ;
+  - HDBSCAN : 0,5 s ; 1,7 s ; 6,5 s pour 8 000 ; 16 000 ; 32 000 points (temps environ
+    multiplié par 3,5 à 4 quand n double), soit environ 25 s attendues pour 64 805 ;
+  - silhouettes (échantillon de 8 000) : quelques secondes par partition, environ 1 minute
+    en tout.
+  **Total attendu : environ 7 minutes, jusqu'à 20 minutes** avec une marge d'un facteur 2 à 3,
+  car les vraies données peuvent demander plus d'itérations que des données aléatoires. Le
+  bootstrap en représente l'essentiel.
