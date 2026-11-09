@@ -122,3 +122,42 @@ Chaque choix est noté avec sa date, ce qui a été décidé et pourquoi.
 - **Sorties console protégées** (`segmentation/console.py`) : sous Windows, une sortie redirigée
   est encodée en cp1252, qui ne connaît pas « → » ou « ≥ » ; le script plantait. Un caractère
   impossible à écrire est désormais remplacé par « ? ».
+
+## 2026-11-09 – Étape 2 : profil client et mise de côté des 20 %
+
+- **Une ligne par vrai client** (`customer_unique_id`), calculée sur les commandes livrées (avec
+  date) achetées du 2017-01-01 au 2018-06-30 : **81 006 clients**, 83 696 commandes.
+- **8 variables pour le clustering** (`config.VARIABLES_PROFIL`) :
+  Récence (jours depuis le dernier achat, comptés au 2018-07-01), Fréquence (commandes livrées),
+  Montant (somme des **prix des articles**, en R$, sans frais de port), part des frais de port
+  (frais / (prix + frais)), mensualités moyennes, articles par commande, délai de livraison
+  moyen (jours), écart moyen à la date promise (jours, > 0 = retard).
+- **Fréquence gardée** (F du RFM demandé par le sujet) malgré 97 % de clients à 1 commande ;
+  son traitement (log, écrêtage) sera décidé à l'étape 3 avec les autres valeurs extrêmes.
+- **Part des frais de port plutôt que leur total** : le total était corrélé à 0,47 avec le
+  Montant ; la part apporte une information différente (distance, objets lourds).
+- **Moyen de paiement seulement pour décrire** : une part payée par *boleto* aurait chevauché
+  les mensualités (un *boleto* se paie en une fois).
+- **Écartés** : nombre de vendeurs (1 pour 98,7 % des commandes), panier moyen (presque égal au
+  Montant), toute donnée d'avis.
+- **Colonnes de description** (jamais dans le clustering) : État de la dernière commande,
+  catégorie principale (celle qui pèse le plus en prix), moyen de paiement principal (celui qui
+  pèse le plus en montant payé), date du premier achat. En cas d'égalité, la première par ordre
+  alphabétique (reproductible). Les 2 lignes de paiement à 0 mensualité comptent pour 1.
+- **Calcul du profil avant le tirage, sans fuite** : chaque valeur d'un client ne dépend que de
+  ses propres commandes. Tout ce qui utilise des statistiques de plusieurs clients
+  (standardisation, seuils, ACP, modèles) sera appris sur les 80 % seulement, dès l'étape 3.
+- **Tirage des 20 %** : par client ; identifiants triés puis mélangés avec la graine 42 ;
+  **64 805 clients d'apprentissage, 16 201 mis de côté**. L'empreinte SHA-256 de la liste mise
+  de côté est versionnée dans `docs/tirage_empreinte.json` (la liste elle-même ne l'est pas) ;
+  un test vérifie qu'elle ne change pas. Les deux groupes se ressemblent : écart standardisé
+  ≤ 0,011 sur les 8 variables, 2,98 % de clients à plusieurs commandes des deux côtés.
+- **Données dérivées non versionnées** : `data/processed/` ajouté au `.gitignore`.
+- **À vérifier à l'étape 4 (ACP)** : avec 97 % de clients à une seule commande, la Récence revient
+  à la date d'achat ; or les délais ont aussi baissé en 2018. Un axe de l'ACP pourrait donc ne
+  mesurer que « le temps » (achat ancien et livraison lente contre achat récent et livraison
+  rapide). Le vérifier et le dire si c'est le cas.
+- **À rappeler lors de l'évaluation externe** : les variables de délai (délai moyen, écart à la
+  date promise) entrent dans le clustering et sont liées à la note d'avis (un retard entraîne
+  souvent une mauvaise note). Les segments seront donc en partie rapprochés de la note par
+  construction ; il faudra le dire honnêtement.

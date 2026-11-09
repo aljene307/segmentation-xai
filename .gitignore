@@ -15,6 +15,8 @@ venv/
 # --- Données brutes (téléchargées, jamais versionnées) ---
 # data/demo/ (petits exemples sous la licence du jeu) reste versionné.
 data/raw/
+# Données dérivées (profils clients, tirage) : recalculées par les scripts, jamais versionnées.
+data/processed/
 *.zip
 
 # --- Sauvegardes ---

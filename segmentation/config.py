@@ -8,6 +8,34 @@ DOSSIER_OLIST = DOSSIER_RAW / "olist"
 FICHIER_ZIP = DOSSIER_RAW / "archive.zip"
 MANIFESTE = RACINE / "docs" / "donnees_manifeste.json"
 DOSSIER_RAPPORTS = RACINE / "reports"
+DOSSIER_PROCESSED = RACINE / "data" / "processed"
+PROFILS_APPRENTISSAGE = DOSSIER_PROCESSED / "profils_apprentissage.csv"
+PROFILS_MISE_DE_COTE = DOSSIER_PROCESSED / "profils_mise_de_cote.csv"
+EMPREINTE_TIRAGE = RACINE / "docs" / "tirage_empreinte.json"
+
+# Part des clients mise de côté (tirée au hasard par client, graine GRAINE).
+PART_MISE_DE_COTE = 0.20
+
+# Variables du profil client utilisées pour le clustering (étape 2, voir docs/CHOIX.md).
+VARIABLES_PROFIL = [
+    "recence_j",                # jours entre le dernier achat et DATE_REFERENCE
+    "frequence",                # nombre de commandes livrées
+    "montant_rs",               # somme des prix des articles (R$), sans frais de port
+    "part_frais_port",          # frais / (prix + frais), sans unité
+    "mensualites_moy",          # nombre moyen de mensualités par commande
+    "articles_par_commande",    # nombre moyen d'articles par commande
+    "delai_livraison_moy_j",    # moyenne de (livraison - achat), en jours
+    "ecart_prevision_moy_j",    # moyenne de (livraison - date promise), en jours ; > 0 = retard
+]
+# Colonnes gardées seulement pour décrire les segments (jamais dans le clustering).
+COLONNES_DESCRIPTION = ["etat", "categorie_principale", "paiement_principal", "premier_achat"]
+
+# Traductions manquantes dans la table officielle (constat du contrôle qualité).
+TRADUCTIONS_AJOUTEES = {
+    "pc_gamer": "pc_gamer",
+    "portateis_cozinha_e_preparadores_de_alimentos": "kitchen_portables_and_food_preparers",
+}
+CATEGORIE_INCONNUE = "inconnue"
 
 GRAINE = 42
 

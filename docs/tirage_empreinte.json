@@ -1,0 +1,7 @@
+{
+  "graine": 42,
+  "part_mise_de_cote": 0.2,
+  "clients_apprentissage": 64805,
+  "clients_mise_de_cote": 16201,
+  "sha256_mise_de_cote": "a46dee66f4cc6b87c5c4be79c3633a924a2432330d71abfc3e094be429cc8478"
+}
