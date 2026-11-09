@@ -694,3 +694,75 @@ colis.
   clients : les commandes à plusieurs vendeurs sont presque toutes dans S3.
 - **Piste pour l'action de S3** (« lots et ventes croisées ») : privilégier des lots d'un même
   vendeur, pour éviter les envois en plusieurs colis. À présenter comme une suggestion.
+
+## 2026-11-09 – Étape 6 (module 5, explicabilité) : règles fixées avant tout calcul
+
+Ces règles sont écrites, commitées et poussées avant tout calcul de l'étape 6. La règle de
+non-retour s'applique. Les segments sont les segments officiels (centre le plus proche). Aucun
+avis n'est utilisé dans cette étape.
+
+### Profils des segments (sur les 80 %)
+
+- **Indice de profil** = moyenne du segment / moyenne de tous les clients d'apprentissage, sur
+  les variables en unités d'origine. Lecture : au moins 1,20 « nettement au-dessus », au plus
+  0,80 « nettement en dessous ».
+- **Exception fixée d'avance : l'écart à la date promise**, dont la moyenne est négative
+  (environ −12 jours) : un rapport n'aurait pas de sens (un segment livré plus tard que la
+  moyenne pourrait obtenir un rapport inférieur à 1). Pour cette variable, on donne la
+  **différence en jours** (moyenne du segment − moyenne globale).
+- **Part du chiffre d'affaires** = somme des prix des articles du segment / total (R$, frais de
+  port non compris, comme le Montant). Avec aussi : effectif, part des clients, médianes des
+  8 variables, et, pour décrire seulement, les 3 États les plus fréquents, le moyen de paiement
+  principal et les 3 premières catégories de produits.
+
+### Arbre de décision de substitution
+
+- **Rôle** : expliquer les segments par des règles lisibles. Ce n'est **pas** le modèle
+  d'affectation (qui reste le centre le plus proche).
+- **Apprentissage** : sur les 64 805 clients d'apprentissage, cible = segment officiel,
+  variables = les 8 variables en **unités d'origine** (le log et l'écrêtage conservent l'ordre
+  des valeurs, donc des seuils sur les valeurs d'origine sont équivalents) ; critère de Gini ;
+  graine 42 ; **au moins 649 clients par feuille** (1 % des clients d'apprentissage, arrondi au
+  supérieur).
+- **Fidélité** = part des clients pour lesquels l'arbre donne le segment officiel. Mesurée sur
+  les 80 %, et sur les 20 % mis de côté (leurs 8 variables, préparées et affectées au centre le
+  plus proche ; aucun avis lu). Aussi : fidélité par segment et tableau des confusions.
+- **Règle de choix de la profondeur** : **profondeur 3 si sa fidélité sur les 80 % atteint au
+  moins 90 % ; sinon profondeur 4 si elle gagne au moins 3 points de fidélité sur les 80 % ;
+  sinon profondeur 3.** La décision se prend sur les 80 % seulement ; les 20 % servent à vérifier.
+- **Règles en phrases** : chaque feuille devient une phrase ; les conditions portant sur une
+  même variable sont regroupées (« entre … et … ») ; seuils arrondis à l'affichage (R$ et
+  proportions à 2 décimales, jours et mensualités à 1 décimale) ; chaque phrase donne le
+  segment majoritaire de la feuille, son effectif et sa pureté (part des clients de la feuille
+  qui sont vraiment dans ce segment). Le modèle garde les seuils exacts.
+
+### Explication d'un client
+
+Dans l'espace des 8 variables préparées (étape 3) :
+
+- **Segment** (centre le plus proche) et **distance au centre** de ce segment.
+- **Client « à la frontière »** si la distance au centre de son segment vaut **au moins 90 % de
+  la distance au 2e centre le plus proche**. La part de clients concernés sera donnée après le
+  calcul (80 % et 20 %).
+- **Deux explications, dans cet ordre** :
+  1. **ce qui explique son segment** : les 3 variables qui l'éloignent le plus du **client
+     moyen** (le centre global, c'est-à-dire 0 dans l'espace préparé, puisque la standardisation
+     est apprise sur les 80 %) ; part de chaque variable = carré de sa coordonnée préparée /
+     somme des carrés ;
+  2. **ce qui explique s'il est atypique** : les 3 variables qui l'éloignent le plus du **centre
+     de son segment** ; part de chaque variable = carré de l'écart au centre / carré de la
+     distance au centre.
+  Pour chaque variable citée : le sens (au-dessus ou en dessous), et les valeurs **en unités
+  d'origine** : la valeur du client, la moyenne globale (80 %) et la médiane de son segment.
+- **Client « atypique »** si sa distance au centre de son segment dépasse le **95e centile des
+  distances des clients d'apprentissage de ce segment** (seuil propre à chaque segment, appris
+  sur les 80 %). Par construction, environ 5 % des clients d'apprentissage de chaque segment
+  sont atypiques ; sur les 20 %, on vérifie que cette part reste proche de 5 %.
+- En complément : l'indicateur « écrêté à la préparation » (étape 3).
+
+### Ce qui est enregistré
+
+`models/explication.json` (texte, LF) : seuils « atypique » par segment, seuil de frontière
+(0,90), moyennes globales et médianes des segments en unités d'origine, profondeur retenue,
+fidélités, et règles de l'arbre en phrases. L'arbre lui-même est décrit dans ce fichier (seuils
+exacts), pour que l'API n'ait pas besoin de scikit-learn.
