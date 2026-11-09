@@ -1,0 +1,41 @@
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Données brutes (téléchargées, jamais versionnées) ---
+# data/demo/ (petits exemples sous la licence du jeu) reste versionné.
+data/raw/
+*.zip
+
+# --- Sauvegardes ---
+backups/
+*.bak
+*.orig
+*~
+
+# --- Exports et sorties générées ---
+exports/
+outputs/
+
+# --- Captures d'écran non relues (déplacer dans docs/captures/ après relecture) ---
+captures_brutes/
+
+# --- Sujet du projet (la synthèse reports/synthese.pdf, elle, sera versionnée) ---
+/Projet Challenge 3  Application Web Interactive de Segmentation Explicable.pdf
+
+# --- Système et éditeurs ---
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

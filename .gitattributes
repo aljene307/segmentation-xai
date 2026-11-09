@@ -1,0 +1,23 @@
+# Par défaut : Git détecte texte/binaire et stocke le texte en LF.
+* text=auto eol=lf
+
+# Scripts PowerShell : CRLF (attendu par Windows PowerShell 5.1)
+*.ps1 text eol=crlf
+
+# Fichiers figés lus par l'API : toujours LF, quel que soit le système
+*.json text eol=lf
+*.csv  text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# Modèles et fichiers binaires : jamais convertis
+*.joblib binary
+*.pkl    binary
+*.npy    binary
+*.npz    binary
+*.parquet binary
+*.png    binary
+*.jpg    binary
+*.gif    binary
+*.pdf    binary
+*.zip    binary
