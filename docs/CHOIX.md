@@ -573,3 +573,54 @@ Paramètres appliqués sans modification (détail dans `reports/partitions.md` e
 - **Correction** : le titre du dendrogramme de la classification mixte n'affichait pas sa
   corrélation cophénétique (0,506) ; corrigé dans le code (le graphique sera à jour au prochain
   lancement).
+
+## 2026-11-09 – Choix de k : k = 5 (règle appliquée sans modification)
+
+Détail dans `reports/choix_k.md` (script `scripts/choisir_k.py`). Aucun avis chargé avant ce choix.
+
+- **Admissibilité** : les 7 valeurs de k sont admissibles (plus petit segment ≥ 2 %, ARI
+  bootstrap moyen ≥ 0,80, Jaccard moyen de chaque segment ≥ 0,60). Le plus juste est k = 4
+  (ARI moyen 0,802368).
+- **Rangs** (valeurs exactes recalculées à partir des étiquettes enregistrées) : sommes
+  k = 2 : 21 ; k = 3 : 18 ; k = 4 : 10 ; **k = 5 : 7** ; k = 6 : 8 ; k = 7 : 8 ; k = 8 : 12.
+  **k = 5 est retenu** : aucun indice ne le place premier (silhouette 2e, Calinski-Harabasz 2e,
+  Davies-Bouldin 3e), mais il est le meilleur compromis. Désaccords entre indices : la silhouette
+  préfère k = 4 (0,2007, contre 0,1996 pour k = 5), Calinski-Harabasz k = 6, Davies-Bouldin
+  k = 7 ; avec un nuage continu, ces indices mesurent des choses différentes (séparation de
+  chaque client, rapport entre dispersions, ressemblance des segments voisins) et n'ont pas de
+  raison de converger.
+- **Stabilité de k = 5, décrite honnêtement** : ARI bootstrap moyen 0,907 (recalculé :
+  0,9074394414761894, identique à la valeur publiée, ce qui confirme la reproductibilité),
+  médiane 0,982, minimum 0,345. Les 50 tirages se partagent en deux groupes, sans rien entre
+  0,60 et 0,90 : **44 tirages** retrouvent presque exactement la partition (ARI ≥ 0,92), et
+  **6 tirages** (ARI de 0,35 à 0,44) tombent sur une **découpe concurrente**. Les 6 découpes
+  concurrentes se ressemblent entre elles (ARI de 0,69 à 0,95) : c'est en gros une seule autre
+  façon de couper. Dans cette découpe concurrente, **S3 (achats de plusieurs articles) et S4
+  (clients qui recommandent) sont inchangés** (98,7 % et 100 % de leurs clients restent
+  ensemble) ; la grande masse S0–S1–S2 est recoupée en trois niveaux de valeur (environ 85 R$,
+  160 R$ et 30 R$ médians) et **le segment S2 « Livraison lente ou en retard » disparaît**, ses
+  clients se répartissant dans les trois autres. S2 est donc le segment le plus fragile
+  (Jaccard moyen 0,90), même s'il ressort dans 44 tirages sur 50.
+- **Critère métier (règle 4) : validé par l'utilisateur pour k = 5**, chaque segment recevant
+  une action différente :
+  - S0 « Gros achats en plusieurs fois » (40,2 % des clients, 57,0 % du chiffre d'affaires ;
+    médianes 129,90 R$, 3 mensualités) : offres premium et paiement en plusieurs fois ;
+  - S1 « Petits achats, livraison chère » (31,9 % ; 35,00 R$, frais de port = 29 % du prix) :
+    livraison gratuite à partir d'un seuil, pour grossir le panier ;
+  - S2 « Livraison lente ou en retard » (15,8 % ; délai médian 24,2 jours, 40,7 % de retards) :
+    geste commercial et suivi de la logistique ;
+  - S3 « Achats de plusieurs articles » (9,1 % ; 2 articles par commande) : lots et ventes
+    croisées ;
+  - S4 « Clients qui recommandent » (3,0 % ; tous les clients à plusieurs commandes) : programme
+    de fidélité.
+  Aucun refus métier : k = 5 est définitif.
+- **Mises en garde** : S2 est défini par la livraison, il sera donc lié à la note d'avis par
+  construction (un retard entraîne souvent une mauvaise note) ; S2 est aussi plus récent
+  (Récence médiane 158 jours contre environ 200), les retards s'étant concentrés sur certains
+  mois (février et mars 2018) : une partie de S2 tient à la période d'achat.
+- **Segments enregistrés** dans `models/segments.json` : centres dans l'espace des 8 variables
+  préparées (moyennes des segments), noms et actions. Réaffecter les clients d'apprentissage au
+  centre le plus proche redonne leur segment pour 99,9475 % d'entre eux ; 34 clients (0,05 %)
+  changeraient de segment, car K-Means s'arrête avant la convergence parfaite. La partition de
+  référence (celle sur laquelle k a été choisi) reste la partition officielle des 80 % ; les
+  nouveaux clients sont affectés avec les centres enregistrés.

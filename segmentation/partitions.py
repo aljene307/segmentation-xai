@@ -86,12 +86,17 @@ def kmeans(x: np.ndarray, k: int, n_init: int, graine: int) -> tuple[np.ndarray,
 
 
 def stabilite_bootstrap(x: np.ndarray, references: dict[int, np.ndarray], n_tirages: int,
-                        n_init: int, graine: int) -> dict[int, dict]:
+                        n_init: int, graine: int, garder_partitions: bool = False
+                        ) -> dict[int, dict]:
     """Règle de docs/CHOIX.md : un générateur initialisé une fois par la graine ; à chaque
     tirage (avec remise), K-Means refait pour chaque k, puis TOUS les clients sont affectés
-    aux centres du tirage ; ARI avec la référence et Jaccard apparié par segment."""
+    aux centres du tirage ; ARI avec la référence et Jaccard apparié par segment.
+
+    Le générateur ne sert qu'au tirage et à la graine du tirage, jamais dans la boucle sur k :
+    refaire le calcul pour un seul k redonne exactement les mêmes tirages et résultats.
+    Avec `garder_partitions`, les partitions de chaque tirage sont aussi renvoyées."""
     rng = np.random.default_rng(graine)
-    res = {k: {"ari": [], "jaccard": []} for k in references}
+    res = {k: {"ari": [], "jaccard": [], "partitions": []} for k in references}
     for _ in range(n_tirages):
         idx = rng.integers(0, len(x), len(x))
         graine_tirage = int(rng.integers(0, 2**31 - 1))
@@ -101,8 +106,14 @@ def stabilite_bootstrap(x: np.ndarray, references: dict[int, np.ndarray], n_tira
             e = affecter(x, m.cluster_centers_)
             res[k]["ari"].append(adjusted_rand_score(ref, e))
             res[k]["jaccard"].append(jaccard_apparie(ref, e))
-    return {k: {"ari": np.array(v["ari"]), "jaccard": np.vstack(v["jaccard"])}
-            for k, v in res.items()}
+            if garder_partitions:
+                res[k]["partitions"].append(e)
+    sortie = {}
+    for k, v in res.items():
+        sortie[k] = {"ari": np.array(v["ari"]), "jaccard": np.vstack(v["jaccard"])}
+        if garder_partitions:
+            sortie[k]["partitions"] = np.vstack(v["partitions"])
+    return sortie
 
 
 def cah_ward(x: np.ndarray) -> tuple[np.ndarray, float]:

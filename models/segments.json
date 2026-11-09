@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "k": 5,
+  "methode": "K-Means sur les 8 variables préparées (20 initialisations, graine 42)",
+  "variables": [
+    "recence_j",
+    "frequence",
+    "montant_rs",
+    "part_frais_port",
+    "mensualites_moy",
+    "articles_par_commande",
+    "delai_livraison_moy_j",
+    "ecart_prevision_moy_j"
+  ],
+  "clients_apprentissage": 64805,
+  "accord_affectation_apprentissage": 0.9994753491242959,
+  "segments": [
+    {
+      "id": 0,
+      "nom": "Gros achats en plusieurs fois",
+      "action": "Offres premium et paiement en plusieurs fois",
+      "clients": 26066,
+      "centre": [
+        0.04563520778483038,
+        -0.17524901736387,
+        0.5587607057091273,
+        -0.6811870030345765,
+        0.379940562311075,
+        -0.31671449803179497,
+        -0.3189868077246639,
+        -0.3353858415133699
+      ]
+    },
+    {
+      "id": 1,
+      "nom": "Petits achats, livraison chère",
+      "action": "Livraison gratuite à partir d'un seuil, pour grossir le panier",
+      "clients": 20690,
+      "centre": [
+        0.04207772138002182,
+        -0.17524901736384477,
+        -0.9972173865110356,
+        0.8768097422162054,
+        -0.555549309816832,
+        -0.29965270664470184,
+        -0.22359594223905893,
+        -0.22051792235354847
+      ]
+    },
+    {
+      "id": 2,
+      "nom": "Livraison lente ou en retard",
+      "action": "Geste commercial et suivi de la logistique",
+      "clients": 10227,
+      "centre": [
+        -0.17068220412934693,
+        -0.175249017363752,
+        0.13813575717176607,
+        -0.126536939953077,
+        -0.0018932465208035755,
+        -0.2712836352205252,
+        1.338130192559574,
+        1.4151301066920987
+      ]
+    },
+    {
+      "id": 3,
+      "nom": "Achats de plusieurs articles",
+      "action": "Lots et ventes croisées",
+      "clients": 5891,
+      "centre": [
+        -0.010177399035254928,
+        -0.17524901736376103,
+        0.5259456496211482,
+        0.17703266787513844,
+        0.20927868608488917,
+        2.8570677211711066,
+        -0.14019647163741972,
+        -0.1768613901814009
+      ]
+    },
+    {
+      "id": 4,
+      "nom": "Clients qui recommandent",
+      "action": "Programme de fidélité",
+      "clients": 1931,
+      "centre": [
+        -0.13184537655337394,
+        5.706166088933294,
+        0.806168286580198,
+        -0.06948695334340134,
+        0.19538374694793031,
+        0.20648700060136282,
+        0.04233563448292856,
+        -0.06523148275391717
+      ]
+    }
+  ]
+}

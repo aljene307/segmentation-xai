@@ -41,6 +41,18 @@ HDBSCAN_MIN_SAMPLES = 25
 AXES_MIXTE = 5
 AXES_SENSIBILITE = 4
 PARTITIONS = DOSSIER_PROCESSED / "partitions.csv"
+
+# Choix de k (règle appliquée sans modification, critère métier validé : docs/CHOIX.md).
+K_RETENU = 5
+SEGMENTS = DOSSIER_MODELES / "segments.json"
+SEGMENTS_NOMS_ACTIONS = {
+    0: ("Gros achats en plusieurs fois", "Offres premium et paiement en plusieurs fois"),
+    1: ("Petits achats, livraison chère",
+        "Livraison gratuite à partir d'un seuil, pour grossir le panier"),
+    2: ("Livraison lente ou en retard", "Geste commercial et suivi de la logistique"),
+    3: ("Achats de plusieurs articles", "Lots et ventes croisées"),
+    4: ("Clients qui recommandent", "Programme de fidélité"),
+}
 INDICES_PARTITIONS = DOSSIER_RAPPORTS / "indices_partitions.csv"
 
 # Stabilité des axes (description seulement, ne change aucune règle).
