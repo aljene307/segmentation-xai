@@ -1,0 +1,8 @@
+# Dépendances de l'application seule (Streamlit Community Cloud lit ce fichier, placé dans le
+# dossier du fichier principal app/app.py). Ni scikit-learn, ni scipy, ni matplotlib : les
+# calculs viennent de fichiers précalculés et du paquet `segmentation` (numpy, pandas).
+streamlit==1.45.1
+altair==5.5.0
+numpy==2.2.6
+pandas==2.3.3
+requests==2.32.5

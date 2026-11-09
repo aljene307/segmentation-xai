@@ -967,3 +967,56 @@ unique) ; le défaut est seulement d'affichage.
   `/proc/self/status` (VmRSS et VmHWM) sous Linux, sans nouvelle bibliothèque ; « non disponible »
   sous Windows. Raison : la courbe « Memory » de l'onglet Metrics de Render était vide (le
   service dormait, aucune mesure).
+- **Redéploiement automatique** sur Render après le push (environ 1 minute). Vérifications de la
+  version 1.1.0 en ligne : empreintes des modèles identiques au dépôt ; les 10 exemples donnent
+  le même segment, la même distance, le même statut et la même règle qu'en local (10 sur 10) ;
+  un lot de 11 lignes (les 10 exemples et une ligne à fréquence 0) donne 10 segments attendus et
+  une erreur en français pour la ligne 11 ; **mémoire du processus sur Render après ces
+  vérifications : 104,6 Mo (pic 104,6 Mo)**, pour 512 Mo disponibles. Temps moyen d'une
+  explication mesuré depuis le PC : 770 ms ce jour-là (174 ms lors de la première mesure ;
+  l'écart vient sans doute du réseau).
+
+## 2026-11-09 – Application Streamlit, en local
+
+- **Silhouette détaillée** (demandée par le module 4, ajoutée comme description, sans changer
+  aucune décision), sur l'échantillon commun de 8 000 clients d'apprentissage. Segmentation
+  retenue (k = 5, segments officiels) : moyenne **0,1997**, **1,7 %** de clients à silhouette
+  négative ; par segment : S0 0,176 (2,6 % négatifs), S1 0,208 (0,2 %), S2 0,195 (1,2 %),
+  S3 0,180 (4,7 %), **S4 0,513 (0 %)**. S4 est de loin le segment le mieux séparé. Valeurs pour
+  k de 2 à 8 dans `app/donnees/silhouette_k.json` (part négative : de 12,0 % à k = 2 à 1,6 % à
+  k = 4, puis de nouveau 8,1 % à k = 8).
+- **Organisation** : une page d'accueil et une page par module du sujet (`app/app.py`, pages dans
+  `app/vues/`). **Tous les imports sont faits avant `st.navigation`** (leçon du projet 1).
+- **Curseur k (2 à 8)** : indices internes, stabilité (ARI, Jaccard), silhouette détaillée,
+  profils et carte de l'ACP mis à jour en direct à partir de fichiers précalculés ; pour k = 5,
+  segments nommés (« retenu par la règle ») ; pour les autres k, segments « exploratoires » sans
+  nom ni action. Défaut corrigé en cours de test : les petites courbes d'indices ne se
+  redessinaient pas toutes après un changement du curseur (deux jeux de données superposés) ;
+  elles utilisent maintenant un seul jeu de données.
+- **Fichiers précalculés** (`scripts/preparer_app.py` → `app/donnees/`, 175 Ko, sans identifiant,
+  licence CC BY-NC-SA 4.0 dans `app/donnees/LICENCE.md`) : carte de 3 000 clients
+  d'apprentissage (F1, F2, segment pour chaque k ; pour k = 5 le segment officiel), profils par k,
+  silhouette détaillée par k, dendrogrammes, agrégats de l'exploration.
+- **Dendrogrammes** : redessinés dans l'application à partir des **30 dernières fusions
+  précalculées** (coordonnées de l'arbre, `app/donnees/dendrogrammes.json`), pour les deux CAH
+  (8 variables ; F1–F5), avec leur corrélation cophénétique ; pas d'image figée.
+- **Import de fichier** (module 1) : CSV des 8 variables, 1 000 clients au plus, envoyé à
+  `/affecter/lot` ; résultat ligne par ligne (segment ou erreur en français) et téléchargeable.
+  Un modèle de fichier (les 10 exemples) est proposé.
+- **Explication d'un client** (module 5) : formulaire prérempli par l'un des 10 exemples, appel à
+  `/expliquer`, affichage du segment, des distances, des statuts atypique et frontière, des deux
+  listes de variables, de la règle de l'arbre et du point du client sur la carte.
+- **API** : adresse lue dans `API_URL` (secrets de Streamlit ou variable d'environnement), par
+  défaut l'adresse Render ; attente jusqu'à 90 s (réveil) ; message clair si l'API est
+  injoignable ; erreurs 422 affichées en français.
+- **Dépendances** : `app/requirements.txt` (streamlit, altair, numpy, pandas, requests), dans le
+  dossier du fichier principal ; un test vérifie que l'application ne charge ni scikit-learn, ni
+  scipy, ni matplotlib.
+- **Tests** : 16 tests (données sans identifiant, cohérence de la carte avec les segments
+  officiels, affichage de chaque page, curseur, API injoignable, application complète).
+- **Captures** prises avec Playwright (navigateur neuf, profil vide), application locale reliée à
+  l'API réelle sur Render, dans `captures_brutes/` (non versionné) : 8 captures. Défauts corrigés
+  après relecture : couleurs des matrices (interpolation en RVB), étiquettes tronquées ou
+  sautées, cercle des corrélations étiré en ellipse, légendes « true / false », flèches
+  trompeuses des indicateurs, nombres avec un point décimal dans les tableaux de texte. Les
+  tableaux numériques des pages 2 et 3 gardent le point décimal pour rester triables.

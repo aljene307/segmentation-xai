@@ -1,0 +1,254 @@
+{
+  "2": {
+    "moyenne": 0.15655800896250785,
+    "part_negative": 0.120375,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 4330,
+        "moyenne": 0.08827190336359003,
+        "part_negative": 0.22240184757505774
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 3670,
+        "moyenne": 0.237124449628261,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "3": {
+    "moyenne": 0.1799126349971677,
+    "part_negative": 0.058625,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 4304,
+        "moyenne": 0.13338854760598023,
+        "part_negative": 0.10896840148698884
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 3452,
+        "moyenne": 0.2134278335733636,
+        "part_negative": 0.0
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 244,
+        "moyenne": 0.5264093835489818,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "4": {
+    "moyenne": 0.20074506185064514,
+    "part_negative": 0.016375,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 3927,
+        "moyenne": 0.17904700679814228,
+        "part_negative": 0.02928444104914693
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 3067,
+        "moyenne": 0.20553300027053717,
+        "part_negative": 0.0006521030322791001
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 762,
+        "moyenne": 0.19136681760493957,
+        "part_negative": 0.01837270341207349
+      },
+      {
+        "segment": 3,
+        "clients_echantillon": 244,
+        "moyenne": 0.5190642305907992,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "5": {
+    "moyenne": 0.19967496723030667,
+    "part_negative": 0.017375,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 3220,
+        "moyenne": 0.1756288813656723,
+        "part_negative": 0.02577639751552795
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 2539,
+        "moyenne": 0.20814874295221433,
+        "part_negative": 0.0023631350925561244
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 1259,
+        "moyenne": 0.19468248918568667,
+        "part_negative": 0.011914217633042097
+      },
+      {
+        "segment": 3,
+        "clients_echantillon": 738,
+        "moyenne": 0.18045372368798754,
+        "part_negative": 0.04742547425474255
+      },
+      {
+        "segment": 4,
+        "clients_echantillon": 244,
+        "moyenne": 0.512725325913122,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "6": {
+    "moyenne": 0.19761907474600082,
+    "part_negative": 0.03625,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 2746,
+        "moyenne": 0.19917957823341345,
+        "part_negative": 0.0
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 1646,
+        "moyenne": 0.18482082557811447,
+        "part_negative": 0.041312272174969626
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 1573,
+        "moyenne": 0.18065082652257444,
+        "part_negative": 0.08328035600762873
+      },
+      {
+        "segment": 3,
+        "clients_echantillon": 1070,
+        "moyenne": 0.19064076091944712,
+        "part_negative": 0.04672897196261682
+      },
+      {
+        "segment": 4,
+        "clients_echantillon": 721,
+        "moyenne": 0.16348023073093243,
+        "part_negative": 0.056865464632454926
+      },
+      {
+        "segment": 5,
+        "clients_echantillon": 244,
+        "moyenne": 0.5072614203961332,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "7": {
+    "moyenne": 0.19625294071901445,
+    "part_negative": 0.048,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 2010,
+        "moyenne": 0.20724877012920134,
+        "part_negative": 0.0
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 1420,
+        "moyenne": 0.19661009861404702,
+        "part_negative": 0.005633802816901409
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 1378,
+        "moyenne": 0.17708491483909256,
+        "part_negative": 0.07619738751814223
+      },
+      {
+        "segment": 3,
+        "clients_echantillon": 1262,
+        "moyenne": 0.17619800667029142,
+        "part_negative": 0.09984152139461172
+      },
+      {
+        "segment": 4,
+        "clients_echantillon": 968,
+        "moyenne": 0.18679000682413024,
+        "part_negative": 0.08161157024793389
+      },
+      {
+        "segment": 5,
+        "clients_echantillon": 718,
+        "moyenne": 0.14520687977098076,
+        "part_negative": 0.09192200557103064
+      },
+      {
+        "segment": 6,
+        "clients_echantillon": 244,
+        "moyenne": 0.5033237475941574,
+        "part_negative": 0.0
+      }
+    ]
+  },
+  "8": {
+    "moyenne": 0.1802320303978917,
+    "part_negative": 0.08075,
+    "segments": [
+      {
+        "segment": 0,
+        "clients_echantillon": 1375,
+        "moyenne": 0.21682421417044406,
+        "part_negative": 0.0
+      },
+      {
+        "segment": 1,
+        "clients_echantillon": 1362,
+        "moyenne": 0.1604416661376784,
+        "part_negative": 0.07048458149779736
+      },
+      {
+        "segment": 2,
+        "clients_echantillon": 1301,
+        "moyenne": 0.16237458394690799,
+        "part_negative": 0.11222136817832437
+      },
+      {
+        "segment": 3,
+        "clients_echantillon": 1278,
+        "moyenne": 0.17438709837487656,
+        "part_negative": 0.04303599374021909
+      },
+      {
+        "segment": 4,
+        "clients_echantillon": 1173,
+        "moyenne": 0.16942907635222965,
+        "part_negative": 0.12702472293265132
+      },
+      {
+        "segment": 5,
+        "clients_echantillon": 719,
+        "moyenne": 0.13178386583152282,
+        "part_negative": 0.12795549374130738
+      },
+      {
+        "segment": 6,
+        "clients_echantillon": 548,
+        "moyenne": 0.13738799791630948,
+        "part_negative": 0.19708029197080293
+      },
+      {
+        "segment": 7,
+        "clients_echantillon": 244,
+        "moyenne": 0.5012451845453597,
+        "part_negative": 0.0
+      }
+    ]
+  }
+}

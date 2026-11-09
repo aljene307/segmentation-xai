@@ -8,3 +8,5 @@ scipy==1.15.2
 fastapi==0.115.12
 uvicorn==0.34.2
 pydantic==2.14.3
+streamlit==1.45.1
+altair==5.5.0

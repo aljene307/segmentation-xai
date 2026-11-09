@@ -1,0 +1,996 @@
+{
+  "2": [
+    {
+      "segment": 0,
+      "clients": 35181,
+      "part_clients": 0.542874778180696,
+      "part_ca": 0.8456600335449893,
+      "medianes": {
+        "recence_j": 191.0,
+        "frequence": 1.0,
+        "montant_rs": 148.9,
+        "part_frais_port": 0.1225784677691528,
+        "mensualites_moy": 3.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.091666666666669,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9938794325319453,
+        "frequence": 1.020420579404255,
+        "montant_rs": 1.5577441935670684,
+        "part_frais_port": 0.6294233626915434,
+        "mensualites_moy": 1.3782899162509104,
+        "articles_par_commande": 1.0453667755985785,
+        "delai_livraison_moy_j": 1.018253389230275,
+        "ecart_prevision_moy_j": -0.017911299893562216
+      },
+      "centre_F1": 1.0329346442965,
+      "centre_F2": 0.022166416682304374
+    },
+    {
+      "segment": 1,
+      "clients": 29624,
+      "part_clients": 0.45712522181930404,
+      "part_ca": 0.1543399664550108,
+      "medianes": {
+        "recence_j": 192.0,
+        "frequence": 1.0,
+        "montant_rs": 44.5,
+        "part_frais_port": 0.2745454545454545,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 10.797164351851851,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 1.007268690389334,
+        "frequence": 0.9757488386436304,
+        "montant_rs": 0.33763170152973854,
+        "part_frais_port": 1.4400910301495007,
+        "mensualites_moy": 0.5507488001747476,
+        "articles_par_commande": 0.9461231254275724,
+        "delai_livraison_moy_j": 0.9783225598666523,
+        "ecart_prevision_moy_j": 0.02127118017673091
+      },
+      "centre_F1": -1.2266970605250866,
+      "centre_F2": -0.026324490457066953
+    }
+  ],
+  "3": [
+    {
+      "segment": 0,
+      "clients": 34870,
+      "part_clients": 0.5380757657588149,
+      "part_ca": 0.8069992876067267,
+      "medianes": {
+        "recence_j": 194.0,
+        "frequence": 1.0,
+        "montant_rs": 139.99,
+        "part_frais_port": 0.1232707632200779,
+        "mensualites_moy": 3.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.019461805555554,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0009904564624037,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4997874629582424,
+        "part_frais_port": 0.6269401604584018,
+        "mensualites_moy": 1.3539046176621923,
+        "articles_par_commande": 1.0379355247535043,
+        "delai_livraison_moy_j": 1.0099393874738112,
+        "ecart_prevision_moy_j": -0.09953345326714569
+      },
+      "centre_F1": 0.9570725180588042,
+      "centre_F2": 0.001649998744525012
+    },
+    {
+      "segment": 1,
+      "clients": 28004,
+      "part_clients": 0.4321271506828177,
+      "part_ca": 0.1400789478255295,
+      "medianes": {
+        "recence_j": 190.0,
+        "frequence": 1.0,
+        "montant_rs": 41.3,
+        "part_frais_port": 0.2806751479457855,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 10.879131944444445,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0047077342115887,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.32416141314931574,
+        "part_frais_port": 1.4674453200081148,
+        "mensualites_moy": 0.550055598139589,
+        "articles_par_commande": 0.9480864914955203,
+        "delai_livraison_moy_j": 0.9899606299293978,
+        "ecart_prevision_moy_j": 0.1718345130527137
+      },
+      "centre_F1": -1.2848979868611927,
+      "centre_F2": -0.004628689020750525
+    },
+    {
+      "segment": 2,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ],
+  "4": [
+    {
+      "segment": 0,
+      "clients": 31843,
+      "part_clients": 0.49136640691304684,
+      "part_ca": 0.6925240998175893,
+      "medianes": {
+        "recence_j": 194.0,
+        "frequence": 1.0,
+        "montant_rs": 129.99,
+        "part_frais_port": 0.1215101716659539,
+        "mensualites_moy": 3.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.143842592592591,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 1.004237242149885,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4093843007467537,
+        "part_frais_port": 0.6066495165335125,
+        "mensualites_moy": 1.3163107513678793,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 1.0302226868004964,
+        "ecart_prevision_moy_j": 0.21957416014455156
+      },
+      "centre_F1": 0.8740947189281948,
+      "centre_F2": 0.05645896996592072
+    },
+    {
+      "segment": 1,
+      "clients": 24932,
+      "part_clients": 0.3847234009721472,
+      "part_ca": 0.11630811645226727,
+      "medianes": {
+        "recence_j": 188.0,
+        "frequence": 1.0,
+        "montant_rs": 39.9,
+        "part_frais_port": 0.2816057519472738,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 10.800717592592594,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0028310996113061,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.3023161995302896,
+        "part_frais_port": 1.4776704425035165,
+        "mensualites_moy": 0.5350715856426311,
+        "articles_par_commande": 0.879801991427862,
+        "delai_livraison_moy_j": 0.9781435154754838,
+        "ecart_prevision_moy_j": 0.015061058833010676
+      },
+      "centre_F1": -1.3659597653780426,
+      "centre_F2": -0.017444986282873394
+    },
+    {
+      "segment": 2,
+      "clients": 6099,
+      "part_clients": 0.09411310855643855,
+      "part_ca": 0.1382460191623994,
+      "medianes": {
+        "recence_j": 193.0,
+        "frequence": 1.0,
+        "montant_rs": 138.0,
+        "part_frais_port": 0.21267087276551,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 2.0,
+        "delai_livraison_moy_j": 10.351331018518518,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9935827395339356,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4689347879684036,
+        "part_frais_port": 1.114432219907756,
+        "mensualites_moy": 1.206545820484052,
+        "articles_par_commande": 2.117066325447657,
+        "delai_livraison_moy_j": 0.9422837806413628,
+        "ecart_prevision_moy_j": -0.9880439600270119
+      },
+      "centre_F1": 0.5924161692448785,
+      "centre_F2": -0.23527970712177815
+    },
+    {
+      "segment": 3,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ],
+  "5": [
+    {
+      "segment": 0,
+      "clients": 26088,
+      "part_clients": 0.4025615307460844,
+      "part_ca": 0.5700063731784463,
+      "medianes": {
+        "recence_j": 201.0,
+        "frequence": 1.0,
+        "montant_rs": 129.9,
+        "part_frais_port": 0.1188866019798098,
+        "mensualites_moy": 3.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 9.211359953703703,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.03001641842201,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.415948444259016,
+        "part_frais_port": 0.5918432482105985,
+        "mensualites_moy": 1.3247715199094416,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 0.7509329306085465,
+        "ecart_prevision_moy_j": -3.237505523620543
+      },
+      "centre_F1": 0.8847610900063108,
+      "centre_F2": -0.44733672120216167
+    },
+    {
+      "segment": 1,
+      "clients": 20698,
+      "part_clients": 0.3193889360388859,
+      "part_ca": 0.08940986214226875,
+      "medianes": {
+        "recence_j": 199.0,
+        "frequence": 1.0,
+        "montant_rs": 35.0,
+        "part_frais_port": 0.2923244420250408,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 9.865653935185184,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0272630958017257,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.27994038632378615,
+        "part_frais_port": 1.5261074800111516,
+        "mensualites_moy": 0.5245059381257413,
+        "articles_par_commande": 0.8817985004294299,
+        "delai_livraison_moy_j": 0.8111067010744502,
+        "ecart_prevision_moy_j": -2.1613228507290483
+      },
+      "centre_F1": -1.4704548748771689,
+      "centre_F2": -0.30820055877936375
+    },
+    {
+      "segment": 2,
+      "clients": 10197,
+      "part_clients": 0.15734896998688372,
+      "part_ca": 0.15312681954674856,
+      "medianes": {
+        "recence_j": 158.0,
+        "frequence": 1.0,
+        "montant_rs": 98.9,
+        "part_frais_port": 0.1762356465302046,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 24.24761574074074,
+        "ecart_prevision_moy_j": -1.0
+      },
+      "indices_profil": {
+        "recence_j": 0.8880384240129101,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.9731669648648663,
+        "part_frais_port": 0.9233740492995307,
+        "mensualites_moy": 0.9852426826457495,
+        "articles_par_commande": 0.8914205105893378,
+        "delai_livraison_moy_j": 2.0974413516773103,
+        "ecart_prevision_moy_j": 13.833857112214321
+      },
+      "centre_F1": 0.11027878979398446,
+      "centre_F2": 1.954622474373144
+    },
+    {
+      "segment": 3,
+      "clients": 5891,
+      "part_clients": 0.09090347966977856,
+      "part_ca": 0.13453518056479236,
+      "medianes": {
+        "recence_j": 194.0,
+        "frequence": 1.0,
+        "montant_rs": 139.0,
+        "part_frais_port": 0.2117568470273881,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 2.0,
+        "delai_livraison_moy_j": 10.16050925925926,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9933262460275323,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4799783358515308,
+        "part_frais_port": 1.105536865624767,
+        "mensualites_moy": 1.213890347058035,
+        "articles_par_commande": 2.1299531353648327,
+        "delai_livraison_moy_j": 0.8781547557539261,
+        "ecart_prevision_moy_j": -1.7870334952544642
+      },
+      "centre_F1": 0.6145222110411488,
+      "centre_F2": -0.3317121327382776
+    },
+    {
+      "segment": 4,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ],
+  "6": [
+    {
+      "segment": 0,
+      "clients": 22067,
+      "part_clients": 0.34051384924002776,
+      "part_ca": 0.2664110371389006,
+      "medianes": {
+        "recence_j": 172.0,
+        "frequence": 1.0,
+        "montant_rs": 85.9,
+        "part_frais_port": 0.1563930961606199,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 8.209108796296297,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9361041391672188,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.7823794472192165,
+        "part_frais_port": 0.7633138275251259,
+        "mensualites_moy": 0.5043515019587855,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 0.671950860616597,
+        "ecart_prevision_moy_j": -2.6973674632013562
+      },
+      "centre_F1": -0.0510809366172542,
+      "centre_F2": -0.5723726602325063
+    },
+    {
+      "segment": 1,
+      "clients": 13522,
+      "part_clients": 0.20865673944911658,
+      "part_ca": 0.38044515842123156,
+      "medianes": {
+        "recence_j": 219.0,
+        "frequence": 1.0,
+        "montant_rs": 159.99,
+        "part_frais_port": 0.1114883984153933,
+        "mensualites_moy": 6.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 10.95655671296296,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.1214539248117492,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.8233063519810608,
+        "part_frais_port": 0.5897261620264416,
+        "mensualites_moy": 2.1769909273862575,
+        "articles_par_commande": 0.8761070904615219,
+        "delai_livraison_moy_j": 0.8959350650803356,
+        "ecart_prevision_moy_j": -2.6266891400751256
+      },
+      "centre_F1": 1.4244989019402476,
+      "centre_F2": -0.16548098135168576
+    },
+    {
+      "segment": 2,
+      "clients": 12868,
+      "part_clients": 0.19856492554586838,
+      "part_ca": 0.0424368698912244,
+      "medianes": {
+        "recence_j": 212.0,
+        "frequence": 1.0,
+        "montant_rs": 27.9,
+        "part_frais_port": 0.3614999574518073,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.272384259259258,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0850110434960238,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.2137178546239351,
+        "part_frais_port": 1.8473669876841567,
+        "mensualites_moy": 0.5748736827008568,
+        "articles_par_commande": 0.892245138051418,
+        "delai_livraison_moy_j": 0.9318955160603604,
+        "ecart_prevision_moy_j": -1.8860647936629622
+      },
+      "centre_F1": -1.928347533039725,
+      "centre_F2": -0.10194221796468732
+    },
+    {
+      "segment": 3,
+      "clients": 8634,
+      "part_clients": 0.13323046061260704,
+      "part_ca": 0.12360228465505975,
+      "medianes": {
+        "recence_j": 153.0,
+        "frequence": 1.0,
+        "montant_rs": 92.995,
+        "part_frais_port": 0.1832560676302154,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 25.292685185185185,
+        "ecart_prevision_moy_j": 0.0
+      },
+      "indices_profil": {
+        "recence_j": 0.8725779850641291,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.9277329229871608,
+        "part_frais_port": 0.939493062458444,
+        "mensualites_moy": 0.8768632064738016,
+        "articles_par_commande": 0.8947117253672839,
+        "delai_livraison_moy_j": 2.194599650945122,
+        "ecart_prevision_moy_j": 15.191864205690354
+      },
+      "centre_F1": 0.026954871044334618,
+      "centre_F2": 2.093798004765691
+    },
+    {
+      "segment": 4,
+      "clients": 5783,
+      "part_clients": 0.08923694159401281,
+      "part_ca": 0.13418288532583986,
+      "medianes": {
+        "recence_j": 193.0,
+        "frequence": 1.0,
+        "montant_rs": 139.8,
+        "part_frais_port": 0.2099255774495816,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 2.0,
+        "delai_livraison_moy_j": 10.110266203703704,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9896770127351427,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.5036697014596316,
+        "part_frais_port": 1.0814313060673166,
+        "mensualites_moy": 1.2241576345583212,
+        "articles_par_commande": 2.1370099918323664,
+        "delai_livraison_moy_j": 0.8744363554533979,
+        "ecart_prevision_moy_j": -1.8181658717642275
+      },
+      "centre_F1": 0.663533123898492,
+      "centre_F2": -0.34064750826641504
+    },
+    {
+      "segment": 5,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ],
+  "7": [
+    {
+      "segment": 0,
+      "clients": 16166,
+      "part_clients": 0.24945606048915978,
+      "part_ca": 0.19100663296153056,
+      "medianes": {
+        "recence_j": 102.0,
+        "frequence": 1.0,
+        "montant_rs": 85.0,
+        "part_frais_port": 0.15692615589564585,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 8.012899305555555,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.5333644991489409,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.7656924934474815,
+        "part_frais_port": 0.7814975644933015,
+        "mensualites_moy": 0.5517545585109215,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 0.6573544336075386,
+        "ecart_prevision_moy_j": -2.8984487825787077
+      },
+      "centre_F1": -0.05809211103872154,
+      "centre_F2": -0.6072341632949327
+    },
+    {
+      "segment": 1,
+      "clients": 11636,
+      "part_clients": 0.17955404675565156,
+      "part_ca": 0.12571393232198827,
+      "medianes": {
+        "recence_j": 374.0,
+        "frequence": 1.0,
+        "montant_rs": 72.62,
+        "part_frais_port": 0.18286357467988856,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 9.833234953703705,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.8058597161261882,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.7001453578658,
+        "part_frais_port": 0.8965790798543608,
+        "mensualites_moy": 0.6724614829977255,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 0.7929344158852907,
+        "ecart_prevision_moy_j": -2.519972479210681
+      },
+      "centre_F1": -0.17457761050415652,
+      "centre_F2": -0.37215507484522137
+    },
+    {
+      "segment": 2,
+      "clients": 11265,
+      "part_clients": 0.173829179847234,
+      "part_ca": 0.35614745599534475,
+      "medianes": {
+        "recence_j": 205.0,
+        "frequence": 1.0,
+        "montant_rs": 184.1,
+        "part_frais_port": 0.1008519318454523,
+        "mensualites_moy": 7.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.20605324074074,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0135091690379012,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 2.048835853153867,
+        "part_frais_port": 0.5461223033577357,
+        "mensualites_moy": 2.3302976359966574,
+        "articles_par_commande": 0.8768977381353482,
+        "delai_livraison_moy_j": 0.9242814612274363,
+        "ecart_prevision_moy_j": -2.086718624337525
+      },
+      "centre_F1": 1.6067493504731096,
+      "centre_F2": -0.08696075322148854
+    },
+    {
+      "segment": 3,
+      "clients": 10296,
+      "part_clients": 0.158876629889669,
+      "part_ca": 0.030931997179672654,
+      "medianes": {
+        "recence_j": 180.0,
+        "frequence": 1.0,
+        "montant_rs": 24.9,
+        "part_frais_port": 0.38689358854298583,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.919270833333332,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9502872534329314,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.19469192669276283,
+        "part_frais_port": 1.9646631180251353,
+        "mensualites_moy": 0.5543940560882921,
+        "articles_par_commande": 0.8978242416459259,
+        "delai_livraison_moy_j": 0.9774603778646968,
+        "ecart_prevision_moy_j": -1.3395451327898655
+      },
+      "centre_F1": -2.11819509421434,
+      "centre_F2": -0.0007913742001671847
+    },
+    {
+      "segment": 4,
+      "clients": 7756,
+      "part_clients": 0.11968212329295579,
+      "part_ca": 0.11127926927887026,
+      "medianes": {
+        "recence_j": 152.0,
+        "frequence": 1.0,
+        "montant_rs": 93.495,
+        "part_frais_port": 0.1832560676302154,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 26.306967592592592,
+        "ecart_prevision_moy_j": 1.0
+      },
+      "indices_profil": {
+        "recence_j": 0.8356025260265972,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.9297902328026287,
+        "part_frais_port": 0.940730980021178,
+        "mensualites_moy": 0.8869374746039724,
+        "articles_par_commande": 0.8968251539317019,
+        "delai_livraison_moy_j": 2.2669466022337925,
+        "ecart_prevision_moy_j": 16.1672180098036
+      },
+      "centre_F1": 0.031307917579345035,
+      "centre_F2": 2.197096736420446
+    },
+    {
+      "segment": 5,
+      "clients": 5755,
+      "part_clients": 0.08880487616696242,
+      "part_ca": 0.13199894769484954,
+      "medianes": {
+        "recence_j": 194.0,
+        "frequence": 1.0,
+        "montant_rs": 139.8,
+        "part_frais_port": 0.2098667870851208,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 2.0,
+        "delai_livraison_moy_j": 10.098564814814814,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9943956408687291,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4863930157019505,
+        "part_frais_port": 1.0795672709559896,
+        "mensualites_moy": 1.221903363182763,
+        "articles_par_commande": 2.1388827825789103,
+        "delai_livraison_moy_j": 0.8736171549377324,
+        "ecart_prevision_moy_j": -1.837368534892157
+      },
+      "centre_F1": 0.6650597170693072,
+      "centre_F2": -0.3437122207233051
+    },
+    {
+      "segment": 6,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ],
+  "8": [
+    {
+      "segment": 0,
+      "clients": 11243,
+      "part_clients": 0.17348969986883728,
+      "part_ca": 0.1787192553747384,
+      "medianes": {
+        "recence_j": 151.0,
+        "frequence": 1.0,
+        "montant_rs": 109.9,
+        "part_frais_port": 0.1513023119695639,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 14.837962962962964,
+        "ecart_prevision_moy_j": -10.0
+      },
+      "indices_profil": {
+        "recence_j": 0.7416791986012697,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.0301433198043155,
+        "part_frais_port": 0.7557424774633105,
+        "mensualites_moy": 0.5372968938525325,
+        "articles_par_commande": 0.8760423040169119,
+        "delai_livraison_moy_j": 1.1871232200905288,
+        "ecart_prevision_moy_j": 1.43138572734094
+      },
+      "centre_F1": 0.1634046434094997,
+      "centre_F2": 0.45523622628657046
+    },
+    {
+      "segment": 1,
+      "clients": 10825,
+      "part_clients": 0.16703958027929944,
+      "part_ca": 0.09742236033837727,
+      "medianes": {
+        "recence_j": 86.0,
+        "frequence": 1.0,
+        "montant_rs": 65.0,
+        "part_frais_port": 0.1730802716350339,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 5.748275462962963,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.5070453457514126,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.5832291973883177,
+        "part_frais_port": 0.8565481973150614,
+        "mensualites_moy": 0.6027606396893364,
+        "articles_par_commande": 0.8763660147989965,
+        "delai_livraison_moy_j": 0.440601716422082,
+        "ecart_prevision_moy_j": -3.69651589746271
+      },
+      "centre_F1": -0.2814190491473388,
+      "centre_F2": -1.0357793695658124
+    },
+    {
+      "segment": 2,
+      "clients": 10576,
+      "part_clients": 0.16319728416017282,
+      "part_ca": 0.3369798176116509,
+      "medianes": {
+        "recence_j": 208.0,
+        "frequence": 1.0,
+        "montant_rs": 188.0,
+        "part_frais_port": 0.09917677082019805,
+        "mensualites_moy": 7.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 10.926180555555556,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.0218439556109125,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 2.064861675522224,
+        "part_frais_port": 0.5412700045720064,
+        "mensualites_moy": 2.4032359974262776,
+        "articles_par_commande": 0.8770363005797147,
+        "delai_livraison_moy_j": 0.9086812315940872,
+        "ecart_prevision_moy_j": -2.2155758196185857
+      },
+      "centre_F1": 1.6465970937421917,
+      "centre_F2": -0.11222524741679869
+    },
+    {
+      "segment": 3,
+      "clients": 10375,
+      "part_clients": 0.16009567163027544,
+      "part_ca": 0.10642112054338242,
+      "medianes": {
+        "recence_j": 391.0,
+        "frequence": 1.0,
+        "montant_rs": 69.9,
+        "part_frais_port": 0.1854829176025534,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 9.310405092592593,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 1.8711816926954887,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.6647345269218213,
+        "part_frais_port": 0.9213203703397785,
+        "mensualites_moy": 0.708062235059113,
+        "articles_par_commande": 0.8762956174542179,
+        "delai_livraison_moy_j": 0.7767085677581491,
+        "ecart_prevision_moy_j": -3.139047075291808
+      },
+      "centre_F1": -0.20710431542336769,
+      "centre_F2": -0.4323236270305653
+    },
+    {
+      "segment": 4,
+      "clients": 9514,
+      "part_clients": 0.1468096597484762,
+      "part_ca": 0.027800229529289292,
+      "medianes": {
+        "recence_j": 187.0,
+        "frequence": 1.0,
+        "montant_rs": 24.9,
+        "part_frais_port": 0.3948274160914297,
+        "mensualites_moy": 1.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 12.173431712962962,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9701811872473339,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.1893624001099004,
+        "part_frais_port": 2.006010316250797,
+        "mensualites_moy": 0.5568015891774688,
+        "articles_par_commande": 0.8992462834800464,
+        "delai_livraison_moy_j": 1.011260982317493,
+        "ecart_prevision_moy_j": -1.0778480002445097
+      },
+      "centre_F1": -2.172566290270171,
+      "centre_F2": 0.070776377938938
+    },
+    {
+      "segment": 5,
+      "clients": 5752,
+      "part_clients": 0.0887585834426356,
+      "part_ca": 0.13175436401098917,
+      "medianes": {
+        "recence_j": 194.0,
+        "frequence": 1.0,
+        "montant_rs": 139.8,
+        "part_frais_port": 0.20957020640708468,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 2.0,
+        "delai_livraison_moy_j": 10.103107638888888,
+        "ecart_prevision_moy_j": -14.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9933456323318626,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 1.4844126494666467,
+        "part_frais_port": 1.079208227721953,
+        "mensualites_moy": 1.2187584451664748,
+        "articles_par_commande": 2.138779915735308,
+        "delai_livraison_moy_j": 0.8731396819478875,
+        "ecart_prevision_moy_j": -1.8382014563766482
+      },
+      "centre_F1": 0.6640983955576082,
+      "centre_F2": -0.3431783755097597
+    },
+    {
+      "segment": 6,
+      "clients": 4589,
+      "part_clients": 0.0708124373119358,
+      "part_ca": 0.06798108802382861,
+      "medianes": {
+        "recence_j": 153.0,
+        "frequence": 1.0,
+        "montant_rs": 89.9,
+        "part_frais_port": 0.1936358705478214,
+        "mensualites_moy": 2.0,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 32.25670138888889,
+        "ecart_prevision_moy_j": 7.0
+      },
+      "indices_profil": {
+        "recence_j": 0.882185199209308,
+        "frequence": 0.9680045409054924,
+        "montant_rs": 0.9600162147274379,
+        "part_frais_port": 1.0047585402790766,
+        "mensualites_moy": 1.0848157752037468,
+        "articles_par_commande": 0.9113588928691952,
+        "delai_livraison_moy_j": 2.7263245687175965,
+        "ecart_prevision_moy_j": 22.246799078554346
+      },
+      "centre_F1": 0.040147397101691386,
+      "centre_F2": 2.831739340953968
+    },
+    {
+      "segment": 7,
+      "clients": 1931,
+      "part_clients": 0.02979708355836741,
+      "part_ca": 0.05292176456774406,
+      "medianes": {
+        "recence_j": 167.0,
+        "frequence": 2.0,
+        "montant_rs": 179.46,
+        "part_frais_port": 0.1787727641804895,
+        "mensualites_moy": 2.5,
+        "articles_par_commande": 1.0,
+        "delai_livraison_moy_j": 11.261045524691356,
+        "ecart_prevision_moy_j": -13.0
+      },
+      "indices_profil": {
+        "recence_j": 0.9138412192100722,
+        "frequence": 2.0417827525158314,
+        "montant_rs": 1.7760719589915348,
+        "part_frais_port": 0.9576684947220475,
+        "mensualites_moy": 1.1344324245563473,
+        "articles_par_commande": 1.067827107200807,
+        "delai_livraison_moy_j": 0.9661087924626458,
+        "ecart_prevision_moy_j": -0.6946256800117911
+      },
+      "centre_F1": 1.3511986117816341,
+      "centre_F2": 0.03733109845443257
+    }
+  ]
+}
