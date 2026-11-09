@@ -28,6 +28,21 @@ ACP = DOSSIER_MODELES / "acp.json"
 PART_CUMULEE_MINIMALE = 0.70
 SEUIL_NOM_AXE = 0.5
 SEUIL_AXE_TEMPS = 0.5
+# Étape 5 : partitions (règles fixées et poussées avant tout calcul, voir docs/CHOIX.md).
+K_VALEURS = list(range(2, 9))
+N_INIT_REFERENCE = 20
+N_INIT_BOOTSTRAP = 10
+TIRAGES_BOOTSTRAP_K = 50
+N_ECHANTILLON_COMMUN = 8000   # silhouettes
+N_ECHANTILLON_CAH = 6000      # les 6 000 premiers de l'échantillon commun
+MEMOIRE_MIN_CAH_GO = 2.0      # en dessous, le script refuse de démarrer
+PART_MIN_SEGMENT = 0.02       # règle de k (admissibilité) : appliquée seulement à l'étape suivante
+HDBSCAN_MIN_SAMPLES = 25
+AXES_MIXTE = 5
+AXES_SENSIBILITE = 4
+PARTITIONS = DOSSIER_PROCESSED / "partitions.csv"
+INDICES_PARTITIONS = DOSSIER_RAPPORTS / "indices_partitions.csv"
+
 # Stabilité des axes (description seulement, ne change aucune règle).
 TIRAGES_BOOTSTRAP_ACP = 50
 # Noms des axes retenus (interprétation validée, voir docs/CHOIX.md ; ne modifie aucun calcul).

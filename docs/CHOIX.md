@@ -529,3 +529,47 @@ La table des avis n'est chargée qu'après le choix de k, commité et poussé.
   **Total attendu : environ 7 minutes, jusqu'à 20 minutes** avec une marge d'un facteur 2 à 3,
   car les vraies données peuvent demander plus d'itérations que des données aléatoires. Le
   bootstrap en représente l'essentiel.
+
+## 2026-11-09 – Étape 5 : résultats des partitions (avant application de la règle de k)
+
+Paramètres appliqués sans modification (détail dans `reports/partitions.md` et
+`reports/indices_partitions.csv`). Aucun avis chargé ; règle de k pas encore appliquée.
+
+- **Mémoire** : 7,14 Go libres au démarrage (minimum exigé 2,0 Go) ; pic du calcul 1,50 Go.
+- **Temps de calcul : 45 minutes, au lieu de 7 à 20 estimées.** Le bootstrap a pris 2 683 s à
+  lui seul, en n'utilisant qu'un seul cœur sur 12 (mesuré pendant le calcul), alors qu'une
+  initialisation de K-Means sur les vraies données prend environ 0,1 s. **Cause non étudiée** (choix
+  de l'utilisateur, à voir plus tard). **Sans effet sur les résultats** : le calcul est
+  déterministe (graines fixées), seul le temps est en cause. L'estimation de l'entrée précédente
+  était donc fausse d'un facteur 9 environ.
+- **K-Means sur les 8 variables (référence), k = 2 à 8** : silhouettes faibles partout (0,157 à
+  0,201), comme attendu pour un nuage continu ; les indices ne préfèrent pas le même k
+  (silhouette : k = 4, presque à égalité avec 5 ; Calinski-Harabasz : k = 6 ; Davies-Bouldin :
+  k = 7). Stabilité : très forte pour k = 2, 6 et 7 (ARI minimum ≥ 0,93) ; k = 4 et 5 stables en
+  moyenne mais avec des tirages très différents (ARI minimum 0,30 et 0,35).
+- **Segment des clients qui recommandent** : dès k = 3, K-Means isole un segment de 2,98 % qui
+  contient exactement les 1 931 clients d'apprentissage à plusieurs commandes, et eux seuls
+  (Jaccard 1,00). La CAH, la classification mixte et HDBSCAN l'isolent aussi : c'est le groupe le
+  plus net du jeu de données (effet de la Fréquence, anticipé à l'étape 3).
+- **k = 2 (K-Means)** sépare les clients par la valeur de l'achat (médianes 148,90 R$ contre
+  44,50 R$, 3 mensualités contre 1, part des frais de port 0,12 contre 0,27).
+- **CAH de Ward (8 variables, 6 000)** : corrélation cophénétique 0,531 (l'arbre ne respecte que
+  moyennement les distances) ; accord avec K-Means faible (ARI de 0,25 à 0,46).
+- **Classification mixte F1–F5** : corrélation cophénétique 0,506 ; très proche de K-Means pour
+  k = 3 à 5 (ARI 0,96 à 0,97), moins pour k = 6 à 8 (0,55 à 0,74). À k = 2, silhouette 0,498 :
+  elle isole seulement les 3 % de clients qui recommandent ; une silhouette élevée ne signifie
+  donc pas une segmentation utile.
+- **Contrôle de sensibilité (mixte F1–F4 contre F1–F5)** : ARI de 0,50 à 0,72 pour k = 3 à 8
+  (−0,01 pour k = 2). Sans F5 (réachat), le segment des clients qui recommandent disparaît (plus
+  petit segment d'environ 11 %). La classification mixte dépend donc fortement du choix 4 ou
+  5 axes, ce qui confirme la raison, écrite d'avance, de prendre K-Means sur les 8 variables
+  comme référence. La décision de 5 axes ne change pas.
+- **HDBSCAN (F1–F5)** : 3 groupes, 87,2 %, 8,4 % et 3,0 % (les clients qui recommandent), et
+  1,4 % de bruit ; il confirme une grande masse continue et un petit groupe à part.
+- **Mise en garde sur Calinski-Harabasz** : cet indice augmente avec le nombre de clients. La
+  valeur de la CAH, calculée sur 6 000 clients (environ 1 000), n'est pas comparable aux valeurs
+  calculées sur les 64 805 clients (environ 12 000). Silhouette, Davies-Bouldin et R² restent
+  comparables entre méthodes.
+- **Correction** : le titre du dendrogramme de la classification mixte n'affichait pas sa
+  corrélation cophénétique (0,506) ; corrigé dans le code (le graphique sera à jour au prochain
+  lancement).
