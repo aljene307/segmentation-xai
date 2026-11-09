@@ -13,6 +13,17 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, s
 from segmentation import explication as X
 
 
+def exiger_fichiers(chemins) -> None:
+    """Arrête proprement (message clair) si un fichier produit par la reproduction manque."""
+    manquants = [str(c) for c in chemins if not c.exists()]
+    if manquants:
+        liste = "".join(f"\n  - {m}" for m in manquants)
+        raise SystemExit(
+            f"Fichiers de la reproduction absents :{liste}\n"
+            "Lancer d'abord les étapes 1 à 12 du README (téléchargement des données et "
+            "calculs, environ une heure), puis relancer cette commande.")
+
+
 def mesurer(z: pd.DataFrame, prof: pd.DataFrame, seg: pd.Series, notes: pd.DataFrame,
             plusieurs_vendeurs: pd.Series, centres: np.ndarray, seuils: list[float],
             arbre: dict, echantillon_silhouette: list, variables: list[str]) -> dict:

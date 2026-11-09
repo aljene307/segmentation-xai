@@ -196,11 +196,13 @@ comparés à leur empreinte).
 | 7 | partitions, indices, bootstrap (≥ 2 Go libres) | **~45 min** |
 | 8 | application de la règle de k (refait les 50 tirages pour k = 5) | quelques minutes |
 | 9–12 | segments officiels, évaluation externe (80 %), hypothèse S3, explicabilité | < 1 min chacune |
-| 13 | **vérification seulement** du code de l'évaluation finale | < 1 min |
+| 13 | **vérification seulement** du code de l'évaluation finale, **après les étapes 1 à 12** | < 1 min |
 | 14–17 | empreintes des modèles, exemples, données de l'application, synthèse PDF | < 1 min chacune |
 
 L'évaluation finale sur les 20 % a été **ouverte une seule fois** ; son résultat est versionné
-(`reports/evaluation_finale.json`). L'étape 13 utilise **uniquement** l'option `--verification` :
+(`reports/evaluation_finale.json`). L'étape 13 se lance **après les étapes 1 à 12**, dont elle
+utilise les fichiers (sur un clone neuf sans ces fichiers, elle s'arrête avec un message qui le
+dit), et **uniquement** avec l'option `--verification` :
 elle fait tourner le même code sur les 80 % sans ouvrir les avis des 20 % et sans rien écrire.
 Lancé sans cette option, le script refuserait de démarrer, puisque l'évaluation a déjà été faite.
 

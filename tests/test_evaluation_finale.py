@@ -57,3 +57,22 @@ def test_verdicts_douze_attentes_et_seuils():
     # E11 : seuil de 40 points inclus.
     m4 = dict(m, ecart_retard=0.40)
     assert E.verdicts(r, m4)[10]["atteinte"]
+
+
+def test_fichiers_absents_message_clair(tmp_path):
+    present = tmp_path / "present.csv"
+    present.write_text("x")
+    E.exiger_fichiers([present])  # rien ne manque : pas d'arrêt
+    with pytest.raises(SystemExit) as e:
+        E.exiger_fichiers([present, tmp_path / "absent.csv"])
+    message = str(e.value)
+    assert "absent.csv" in message and "present.csv" not in message
+    assert "étapes 1 à 12 du README" in message
+
+
+def test_le_script_verifie_les_fichiers_avant_de_les_lire():
+    from segmentation import config
+    texte = (config.RACINE / "scripts" / "evaluation_finale.py").read_text(encoding="utf-8")
+    verif = texte.index("E.exiger_fichiers(")
+    assert verif < texte.index("pd.read_csv(") and verif < texte.index("charger_tables(")
+    assert texte.index("REFUS") < verif  # le verrou de l'ouverture unique passe avant

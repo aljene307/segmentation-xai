@@ -62,6 +62,12 @@ def main() -> int:
         raise SystemExit("REFUS : l'évaluation finale a déjà été faite (fichier de résultats "
                          "présent). Elle ne s'ouvre qu'une seule fois.")
 
+    # Fichiers produits par les étapes 1 à 12 de la reproduction (absents d'un clone neuf).
+    E.exiger_fichiers([config.DOSSIER_OLIST / f for f in (*config.TABLES.values(), config.TABLE_AVIS)]
+                      + [config.PREPARES_APPRENTISSAGE, config.PREPARES_MISE_DE_COTE,
+                         config.PROFILS_APPRENTISSAGE, config.PROFILS_MISE_DE_COTE,
+                         config.SEGMENTS_APPRENTISSAGE])
+
     v = config.VARIABLES_PROFIL
     segs = S.charger()
     centres = S.centres(segs)
