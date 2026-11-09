@@ -57,6 +57,12 @@ def table_commandes(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return t
 
 
+def dans_periode(table: pd.DataFrame, debut: str, fin: str) -> pd.DataFrame:
+    """Lignes dont la date d'achat est dans [debut, fin[."""
+    achat = table["order_purchase_timestamp"]
+    return table[(achat >= debut) & (achat < fin)]
+
+
 def commandes_par_mois(commandes: pd.DataFrame) -> pd.DataFrame:
     """Toutes les commandes et les livrées, par mois d'achat (mois vides inclus)."""
     mois = commandes["order_purchase_timestamp"].dt.to_period("M")

@@ -5,6 +5,8 @@ Usage (depuis la racine du projet) :
 
 Les graphiques vont dans captures_brutes/ (ignoré par Git) tant qu'ils ne sont pas relus.
 Aucune colonne d'avis n'est chargée. Montants en R$.
+Période retenue : achats de config.DEBUT_ACHATS (inclus) à config.FIN_ACHATS (exclu).
+Les tableaux par mois et l'effet de coupure montrent toute la période, pour justifier ce choix.
 """
 
 from __future__ import annotations
@@ -17,12 +19,14 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from segmentation import config  # noqa: E402
 from segmentation import exploration as ex  # noqa: E402
+from segmentation.console import proteger_sorties  # noqa: E402
 from segmentation.donnees import charger_tables  # noqa: E402
 
 SORTIE = config.RACINE / "captures_brutes"
@@ -55,11 +59,16 @@ def fmt(n: float) -> str:
 def figure_mois(par_mois, chemin):
     fig, ax = plt.subplots(figsize=(11, 4))
     x = np.arange(len(par_mois))
+    mois = [str(p) for p in par_mois.index]
+    i0 = mois.index(config.DEBUT_ACHATS[:7])
+    i1 = mois.index(str(pd.Period(config.FIN_ACHATS, "M") - 1))
+    ax.axvspan(i0 - 0.5, i1 + 0.5, color="#e4e3df", zorder=0, label="Période retenue")
     ax.bar(x - 0.2, par_mois["toutes"], 0.4, color=BLEU, label="Toutes les commandes")
     ax.bar(x + 0.2, par_mois["livrees"], 0.4, color=ORANGE, label="Commandes livrées")
     ax.set_xticks(x, [str(p) for p in par_mois.index], rotation=90)
     ax.set_ylabel("Commandes")
-    ax.set_title("Commandes par mois d'achat")
+    ax.set_title("Commandes par mois d'achat (zone grise : période retenue)")
+    ax.grid(axis="x", visible=False)
     ax.legend(frameon=False, loc="upper left")
     for i, (_, r) in enumerate(par_mois.iterrows()):
         if r["toutes"] < 500:
@@ -149,17 +158,20 @@ def tableau(entetes, lignes):
 
 
 def main() -> int:
+    proteger_sorties()
     SORTIE.mkdir(exist_ok=True)
     tables = charger_tables(sauf=("geolocalisation",))
 
     perte = ex.clients_sans_commande_livree(tables["clients"], tables["commandes"])
     par_mois = ex.commandes_par_mois(tables["commandes"])
-    t = ex.table_commandes(tables)
+    t_toutes = ex.table_commandes(tables)
+    t = ex.dans_periode(t_toutes, config.DEBUT_ACHATS, config.FIN_ACHATS)
+    n_periode = t["customer_unique_id"].nunique()
     extremes = ex.valeurs_extremes(t, list(VARIABLES))
     corr = ex.correlations(t, list(VARIABLES))
     etats = ex.repartition_etats(t)
     delais = t.groupby("customer_state")["delai_livraison_j"].median()
-    coupure = ex.effet_coupure(tables["commandes"], t).loc["2017-01":]
+    coupure = ex.effet_coupure(tables["commandes"], t_toutes).loc["2017-01":]
     semaines = ex.livraisons_par_semaine(tables["commandes"], "2018-07-01")
 
     figure_mois(par_mois, SORTIE / "commandes_par_mois.png")
@@ -172,11 +184,19 @@ def main() -> int:
           "Rapport généré par `scripts/exploration.py`. Variables calculées par commande "
           "livrée (statut `delivered` avec date de livraison). Montants en R$. "
           "Aucune colonne d'avis utilisée.", "",
-          "## Clients perdus en ne gardant que les commandes livrées", "",
-          tableau(["mesure", "valeur"], [["vrais clients (toutes commandes)", fmt(perte["clients"])],
-                                          ["clients avec au moins une commande livrée", fmt(perte["gardes"])],
-                                          ["clients perdus", fmt(perte["perdus"])],
-                                          ["part perdue (%)", f"{100 * perte['perdus'] / perte['clients']:.2f}"]]),
+          f"**Période retenue : achats du {config.DEBUT_ACHATS} au "
+          f"{(pd.Timestamp(config.FIN_ACHATS) - pd.Timedelta(days=1)):%Y-%m-%d}.** "
+          "Les sections « par mois » et « effet de coupure » couvrent toute la durée du jeu "
+          "pour justifier ce choix ; toutes les autres sont calculées sur la période retenue.", "",
+          "## Du jeu complet aux clients retenus", "",
+          tableau(["étape", "clients", "perte depuis l'étape précédente"], [
+              ["vrais clients (toutes commandes)", fmt(perte["clients"]), "—"],
+              ["avec au moins une commande livrée", fmt(perte["gardes"]),
+               f"{fmt(perte['perdus'])} ({100 * perte['perdus'] / perte['clients']:.2f} %)"],
+              ["avec une commande livrée achetée dans la période", fmt(n_periode),
+               f"{fmt(perte['gardes'] - n_periode)} "
+               f"({100 * (perte['gardes'] - n_periode) / perte['gardes']:.2f} %)"]]),
+          "", f"Commandes livrées dans la période : {fmt(len(t))}.",
           "", "## Commandes par mois d'achat", "",
           tableau(["mois", "toutes", "livrées"],
                   [[str(m), fmt(r["toutes"]), fmt(r["livrees"])] for m, r in par_mois.iterrows()]),
@@ -189,7 +209,7 @@ def main() -> int:
                    for m, r in coupure.iterrows()]),
           "", "Livraisons par semaine de livraison, depuis juillet 2018 :", "",
           tableau(["semaine", "livraisons"], [[str(w), fmt(n)] for w, n in semaines.items()]),
-          "", "## Distributions et valeurs extrêmes (par commande livrée)", "",
+          "", "## Distributions et valeurs extrêmes (commandes livrées de la période)", "",
           tableau(["variable", "min", "médiane", "moyenne", "max", "asymétrie",
                    "% hors moustaches", "toujours ≥ 0"],
                   [[VARIABLES[c], f"{r['min']:.2f}", f"{r['mediane']:.2f}", f"{r['moyenne']:.2f}",
@@ -198,7 +218,7 @@ def main() -> int:
           "", "## Corrélations de Spearman", "",
           tableau([""] + [c for c in corr.columns],
                   [[i] + [f"{v:.2f}" for v in r] for i, r in corr.iterrows()]),
-          "", "## Clients par État (État de la dernière commande livrée)", "",
+          "", "## Clients par État (État de la dernière commande livrée de la période)", "",
           tableau(["État", "clients", "%", "% cumulé", "délai médian (j)"],
                   [[s, fmt(r["clients"]), r["pct"], r["pct_cumule"], f"{delais[s]:.1f}"]
                    for s, r in etats.iterrows()]), ""]

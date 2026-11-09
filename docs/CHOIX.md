@@ -102,4 +102,23 @@ Chaque choix est noté avec sa date, ce qui a été décidé et pourquoi.
   manquent entièrement ; part de SP 49,8 % (contre 40 à 46 %). La part de commandes livrées,
   elle, ne baisse pas (97,5 %) : la coupure retire des commandes au lieu de les laisser
   « en route ».
-- **Date de fin : en attente de décision** (voir la proposition faite à l'utilisateur).
+- **Fin de période : dernier achat gardé le 2018-06-30 ; Récence comptée à partir du
+  2018-07-01** (validé ; `config.FIN_ACHATS` et `config.DATE_REFERENCE`). Raisons chiffrées :
+  - sur la période normale (achats de janvier 2017 à mai 2018), 99 % des livraisons arrivent
+    en **47,8 jours** ou moins ; un achat du 2018-06-30 dispose de **65 jours** avant la
+    coupure (2018-09-03) : juin est complet. Un achat de fin juillet n'a que 34 jours ;
+  - juin ne montre aucun signe de commandes manquantes : délai promis médian 28 j (normal),
+    part de SP 44,9 % (normal). Juillet en montre déjà (délai promis 20 j), août nettement
+    (14 j, 49,8 % de SP) ;
+  - coût : **81 006 clients gardés**, soit une perte de 12 090 clients (**13,0 %**) par rapport
+    aux 93 096 clients de 2017-01 → 2018-08. Depuis les 93 350 clients ayant au moins une
+    commande livrée, la perte totale due à la période est de 12 344 (13,2 %), dont 254 de 2016.
+  - Limites notées : les délais de juin restent courts (médiane 8,0 j) alors que la coupure
+    ne peut pas l'expliquer (marge 65 j) : c'est un trait de la période, sans cause supposée.
+    La semaine de livraison du 16 au 22 juillet 2018 est anormalement creuse (367 livraisons) :
+    hors période, sans effet.
+- **Chaîne de clients retenus** : 96 096 vrais clients → 93 350 avec au moins une commande
+  livrée → **81 006** avec une commande livrée achetée dans la période (83 696 commandes).
+- **Sorties console protégées** (`segmentation/console.py`) : sous Windows, une sortie redirigée
+  est encodée en cp1252, qui ne connaît pas « → » ou « ≥ » ; le script plantait. Un caractère
+  impossible à écrire est désormais remplacé par « ? ».

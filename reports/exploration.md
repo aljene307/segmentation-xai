@@ -2,14 +2,17 @@
 
 Rapport généré par `scripts/exploration.py`. Variables calculées par commande livrée (statut `delivered` avec date de livraison). Montants en R$. Aucune colonne d'avis utilisée.
 
-## Clients perdus en ne gardant que les commandes livrées
+**Période retenue : achats du 2017-01-01 au 2018-06-30.** Les sections « par mois » et « effet de coupure » couvrent toute la durée du jeu pour justifier ce choix ; toutes les autres sont calculées sur la période retenue.
 
-| mesure | valeur |
-|---|---|
-| vrais clients (toutes commandes) | 96 096 |
-| clients avec au moins une commande livrée | 93 350 |
-| clients perdus | 2 746 |
-| part perdue (%) | 2.86 |
+## Du jeu complet aux clients retenus
+
+| étape | clients | perte depuis l'étape précédente |
+|---|---|---|
+| vrais clients (toutes commandes) | 96 096 | — |
+| avec au moins une commande livrée | 93 350 | 2 746 (2.86 %) |
+| avec une commande livrée achetée dans la période | 81 006 | 12 344 (13.22 %) |
+
+Commandes livrées dans la période : 83 696.
 
 ## Commandes par mois d'achat
 
@@ -91,58 +94,58 @@ Livraisons par semaine de livraison, depuis juillet 2018 :
 | 2018-10-08/2018-10-14 | 1 |
 | 2018-10-15/2018-10-21 | 1 |
 
-## Distributions et valeurs extrêmes (par commande livrée)
+## Distributions et valeurs extrêmes (commandes livrées de la période)
 
 | variable | min | médiane | moyenne | max | asymétrie | % hors moustaches | toujours ≥ 0 |
 |---|---|---|---|---|---|---|---|
-| Montant des articles (R$) | 0.85 | 86.50 | 137.04 | 13440.00 | 9.89 | 7.9 | oui |
-| Frais de port (R$) | 0.00 | 17.17 | 22.79 | 1794.96 | 12.28 | 10.0 | oui |
-| Nombre d'articles | 1.00 | 1.00 | 1.14 | 21.00 | 7.56 | 10.0 | oui |
-| Nombre de vendeurs | 1.00 | 1.00 | 1.01 | 5.00 | 9.87 | 1.3 | oui |
-| Nombre de mensualités | 0.00 | 2.00 | 2.93 | 24.00 | 1.60 | 6.3 | oui |
-| Délai de livraison (jours) | 0.53 | 10.22 | 12.56 | 209.63 | 3.83 | 5.1 | oui |
-| Écart à la date promise (jours, > 0 = retard) | -147.00 | -12.00 | -11.88 | 188.00 | 2.02 | 4.5 | non |
+| Montant des articles (R$) | 0.85 | 86.99 | 137.09 | 13440.00 | 9.88 | 8.0 | oui |
+| Frais de port (R$) | 0.00 | 16.95 | 22.52 | 1002.29 | 7.70 | 9.8 | oui |
+| Nombre d'articles | 1.00 | 1.00 | 1.14 | 21.00 | 7.70 | 10.1 | oui |
+| Nombre de vendeurs | 1.00 | 1.00 | 1.01 | 5.00 | 9.96 | 1.3 | oui |
+| Nombre de mensualités | 0.00 | 2.00 | 2.95 | 24.00 | 1.59 | 6.5 | oui |
+| Délai de livraison (jours) | 0.53 | 10.95 | 13.17 | 209.63 | 3.82 | 5.1 | oui |
+| Écart à la date promise (jours, > 0 = retard) | -147.00 | -13.00 | -12.11 | 188.00 | 2.33 | 6.6 | non |
 
 ## Corrélations de Spearman
 
 |  | montant_articles | frais_port | nb_articles | nb_vendeurs | mensualites | delai_livraison_j | ecart_prevision_j |
 |---|---|---|---|---|---|---|---|
-| montant_articles | 1.00 | 0.47 | 0.18 | 0.08 | 0.37 | 0.10 | -0.04 |
-| frais_port | 0.47 | 1.00 | 0.38 | 0.14 | 0.23 | 0.38 | -0.16 |
-| nb_articles | 0.18 | 0.38 | 1.00 | 0.35 | 0.06 | -0.03 | -0.04 |
-| nb_vendeurs | 0.08 | 0.14 | 0.35 | 1.00 | 0.05 | -0.05 | -0.07 |
-| mensualites | 0.37 | 0.23 | 0.06 | 0.05 | 1.00 | 0.05 | -0.05 |
-| delai_livraison_j | 0.10 | 0.38 | -0.03 | -0.05 | 0.05 | 1.00 | 0.31 |
-| ecart_prevision_j | -0.04 | -0.16 | -0.04 | -0.07 | -0.05 | 0.31 | 1.00 |
+| montant_articles | 1.00 | 0.47 | 0.18 | 0.08 | 0.37 | 0.10 | -0.03 |
+| frais_port | 0.47 | 1.00 | 0.39 | 0.14 | 0.23 | 0.40 | -0.14 |
+| nb_articles | 0.18 | 0.39 | 1.00 | 0.34 | 0.06 | -0.03 | -0.03 |
+| nb_vendeurs | 0.08 | 0.14 | 0.34 | 1.00 | 0.05 | -0.05 | -0.06 |
+| mensualites | 0.37 | 0.23 | 0.06 | 0.05 | 1.00 | 0.05 | -0.04 |
+| delai_livraison_j | 0.10 | 0.40 | -0.03 | -0.05 | 0.05 | 1.00 | 0.41 |
+| ecart_prevision_j | -0.03 | -0.14 | -0.03 | -0.06 | -0.04 | 0.41 | 1.00 |
 
-## Clients par État (État de la dernière commande livrée)
+## Clients par État (État de la dernière commande livrée de la période)
 
 | État | clients | % | % cumulé | délai médian (j) |
 |---|---|---|---|---|
-| SP | 39 143 | 41.93 | 41.93 | 7.2 |
-| RJ | 11 914 | 12.76 | 54.69 | 12.0 |
-| MG | 10 995 | 11.78 | 66.47 | 10.3 |
-| RS | 5 166 | 5.53 | 72.01 | 13.2 |
-| PR | 4 766 | 5.11 | 77.11 | 10.4 |
-| SC | 3 446 | 3.69 | 80.8 | 13.0 |
-| BA | 3 156 | 3.38 | 84.18 | 16.9 |
-| DF | 2 016 | 2.16 | 86.34 | 11.4 |
-| ES | 1 928 | 2.07 | 88.41 | 13.6 |
-| GO | 1 893 | 2.03 | 90.44 | 13.9 |
-| PE | 1 547 | 1.66 | 92.09 | 15.7 |
-| CE | 1 258 | 1.35 | 93.44 | 18.2 |
-| PA | 922 | 0.99 | 94.43 | 21.1 |
-| MT | 855 | 0.92 | 95.35 | 16.1 |
-| MA | 700 | 0.75 | 96.1 | 19.2 |
-| MS | 680 | 0.73 | 96.82 | 13.9 |
-| PB | 502 | 0.54 | 97.36 | 18.2 |
-| PI | 464 | 0.5 | 97.86 | 16.3 |
-| RN | 464 | 0.5 | 98.36 | 16.1 |
-| AL | 387 | 0.41 | 98.77 | 22.3 |
-| SE | 328 | 0.35 | 99.12 | 18.0 |
-| TO | 267 | 0.29 | 99.41 | 15.9 |
-| RO | 231 | 0.25 | 99.66 | 17.6 |
-| AM | 140 | 0.15 | 99.81 | 25.9 |
-| AC | 76 | 0.08 | 99.89 | 18.4 |
-| AP | 66 | 0.07 | 99.96 | 24.3 |
-| RR | 40 | 0.04 | 100.0 | 25.0 |
+| SP | 33 366 | 41.19 | 41.19 | 7.6 |
+| RJ | 10 517 | 12.98 | 54.17 | 12.8 |
+| MG | 9 663 | 11.93 | 66.1 | 11.0 |
+| RS | 4 571 | 5.64 | 71.74 | 13.9 |
+| PR | 4 129 | 5.1 | 76.84 | 11.0 |
+| SC | 3 059 | 3.78 | 80.62 | 13.8 |
+| BA | 2 763 | 3.41 | 84.03 | 17.9 |
+| DF | 1 711 | 2.11 | 86.14 | 12.1 |
+| ES | 1 705 | 2.1 | 88.25 | 14.2 |
+| GO | 1 669 | 2.06 | 90.31 | 14.3 |
+| PE | 1 327 | 1.64 | 91.94 | 16.7 |
+| CE | 1 116 | 1.38 | 93.32 | 19.0 |
+| PA | 820 | 1.01 | 94.33 | 22.1 |
+| MT | 769 | 0.95 | 95.28 | 16.9 |
+| MA | 629 | 0.78 | 96.06 | 19.5 |
+| MS | 598 | 0.74 | 96.8 | 14.1 |
+| PB | 423 | 0.52 | 97.32 | 19.3 |
+| PI | 412 | 0.51 | 97.83 | 17.1 |
+| RN | 412 | 0.51 | 98.34 | 17.1 |
+| AL | 349 | 0.43 | 98.77 | 23.2 |
+| SE | 279 | 0.34 | 99.11 | 19.0 |
+| TO | 232 | 0.29 | 99.4 | 16.2 |
+| RO | 207 | 0.26 | 99.65 | 18.3 |
+| AM | 118 | 0.15 | 99.8 | 27.1 |
+| AC | 69 | 0.09 | 99.89 | 18.9 |
+| AP | 58 | 0.07 | 99.96 | 24.1 |
+| RR | 35 | 0.04 | 100.0 | 25.3 |

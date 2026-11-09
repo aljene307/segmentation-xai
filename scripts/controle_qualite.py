@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from segmentation import config  # noqa: E402
+from segmentation.console import proteger_sorties  # noqa: E402
 from segmentation import qualite as q  # noqa: E402
 from segmentation.donnees import charger_avis, charger_tables  # noqa: E402
 from segmentation.telechargement import comparer_au_manifeste, inventaire  # noqa: E402
@@ -69,6 +70,7 @@ def tableau(entetes: list[str], lignes: list[list]) -> str:
 
 
 def main() -> int:
+    proteger_sorties()
     md: list[str] = ["# Contrôle qualité des données brutes Olist", ""]
     md.append("Rapport généré par `scripts/controle_qualite.py`. Comptes agrégés uniquement. "
               "Montants en réals brésiliens (R$).")

@@ -11,6 +11,12 @@ DOSSIER_RAPPORTS = RACINE / "reports"
 
 GRAINE = 42
 
+# Période retenue (dates d'achat), voir docs/CHOIX.md :
+# début après la période d'essai de 2016, fin avant la coupure de l'extraction.
+DEBUT_ACHATS = "2017-01-01"   # inclus
+FIN_ACHATS = "2018-07-01"     # exclu : dernier jour gardé = 2018-06-30
+DATE_REFERENCE = "2018-07-01"  # la Récence est comptée à partir de cette date
+
 # Source vérifiée sur la page Kaggle le 2026-11-09 (voir docs/CHOIX.md).
 URL_KAGGLE = "https://www.kaggle.com/api/v1/datasets/download/olistbr/brazilian-ecommerce"
 PAGE_KAGGLE = "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"

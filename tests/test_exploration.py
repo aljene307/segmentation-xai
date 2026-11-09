@@ -88,3 +88,16 @@ def test_effet_coupure_par_mois():
 def test_livraisons_par_semaine():
     s = ex.livraisons_par_semaine(_tables()["commandes"], "2017-01-01")
     assert s.sum() == 2 and len(s) == 2
+
+
+def test_dans_periode_debut_inclus_fin_exclue():
+    df = pd.DataFrame({"order_purchase_timestamp": [
+        T("2016-12-31 23:59"), T("2017-01-01"), T("2018-06-30 23:59"), T("2018-07-01")]})
+    r = ex.dans_periode(df, "2017-01-01", "2018-07-01")
+    assert list(r["order_purchase_timestamp"]) == [T("2017-01-01"), T("2018-06-30 23:59")]
+
+
+def test_periode_retenue_dans_la_configuration():
+    from segmentation import config
+    assert (config.DEBUT_ACHATS, config.FIN_ACHATS) == ("2017-01-01", "2018-07-01")
+    assert config.DATE_REFERENCE == config.FIN_ACHATS  # Récence comptée au lendemain du dernier jour

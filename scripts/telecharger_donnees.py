@@ -20,6 +20,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from segmentation import config  # noqa: E402
+from segmentation.console import proteger_sorties  # noqa: E402
 from segmentation.telechargement import (  # noqa: E402
     comparer_au_manifeste,
     ecrire_json,
@@ -30,6 +31,7 @@ from segmentation.telechargement import (  # noqa: E402
 
 
 def main() -> int:
+    proteger_sorties()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--zip", type=Path, help="archive déjà téléchargée à la main")
     args = parser.parse_args()
