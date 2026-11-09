@@ -161,3 +161,49 @@ Chaque choix est noté avec sa date, ce qui a été décidé et pourquoi.
   date promise) entrent dans le clustering et sont liées à la note d'avis (un retard entraîne
   souvent une mauvaise note). Les segments seront donc en partie rapprochés de la note par
   construction ; il faudra le dire honnêtement.
+
+## 2026-11-09 – Étape 3 : règles de préparation, fixées avant tout segment
+
+Ces règles sont fixées à partir de la **forme des données des 80 % d'apprentissage seulement**
+(asymétries, centiles), avant toute ACP, tout clustering, tout indice et toute lecture des avis.
+
+- **Règle de non-retour.** Les transformations ci-dessous (variables passées au log, seuils
+  d'écrêtage, standardisation, absence de pondération) ne sont pas modifiées pour obtenir de
+  « plus beaux » segments ou de meilleurs indices. Toute modification ultérieure exige une raison
+  écrite et datée dans ce journal, et cette raison ne peut pas être l'apparence des segments ni
+  la valeur d'un indice.
+- **Règle du log, sans exception.** On applique `log(1 + x)` aux variables positives et sans
+  borne haute (montants, durées, comptages), si leur asymétrie dépasse 1 et si le log la réduit.
+  Asymétries mesurées sur les 80 % (brute → après log) :
+  - dans la règle, log appliqué : Montant (10,00 → 0,27), mensualités moyennes (1,59 → 0,79),
+    délai de livraison moyen (3,86 → 0,00), Fréquence (9,16 → 6,48), articles par commande
+    (7,49 → 3,95) ;
+  - hors de la règle par définition : part des frais de port (proportion bornée entre 0 et 1),
+    écart à la date promise (valeurs négatives) ;
+  - hors de la règle par son asymétrie : Récence (0,47, inférieure à 1).
+- **Écrêtage** des 8 variables aux **0,5e et 99,5e centiles**, appris sur les 80 %, calculés
+  après le log : toute valeur au-delà est ramenée au seuil. Raisons du choix de cette option
+  parmi les quatre du sujet : tous les clients restent et reçoivent un segment (indispensable
+  pour un nouveau client) ; la règle se réapplique avec deux nombres par variable ; « garder »
+  laisserait quelques clients (13 440 R$, 188 jours de retard) peser lourd dans des distances au
+  carré ; DBSCAN demande des réglages subjectifs, laisse des clients sans segment et ne classe
+  pas un nouveau client (il sera testé comme algorithme au module 3) ; « suivre à part »
+  retirerait plusieurs pour cent des clients et un nouveau client extrême n'aurait pas de segment.
+- **Pourquoi 0,5 / 99,5 et pas 1 / 99** : le but est de neutraliser les vraies queues, pas de
+  modifier des clients ordinaires. À 0,5 / 99,5, environ 1 % des clients sont touchés par
+  variable et le Montant passe déjà d'un maximum de 13 440 R$ à un plafond d'environ 1 365 R$.
+  À 1 / 99, on toucherait deux fois plus de clients pour un gain faible ; exemple mesuré sur
+  l'écart à la date promise : 584 clients touchés à 0,5 / 99,5 (bornes −40 / +28 j) contre
+  1 207 à 1 / 99 (bornes −35 / +20 j). Sur 8 variables, l'écart se cumule.
+- **Indicateur « écrêté à la préparation »** (oui/non, et sur quelles variables) : conservé pour
+  la description et l'explication (module 5), jamais dans le clustering.
+- **Standardisation** de toutes les variables, `z = (x − moyenne) / écart-type`, moyenne et
+  écart-type appris sur les 80 % après log et écrêtage. Ordre fixé : log → écrêtage →
+  standardisation.
+- **Aucune pondération** : aucun poids ajouté ou retiré à une variable. La Fréquence (qui devient
+  en pratique « une / plusieurs commandes » après écrêtage, plafond = 2) et les articles par
+  commande peuvent créer des segments à part ; c'est un comportement réel, et ce choix est figé
+  avec le reste.
+- **Apprendre une fois, réappliquer tel quel** : les paramètres appris (log oui/non, seuils,
+  moyennes, écarts-types) sont enregistrés dans `models/preparation.json` (texte, LF) et
+  réappliqués sans modification aux 20 % mis de côté et à tout nouveau client.
