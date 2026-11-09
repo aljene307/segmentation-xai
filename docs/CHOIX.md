@@ -272,3 +272,76 @@ non-retour de l'étape 3 s'applique aussi à elles.
   valeur propre), sinon un petit axe pèserait autant que le premier. La taille de l'échantillon
   de la CAH sera fixée au début de l'étape 5 d'après la mémoire libre mesurée, avec la graine 42,
   sur les 80 % seulement.
+
+## 2026-11-09 – Étape 4 : résultats de l'ACP
+
+Application des règles fixées et poussées avant le calcul (commit « Fixer les règles de l'ACP
+avant tout calcul »), sans modification. Détail dans `reports/acp.md`, paramètres dans
+`models/acp.json`.
+
+- **Valeurs propres** : 2,011 ; 1,486 ; 1,072 ; 1,028 ; 0,962 ; 0,781 ; 0,534 ; 0,126.
+  Parts cumulées : 25,1 % ; 43,7 % ; 57,1 % ; **69,97 %** ; 82,0 % ; 91,8 % ; 98,4 % ; 100 %.
+- **Décision : 5 axes retenus** (81,99 % de l'information). Kaiser donne 4, la part cumulée 5,
+  donc max = 5. Désaccord expliqué : F4 atteint 69,97 %, juste sous le seuil de 70 % ; la règle
+  fixée d'avance impose donc F5, qui porte surtout la Fréquence (cos² 0,63). Le coude indicatif
+  est après F1 (plus forte chute 2,011 → 1,486), mais les valeurs propres de F3 à F5 sont presque
+  plates (1,07 ; 1,03 ; 0,96) : il n'y a pas de coude net, ce qui confirme que le coude ne pouvait
+  pas décider. Ce cas, tranché à 0,03 point près, montre l'intérêt d'avoir fixé la règle avant.
+- **Description des axes** (variables à |corrélation| ≥ 0,5) :
+  F1 (25,1 %) Montant +0,93, part des frais de port −0,85, mensualités +0,61 ;
+  F2 (18,6 %) délai de livraison +0,87, écart à la date promise +0,85 ;
+  F3 (13,4 %) articles par commande +0,81, Fréquence +0,52 ;
+  F4 (12,9 %) Récence +0,90 ;
+  F5 (12,0 %) Fréquence +0,79.
+- **Axe du temps : F4**, selon la règle fixée (corrélation avec la Récence 0,90, avec la date
+  d'achat −0,86). C'est la Récence presque seule : les délais n'y pèsent pas (0,12 et −0,10) et
+  restent sur F2, qui n'est pas lié à la date (0,02). La crainte d'un axe mêlant « achat ancien »
+  et « livraison lente » ne se vérifie donc pas. Corrélations des autres axes avec la date
+  d'achat : F1 −0,01 ; F2 0,02 ; F3 0,08 ; F5 −0,42 (F5 contient aussi la Récence, 0,35).
+  Conséquence, sans rien modifier : un segment séparé surtout par F4 signifiera « clients d'une
+  autre période d'achat », pas un comportement différent ; à dire au module 5.
+- **Qualité de représentation sur les 5 axes** : bonne pour 7 variables (0,74 à 1,00) ; faible
+  pour les **mensualités (0,44)**, dont la part propre est surtout sur F6 (cos² 0,52), écarté.
+  Conséquence pour l'étape 5 : la classification mixte (sur les axes) perd une partie de
+  l'information sur les mensualités ; K-Means et la CAH sur les 8 variables la gardent. À
+  rappeler dans le tableau comparatif.
+- **Nuage continu** : sur le plan F1–F2, les clients forment un seul nuage, sans groupes
+  séparés à l'œil. Les segments découperont probablement un continuum plutôt que de révéler des
+  groupes nettement isolés ; des silhouettes modérées seront donc attendues. C'est un constat,
+  pas une raison de modifier quoi que ce soit.
+- **Projection des 20 %** : variance des coordonnées axe par axe, à comparer à la valeur propre
+  (= variance sur les 80 %) : F1 2,011 contre 2,011 ; F2 1,470 contre 1,486 ; F3 1,082 contre
+  1,072 ; F4 1,020 contre 1,028 ; F5 0,975 contre 0,962. Écart relatif au plus 1,4 % (F5) ;
+  moyennes entre −0,008 et +0,002. Les axes se transposent bien. (Une première rédaction disait
+  « entre 1,470 et 2,011 » : erreur, le minimum est 0,975, sur F5.)
+- **Stabilité des axes par bootstrap** (description, aucune règle modifiée) : 50 tirages avec
+  remise des 64 805 clients d'apprentissage, graine 42, ACP refaite à chaque tirage ; on compare
+  chaque axe du tirage à l'axe de même rang d'origine (|cosinus|, 1 = identique).
+  - F1 et F2 : |cos| médian 1,000, minimum 0,999 : parfaitement stables. F6 aussi (0,998 au
+    minimum).
+  - F3, F4, F5 : |cos| médian 0,991 / 0,990 / 0,992 ; 5e centile 0,945 / 0,951 / 0,954 ;
+    minimum 0,900 / 0,900 / 0,937. Ces trois axes **tournent légèrement entre eux** (jusqu'à
+    environ 26° dans le pire tirage), comme attendu avec des valeurs propres proches, mais ils
+    **ne changent jamais de rang** : le meilleur |cos| est toujours celui du même rang, et les
+    intervalles des valeurs propres ne se chevauchent pas (F3 [1,056 – 1,095], F4 [1,019 – 1,037],
+    F5 [0,936 – 0,982], 5e – 95e centiles).
+  - **Sous-espaces** (plus petit cosinus principal ; 1 = même sous-espace même si les axes y
+    tournent) : F1–F2 0,9997 au 5e centile ; F3–F5 0,9989 ; **F1–F5 0,9989** (minimum 0,9985,
+    soit environ 3°). Le sous-espace des 5 axes retenus est donc très stable.
+  - **Conséquence pour les noms de F3 à F5** : ils restent valables (chaque axe garde sa variable
+    dominante dans presque tous les tirages), mais ils décrivent une tendance dominante, pas une
+    frontière nette : une petite part de chacun se mélange aux deux autres. On lira donc la
+    coordonnée d'un client sur F3, F4 ou F5 avec prudence, et on décrira les segments d'abord par
+    leurs variables d'origine (module 5), les axes servant de résumé.
+  - **Conséquence pour la classification mixte** : elle n'utilise que les distances dans le
+    sous-espace F1–F5, qui ne changent pas quand les axes tournent à l'intérieur de ce
+    sous-espace. Le sous-espace étant stable, la rotation de F3 à F5 n'affecte pas la
+    classification.
+  - **Le nombre d'axes lui-même est fragile** : sur les 50 tirages, la règle aurait donné 4 axes
+    22 fois et 5 axes 28 fois, parce que la part cumulée à F4 (69,97 %) est collée au seuil de
+    70 %. La décision reste 5 axes (règle fixée, calculée sur les 80 %). Ce point sera rappelé
+    dans le tableau comparatif de l'étape 5 ; K-Means et la CAH sur les 8 variables, qui ne
+    dépendent pas de ce choix, servent de point de comparaison.
+- **Noms des axes retenus** (validés ; interprétation, ne modifie aucun calcul ; dans
+  `config.NOMS_AXES`) : F1 « Valeur de l'achat », F2 « Expérience de livraison », F3 « Taille du
+  panier », F4 « Ancienneté de l'achat (axe du temps) », F5 « Réachat (plutôt qu'achat groupé) ».

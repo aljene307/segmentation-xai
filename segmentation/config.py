@@ -23,6 +23,22 @@ CENTILES_ECRETAGE = (0.005, 0.995)
 # Variables bornées (proportions) : hors de la règle du log par définition.
 VARIABLES_BORNEES = ["part_frais_port"]
 
+# ACP (étape 4, voir docs/CHOIX.md) : règles fixées avant le calcul.
+ACP = DOSSIER_MODELES / "acp.json"
+PART_CUMULEE_MINIMALE = 0.70
+SEUIL_NOM_AXE = 0.5
+SEUIL_AXE_TEMPS = 0.5
+# Stabilité des axes (description seulement, ne change aucune règle).
+TIRAGES_BOOTSTRAP_ACP = 50
+# Noms des axes retenus (interprétation validée, voir docs/CHOIX.md ; ne modifie aucun calcul).
+NOMS_AXES = {
+    "F1": "Valeur de l'achat",
+    "F2": "Expérience de livraison",
+    "F3": "Taille du panier",
+    "F4": "Ancienneté de l'achat (axe du temps)",
+    "F5": "Réachat (plutôt qu'achat groupé)",
+}
+
 # Part des clients mise de côté (tirée au hasard par client, graine GRAINE).
 PART_MISE_DE_COTE = 0.20
 
