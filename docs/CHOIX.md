@@ -207,3 +207,28 @@ Ces règles sont fixées à partir de la **forme des données des 80 % d'apprent
 - **Apprendre une fois, réappliquer tel quel** : les paramètres appris (log oui/non, seuils,
   moyennes, écarts-types) sont enregistrés dans `models/preparation.json` (texte, LF) et
   réappliqués sans modification aux 20 % mis de côté et à tout nouveau client.
+
+## 2026-11-09 – Étape 3 : résultats de la préparation
+
+Application des règles ci-dessus, sans modification (détail dans `reports/preparation.md`,
+paramètres dans `models/preparation.json`).
+
+- **Log appliqué** à la Fréquence, au Montant, aux mensualités moyennes, aux articles par
+  commande et au délai de livraison moyen, conformément à la règle.
+- **Clients écrêtés sur au moins une variable** : **3 156 sur 64 805 (4,87 %)** dans
+  l'apprentissage, 792 sur 16 201 (4,89 %) parmi les clients mis de côté. Pour comparaison,
+  l'option écartée 1 / 99 en aurait touché 5 868 (9,05 %), presque le double. Répartition dans
+  l'apprentissage : 2 636 clients sur 1 variable, 506 sur 2, 14 sur 3 ou plus.
+- **Seuils dans l'unité d'origine** : Montant de 9,90 à **1 359 R$** (le « environ 1 365 R$ » écrit
+  plus haut venait d'un arrondi du seuil sur l'échelle log ; la valeur exacte est 1 359 R$),
+  Fréquence plafonnée à 2 (149 clients ramenés à 2), articles par commande plafonnés à 4,
+  mensualités à 10, délai moyen de 1,57 à 55,97 jours, écart à la date promise de −40 à
+  +28 jours, Récence de 3 à 521 jours, part des frais de port de 0,02 à 0,64.
+- **Transposition aux 20 %** : après application des paramètres appris, moyennes entre −0,013 et
+  +0,005 et écarts-types entre 0,994 et 1,011 : les paramètres se transposent bien à des clients
+  jamais vus.
+- **Asymétries restantes** (après préparation) : Fréquence 5,53 et articles par commande 3,39,
+  car presque tous les clients valent 1 ; c'est attendu et ne change pas la règle.
+- **Vérification de stabilité** : relancer `scripts/preparer.py` recalcule les paramètres et
+  s'arrête s'ils diffèrent du fichier enregistré ; un test vérifie aussi qu'ils sont exactement
+  ceux appris sur les 80 %.

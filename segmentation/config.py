@@ -12,6 +12,16 @@ DOSSIER_PROCESSED = RACINE / "data" / "processed"
 PROFILS_APPRENTISSAGE = DOSSIER_PROCESSED / "profils_apprentissage.csv"
 PROFILS_MISE_DE_COTE = DOSSIER_PROCESSED / "profils_mise_de_cote.csv"
 EMPREINTE_TIRAGE = RACINE / "docs" / "tirage_empreinte.json"
+DOSSIER_MODELES = RACINE / "models"
+PREPARATION = DOSSIER_MODELES / "preparation.json"
+PREPARES_APPRENTISSAGE = DOSSIER_PROCESSED / "prepares_apprentissage.csv"
+PREPARES_MISE_DE_COTE = DOSSIER_PROCESSED / "prepares_mise_de_cote.csv"
+
+# Préparation (étape 3, voir docs/CHOIX.md) : règles fixées avant tout segment.
+SEUIL_ASYMETRIE_LOG = 1.0
+CENTILES_ECRETAGE = (0.005, 0.995)
+# Variables bornées (proportions) : hors de la règle du log par définition.
+VARIABLES_BORNEES = ["part_frais_port"]
 
 # Part des clients mise de côté (tirée au hasard par client, graine GRAINE).
 PART_MISE_DE_COTE = 0.20

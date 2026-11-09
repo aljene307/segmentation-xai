@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "variables": [
+    "recence_j",
+    "frequence",
+    "montant_rs",
+    "part_frais_port",
+    "mensualites_moy",
+    "articles_par_commande",
+    "delai_livraison_moy_j",
+    "ecart_prevision_moy_j"
+  ],
+  "centiles": [
+    0.005,
+    0.995
+  ],
+  "seuil_asymetrie": 1.0,
+  "clients_apprentissage": 64805,
+  "parametres": {
+    "recence_j": {
+      "log": false,
+      "raison": "asymétrie ≤ 1",
+      "asymetrie_brute": 0.4729662790613774,
+      "asymetrie_log": -1.3480576405783269,
+      "bas": 3.0,
+      "haut": 521.0,
+      "moyenne": 208.88412931100996,
+      "ecart_type": 136.70916321840838
+    },
+    "frequence": {
+      "log": true,
+      "raison": "positive, sans borne, asymétrique : log",
+      "asymetrie_brute": 9.164188548480023,
+      "asymetrie_log": 6.484643211980321,
+      "bas": 0.6931471805599453,
+      "haut": 1.0986122886681098,
+      "moyenne": 0.7052288582662467,
+      "ecart_type": 0.06894005962511622
+    },
+    "montant_rs": {
+      "log": true,
+      "raison": "positive, sans borne, asymétrique : log",
+      "asymetrie_brute": 9.995086120950129,
+      "asymetrie_log": 0.2695813017919823,
+      "bas": 2.388762789235098,
+      "haut": 7.215239978730097,
+      "moyenne": 4.485709614393864,
+      "ecart_type": 0.9149255999922769
+    },
+    "part_frais_port": {
+      "log": false,
+      "raison": "proportion bornée : hors de la règle",
+      "asymetrie_brute": 1.0755692764062796,
+      "asymetrie_log": null,
+      "bas": 0.015215011972370844,
+      "haut": 0.6384832819206625,
+      "moyenne": 0.20698779704723524,
+      "ecart_type": 0.12370775405589252
+    },
+    "mensualites_moy": {
+      "log": true,
+      "raison": "positive, sans borne, asymétrique : log",
+      "asymetrie_brute": 1.5891567541722647,
+      "asymetrie_log": 0.7914634628723923,
+      "bas": 0.6931471805599453,
+      "haut": 2.3978952727983707,
+      "moyenne": 1.1865623206755869,
+      "ecart_type": 0.5704593927186049
+    },
+    "articles_par_commande": {
+      "log": true,
+      "raison": "positive, sans borne, asymétrique : log",
+      "asymetrie_brute": 7.492689877672105,
+      "asymetrie_log": 3.950278561108328,
+      "bas": 0.6931471805599453,
+      "haut": 1.6094379124341003,
+      "moyenne": 0.7426209751681943,
+      "ecart_type": 0.15620944072874818
+    },
+    "delai_livraison_moy_j": {
+      "log": true,
+      "raison": "positive, sans borne, asymétrique : log",
+      "asymetrie_brute": 3.8633790953165,
+      "asymetrie_log": -0.004668249438321777,
+      "bas": 0.9426997540381582,
+      "haut": 4.042447016101839,
+      "moyenne": 2.4698380970521425,
+      "ecart_type": 0.593889945937409
+    },
+    "ecart_prevision_moy_j": {
+      "log": false,
+      "raison": "valeurs négatives : hors de la règle",
+      "asymetrie_brute": 2.3916535327387587,
+      "asymetrie_log": null,
+      "bas": -40.0,
+      "haut": 28.0,
+      "moyenne": -12.177167105712742,
+      "ecart_type": 9.29014042152588
+    }
+  }
+}
