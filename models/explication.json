@@ -1,0 +1,473 @@
+{
+  "version": 1,
+  "variables": [
+    "recence_j",
+    "frequence",
+    "montant_rs",
+    "part_frais_port",
+    "mensualites_moy",
+    "articles_par_commande",
+    "delai_livraison_moy_j",
+    "ecart_prevision_moy_j"
+  ],
+  "segments": {
+    "0": "Gros achats en plusieurs fois",
+    "1": "Petits achats, livraison chère",
+    "2": "Livraison lente ou en retard",
+    "3": "Achats de plusieurs articles",
+    "4": "Clients qui recommandent"
+  },
+  "seuil_frontiere": 0.9,
+  "centile_atypique": 0.95,
+  "seuils_atypiques": [
+    2.974155994516563,
+    3.0397705360586422,
+    3.429776501628366,
+    3.8903863442153535,
+    3.788057516045431
+  ],
+  "moyennes_globales": {
+    "recence_j": 208.91435845999538,
+    "frequence": 1.0330530051693543,
+    "montant_rs": 141.32020739140498,
+    "part_frais_port": 0.2072141890594421,
+    "mensualites_moy": 2.9418147850143836,
+    "articles_par_commande": 1.1414973859306858,
+    "delai_livraison_moy_j": 13.188577364118622,
+    "ecart_prevision_moy_j": -12.092952924708191
+  },
+  "medianes_segments": {
+    "0": {
+      "recence_j": 201.0,
+      "frequence": 1.0,
+      "montant_rs": 129.9,
+      "part_frais_port": 0.1188866019798098,
+      "mensualites_moy": 3.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 9.211359953703703,
+      "ecart_prevision_moy_j": -14.0
+    },
+    "1": {
+      "recence_j": 199.0,
+      "frequence": 1.0,
+      "montant_rs": 35.0,
+      "part_frais_port": 0.2923244420250408,
+      "mensualites_moy": 1.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 9.865653935185184,
+      "ecart_prevision_moy_j": -14.0
+    },
+    "2": {
+      "recence_j": 158.0,
+      "frequence": 1.0,
+      "montant_rs": 98.9,
+      "part_frais_port": 0.1762356465302046,
+      "mensualites_moy": 2.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 24.24761574074074,
+      "ecart_prevision_moy_j": -1.0
+    },
+    "3": {
+      "recence_j": 194.0,
+      "frequence": 1.0,
+      "montant_rs": 139.0,
+      "part_frais_port": 0.2117568470273881,
+      "mensualites_moy": 2.0,
+      "articles_par_commande": 2.0,
+      "delai_livraison_moy_j": 10.16050925925926,
+      "ecart_prevision_moy_j": -14.0
+    },
+    "4": {
+      "recence_j": 167.0,
+      "frequence": 2.0,
+      "montant_rs": 179.46,
+      "part_frais_port": 0.1787727641804895,
+      "mensualites_moy": 2.5,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 11.261045524691356,
+      "ecart_prevision_moy_j": -13.0
+    }
+  },
+  "indices_profil": {
+    "0": {
+      "recence_j": 1.03001641842201,
+      "frequence": 0.9680045409054924,
+      "montant_rs": 1.415948444259016,
+      "part_frais_port": 0.5918432482105985,
+      "mensualites_moy": 1.3247715199094416,
+      "articles_par_commande": 0.8760423040169119,
+      "delai_livraison_moy_j": 0.7509329306085465,
+      "ecart_prevision_moy_j": -3.237505523620543
+    },
+    "1": {
+      "recence_j": 1.0272630958017257,
+      "frequence": 0.9680045409054924,
+      "montant_rs": 0.27994038632378615,
+      "part_frais_port": 1.5261074800111516,
+      "mensualites_moy": 0.5245059381257413,
+      "articles_par_commande": 0.8817985004294299,
+      "delai_livraison_moy_j": 0.8111067010744502,
+      "ecart_prevision_moy_j": -2.1613228507290483
+    },
+    "2": {
+      "recence_j": 0.8880384240129101,
+      "frequence": 0.9680045409054924,
+      "montant_rs": 0.9731669648648663,
+      "part_frais_port": 0.9233740492995307,
+      "mensualites_moy": 0.9852426826457495,
+      "articles_par_commande": 0.8914205105893378,
+      "delai_livraison_moy_j": 2.0974413516773103,
+      "ecart_prevision_moy_j": 13.833857112214321
+    },
+    "3": {
+      "recence_j": 0.9933262460275323,
+      "frequence": 0.9680045409054924,
+      "montant_rs": 1.4799783358515308,
+      "part_frais_port": 1.105536865624767,
+      "mensualites_moy": 1.213890347058035,
+      "articles_par_commande": 2.1299531353648327,
+      "delai_livraison_moy_j": 0.8781547557539261,
+      "ecart_prevision_moy_j": -1.7870334952544642
+    },
+    "4": {
+      "recence_j": 0.9138412192100722,
+      "frequence": 2.0417827525158314,
+      "montant_rs": 1.7760719589915348,
+      "part_frais_port": 0.9576684947220475,
+      "mensualites_moy": 1.1344324245563473,
+      "articles_par_commande": 1.067827107200807,
+      "delai_livraison_moy_j": 0.9661087924626458,
+      "ecart_prevision_moy_j": -0.6946256800117911
+    }
+  },
+  "part_ca": {
+    "0": 57.00063731784463,
+    "1": 8.940986214226875,
+    "2": 15.312681954674856,
+    "3": 13.453518056479236,
+    "4": 5.292176456774406
+  },
+  "arbre": {
+    "profondeur": 4,
+    "variables": [
+      "recence_j",
+      "frequence",
+      "montant_rs",
+      "part_frais_port",
+      "mensualites_moy",
+      "articles_par_commande",
+      "delai_livraison_moy_j",
+      "ecart_prevision_moy_j"
+    ],
+    "classes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "gauche": [
+      1,
+      2,
+      3,
+      4,
+      -1,
+      -1,
+      -1,
+      8,
+      -1,
+      10,
+      -1,
+      -1,
+      13,
+      14,
+      15,
+      -1,
+      -1,
+      18,
+      -1,
+      -1,
+      21,
+      22,
+      -1,
+      -1,
+      -1
+    ],
+    "droite": [
+      12,
+      7,
+      6,
+      5,
+      -1,
+      -1,
+      -1,
+      9,
+      -1,
+      11,
+      -1,
+      -1,
+      20,
+      17,
+      16,
+      -1,
+      -1,
+      19,
+      -1,
+      -1,
+      24,
+      23,
+      -1,
+      -1,
+      -1
+    ],
+    "variable": [
+      2,
+      7,
+      5,
+      4,
+      -2,
+      -2,
+      -2,
+      2,
+      -2,
+      7,
+      -2,
+      -2,
+      5,
+      7,
+      1,
+      -2,
+      -2,
+      6,
+      -2,
+      -2,
+      6,
+      2,
+      -2,
+      -2,
+      -2
+    ],
+    "seuil": [
+      66.99499893188477,
+      -3.75,
+      1.75,
+      4.25,
+      -2.0,
+      -2.0,
+      -2.0,
+      24.984999656677246,
+      -2.0,
+      -0.5,
+      -2.0,
+      -2.0,
+      1.9166666865348816,
+      -6.166666746139526,
+      1.5,
+      -2.0,
+      -2.0,
+      13.271417617797852,
+      -2.0,
+      -2.0,
+      21.109785079956055,
+      292.9250030517578,
+      -2.0,
+      -2.0,
+      -2.0
+    ],
+    "effectifs": [
+      [
+        26088,
+        20698,
+        10197,
+        5891,
+        1931
+      ],
+      [
+        2153,
+        18762,
+        2989,
+        1022,
+        169
+      ],
+      [
+        2142,
+        18135,
+        812,
+        944,
+        165
+      ],
+      [
+        2142,
+        18006,
+        812,
+        0,
+        164
+      ],
+      [
+        1211,
+        17407,
+        640,
+        0,
+        159
+      ],
+      [
+        931,
+        599,
+        172,
+        0,
+        5
+      ],
+      [
+        0,
+        129,
+        0,
+        944,
+        1
+      ],
+      [
+        11,
+        627,
+        2177,
+        78,
+        4
+      ],
+      [
+        0,
+        410,
+        242,
+        2,
+        1
+      ],
+      [
+        11,
+        217,
+        1935,
+        76,
+        3
+      ],
+      [
+        11,
+        191,
+        496,
+        37,
+        1
+      ],
+      [
+        0,
+        26,
+        1439,
+        39,
+        2
+      ],
+      [
+        23935,
+        1936,
+        7208,
+        4869,
+        1762
+      ],
+      [
+        23935,
+        1936,
+        7063,
+        0,
+        1595
+      ],
+      [
+        22814,
+        1907,
+        1743,
+        0,
+        1385
+      ],
+      [
+        22814,
+        1907,
+        1743,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1385
+      ],
+      [
+        1121,
+        29,
+        5320,
+        0,
+        210
+      ],
+      [
+        774,
+        20,
+        136,
+        0,
+        25
+      ],
+      [
+        347,
+        9,
+        5184,
+        0,
+        185
+      ],
+      [
+        0,
+        0,
+        145,
+        4869,
+        167
+      ],
+      [
+        0,
+        0,
+        0,
+        4380,
+        152
+      ],
+      [
+        0,
+        0,
+        0,
+        3454,
+        69
+      ],
+      [
+        0,
+        0,
+        0,
+        926,
+        83
+      ],
+      [
+        0,
+        0,
+        145,
+        489,
+        15
+      ]
+    ],
+    "fidelite_80": 0.8742072370959031,
+    "fidelite_20": 0.8774766989691994,
+    "feuille_min": 649
+  },
+  "regles": [
+    "Si le montant est au plus de 66,99 R$, l'écart à la date promise est au plus de -3,8 jours, le nombre moyen d'articles par commande est au plus de 1,8 et le nombre moyen de mensualités est au plus de 4,2, alors le client est le plus souvent dans S1 « Petits achats, livraison chère » (90 % des 19 417 clients de cette règle).",
+    "Si le montant est au plus de 66,99 R$, l'écart à la date promise est au plus de -3,8 jours, le nombre moyen d'articles par commande est au plus de 1,8 et le nombre moyen de mensualités est supérieur à 4,2, alors le client est le plus souvent dans S0 « Gros achats en plusieurs fois » (55 % des 1 707 clients de cette règle).",
+    "Si le montant est au plus de 66,99 R$, l'écart à la date promise est au plus de -3,8 jours et le nombre moyen d'articles par commande est supérieur à 1,8, alors le client est le plus souvent dans S3 « Achats de plusieurs articles » (88 % des 1 074 clients de cette règle).",
+    "Si le montant est au plus de 24,98 R$ et l'écart à la date promise est supérieur à -3,8 jours, alors le client est le plus souvent dans S1 « Petits achats, livraison chère » (63 % des 655 clients de cette règle).",
+    "Si le montant est entre 24,98 R$ et 66,99 R$ et l'écart à la date promise est entre -3,8 jours et -0,5 jours, alors le client est le plus souvent dans S2 « Livraison lente ou en retard » (67 % des 736 clients de cette règle).",
+    "Si le montant est entre 24,98 R$ et 66,99 R$ et l'écart à la date promise est supérieur à -0,5 jours, alors le client est le plus souvent dans S2 « Livraison lente ou en retard » (96 % des 1 506 clients de cette règle).",
+    "Si le montant est supérieur à 66,99 R$, le nombre moyen d'articles par commande est au plus de 1,9, l'écart à la date promise est au plus de -6,2 jours et le client a au plus 1 commande, alors le client est le plus souvent dans S0 « Gros achats en plusieurs fois » (86 % des 26 464 clients de cette règle).",
+    "Si le montant est supérieur à 66,99 R$, le nombre moyen d'articles par commande est au plus de 1,9, l'écart à la date promise est au plus de -6,2 jours et le client a au moins 2 commandes, alors le client est le plus souvent dans S4 « Clients qui recommandent » (100 % des 1 385 clients de cette règle).",
+    "Si le montant est supérieur à 66,99 R$, le nombre moyen d'articles par commande est au plus de 1,9, l'écart à la date promise est supérieur à -6,2 jours et le délai de livraison moyen est au plus de 13,3 jours, alors le client est le plus souvent dans S0 « Gros achats en plusieurs fois » (81 % des 955 clients de cette règle).",
+    "Si le montant est supérieur à 66,99 R$, le nombre moyen d'articles par commande est au plus de 1,9, l'écart à la date promise est supérieur à -6,2 jours et le délai de livraison moyen est supérieur à 13,3 jours, alors le client est le plus souvent dans S2 « Livraison lente ou en retard » (91 % des 5 725 clients de cette règle).",
+    "Si le montant est entre 66,99 R$ et 292,93 R$, le nombre moyen d'articles par commande est supérieur à 1,9 et le délai de livraison moyen est au plus de 21,1 jours, alors le client est le plus souvent dans S3 « Achats de plusieurs articles » (98 % des 3 523 clients de cette règle).",
+    "Si le montant est supérieur à 292,93 R$, le nombre moyen d'articles par commande est supérieur à 1,9 et le délai de livraison moyen est au plus de 21,1 jours, alors le client est le plus souvent dans S3 « Achats de plusieurs articles » (92 % des 1 009 clients de cette règle).",
+    "Si le montant est supérieur à 66,99 R$, le nombre moyen d'articles par commande est supérieur à 1,9 et le délai de livraison moyen est supérieur à 21,1 jours, alors le client est le plus souvent dans S3 « Achats de plusieurs articles » (75 % des 649 clients de cette règle)."
+  ]
+}

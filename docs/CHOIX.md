@@ -766,3 +766,44 @@ Dans l'espace des 8 variables préparées (étape 3) :
 (0,90), moyennes globales et médianes des segments en unités d'origine, profondeur retenue,
 fidélités, et règles de l'arbre en phrases. L'arbre lui-même est décrit dans ce fichier (seuils
 exacts), pour que l'API n'ait pas besoin de scikit-learn.
+
+## 2026-11-09 – Étape 6 : résultats de l'explicabilité
+
+Règles appliquées sans modification. Détail dans `reports/explication.md`, paramètres dans
+`models/explication.json`. Aucun avis lu.
+
+- **Profils** (indices de profil, 80 %) : S0 Montant 1,42, mensualités 1,32, part des frais de
+  port 0,59, 57,0 % du chiffre d'affaires ; S1 Montant 0,28, part des frais de port 1,53 ; S2
+  délai 2,10 et écart à la date promise +13,8 jours par rapport à la moyenne ; S3 articles par
+  commande 2,13, Montant 1,48 ; S4 nombre de commandes 2,04, Montant 1,78. Les profils confirment
+  les noms des segments. S2 est le seul segment où SP n'est pas majoritaire au même niveau
+  (24 % contre 42 à 46 % ailleurs) : les clients livrés lentement habitent probablement plus
+  loin des vendeurs (interprétation, la distance n'est pas mesurée).
+- **Arbre de substitution** : profondeur 3, fidélité 83,79 % sur les 80 % (sous 90 %) ;
+  profondeur 4, 87,42 % (gain 3,63 points ≥ 3). **Profondeur retenue : 4** (13 feuilles, au
+  moins 649 clients chacune). Fidélité sur les 20 % : 87,75 %, du même niveau que sur les 80 % :
+  les règles se transposent. Fidélité par segment (80 %) : S3 98,7 %, S0 94,0 %, S1 86,1 %,
+  S4 71,7 %, **S2 69,8 %** (S2 confondu avec S0 pour 20,1 % de ses clients).
+- **Limite honnête de l'arbre pour S4** : S4 est exactement l'ensemble des clients à plusieurs
+  commandes ; une seule règle (« nombre de commandes supérieur à 1 ») le retrouverait à 100 %.
+  Mais l'arbre, qui maximise la fidélité globale, ne teste le nombre de commandes qu'au
+  quatrième niveau d'une seule branche ; il ne retrouve donc que 71,7 % de S4. Les phrases
+  restent fidèles à l'arbre ; dans la présentation, on rappellera que S4 se définit simplement.
+- **Règles en phrases** : 13 phrases, de pureté 55 % à 100 % ; les plus grandes : « montant
+  au plus de 66,99 R$, en avance d'au moins 3,8 jours, au plus 1,8 article et 4,2 mensualités
+  → S1 (90 % de 19 417 clients) » ; « montant supérieur à 66,99 R$, au plus 1,9 article, en
+  avance d'au moins 6,2 jours, une seule commande → S0 (86 % de 26 464 clients) ».
+- **Clients atypiques** (au-delà du 95e centile de leur segment) : 5,0 % dans chaque segment
+  des 80 % (par construction) ; **4,9 % sur les 20 %** (de 4,4 % à 5,5 % selon le segment) : les
+  seuils se transposent.
+- **Clients à la frontière** (distance au centre ≥ 90 % de la distance au 2e centre) : **13,3 %
+  sur les 80 %, 13,2 % sur les 20 %** ; S2 17,1 %, S1 14,6 %, S0 13,5 %, S3 5,0 %, S4 0,1 %.
+  S0, S1 et S2 partagent de longues frontières (cohérent avec la découpe concurrente de
+  l'étape 5) ; S3 et S4 sont nettement séparés.
+- **Exemples** (deux clients mis de côté, traités comme de nouveaux clients, choisis par une
+  règle fixe : le premier client typique et non frontière de S2, puis le premier client
+  atypique, dans l'ordre des identifiants) : le client A est en S2 surtout à cause de son délai
+  (31,5 jours contre 13,2 en moyenne) ; ce qui l'éloigne du centre de S2 est sa part de frais
+  de port (0,33 contre 0,18) et ses mensualités (1 contre 2). Le client B est atypique en S2
+  (distance 3,444 pour un seuil de 3,430) à cause d'un retard extrême (29 jours après la date
+  promise, 58,3 jours de délai).
