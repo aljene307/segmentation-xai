@@ -884,3 +884,11 @@ nature ; les attentes E3 à E5 portaient sur des valeurs déjà observées.
 Défaut de présentation connu, non corrigé : le tableau « Détail par segment » du rapport
 utilise le point décimal au lieu de la virgule. Le fichier ne peut pas être réécrit (ouverture
 unique) ; le défaut est seulement d'affichage.
+- **Limite de cette évaluation** : les 20 % ont été tirés au hasard parmi les clients de la
+  même période (achats de 2017-01 à 2018-06). Le test prouve que la segmentation n'est pas
+  apprise par cœur (elle se transpose à des clients jamais vus de la même période), mais pas
+  qu'elle resterait valable pour des clients futurs : les habitudes d'achat, les délais de
+  livraison ou l'offre peuvent changer (les délais ont déjà baissé au printemps 2018). En
+  pratique, il faudrait surveiller la répartition des nouveaux clients entre segments et la part
+  d'atypiques, et refaire la segmentation régulièrement (par exemple chaque trimestre ou chaque
+  semestre), avec les mêmes règles écrites d'avance.
