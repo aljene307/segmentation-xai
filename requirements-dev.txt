@@ -1,0 +1,3 @@
+# Outils de travail et de test (inclut les dépendances du projet)
+-r requirements.txt
+pytest==8.4.2

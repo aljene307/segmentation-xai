@@ -39,3 +39,21 @@ Chaque choix est noté avec sa date, ce qui a été décidé et pourquoi.
   l'affectation de nouveaux clients (silhouette, répartition par segment).
 - **Monnaie** : tous les montants sont en réals brésiliens, notés **R$** dans les
   tableaux, les graphiques, l'API et l'application.
+
+## 2026-11-09 – Étape 1 : source, licence et nature des données
+
+- **Source vérifiée** (métadonnées officielles de la page Kaggle `olistbr/brazilian-ecommerce`,
+  lues le 2026-11-09) : titre « Brazilian E-Commerce Public Dataset by Olist », propriétaire
+  Olist, licence **CC BY-NC-SA 4.0**, taille totale annoncée **126 186 995 octets**,
+  dernière mise à jour 2021-10-01, « 100k orders from 2016 to 2018 ».
+- **Données réelles, anonymisées, non synthétiques.** Texte de la page : « This is real
+  commercial data, it has been anonymised, and references to the companies and partners
+  in the review text have been replaced with the names of Game of Thrones great houses. »
+- **Conséquences de la licence** : citer Olist (BY), usage non commercial uniquement (NC),
+  tout extrait redistribué (`data/demo/`) garde la licence CC BY-NC-SA 4.0 (SA).
+  Le README le dira ainsi, avec le remerciement « Thanks to Olist for releasing this dataset. »
+  Le code du projet peut avoir sa propre licence, distincte de celle des données.
+- **Téléchargement sans jeton** : l'adresse publique de téléchargement Kaggle renvoie le zip
+  sans connexion. Aucun jeton n'est donc nécessaire ni stocké.
+- **Deux fichiers de dépendances** : `requirements.txt` (ce qu'il faut pour faire tourner le
+  projet) et `requirements-dev.txt` (tests et outils de travail ; il inclut le premier).
