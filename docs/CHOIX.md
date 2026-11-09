@@ -807,3 +807,45 @@ Règles appliquées sans modification. Détail dans `reports/explication.md`, pa
   de port (0,33 contre 0,18) et ses mensualités (1 contre 2). Le client B est atypique en S2
   (distance 3,444 pour un seuil de 3,430) à cause d'un retard extrême (29 jours après la date
   promise, 58,3 jours de délai).
+- **Affichage** : dans les phrases, le nombre de commandes (seule variable à valeurs entières)
+  s'écrit sous forme naturelle (« le client a au moins 2 commandes » au lieu de « supérieur à
+  1,5 »). Le rapport ajoute, hors de l'arbre : S4 est exactement l'ensemble des clients à au
+  moins 2 commandes (100 %), alors que l'arbre ne le retrouve qu'à 71,7 %.
+
+## 2026-11-09 – Évaluation finale sur les 20 % : attentes écrites AVANT l'ouverture
+
+Ces attentes sont écrites, commitées et poussées **avant d'ouvrir les avis des 20 %**. Ensuite,
+l'évaluation est calculée **une seule fois** : le script refuse de démarrer si le fichier de
+résultats existe déjà, et l'écrit en mode « création seulement » (il ne peut pas l'écraser).
+Après l'ouverture, **rien n'est modifié** (préparation, ACP, segments, arbre, seuils) : une attente
+non atteinte est rapportée et discutée, sans retouche.
+
+**Ce qui a déjà été vu des 20 % (honnêteté)** : leurs **variables** (jamais leurs avis) ont servi
+à des vérifications aux étapes 2, 3, 4 et 6 (ressemblance avec les 80 %, transposition de la
+préparation et de l'ACP, fidélité de l'arbre 87,75 %, atypiques 4,9 %, frontière 13,2 %). Les
+attentes E3 à E5 portent donc sur des valeurs **déjà observées** : elles servent de rappel, pas
+de test à l'aveugle. Les attentes E1, E2 et E6 à E12 sont **inédites**.
+
+Segments des 20 % = centre le plus proche de `models/segments.json` (comme l'API). Note d'avis
+selon la règle déjà fixée (avis le plus récent par commande, moyenne, « satisfait » si ≥ 4,
+clients sans avis exclus).
+
+| n° | mesure sur les 20 % | valeur sur les 80 % | attente (seuil) | statut |
+|---|---|---|---|---|
+| E1 | part de chaque segment | S0 40,3 % ; S1 31,9 % ; S2 15,7 % ; S3 9,1 % ; S4 3,0 % | écart ≤ 1,0 point pour chaque segment | inédit |
+| E2 | silhouette des segments, sur 8 000 clients des 20 % tirés avec la graine 42 | recalculée sur l'échantillon commun de 8 000 clients des 80 %, segments officiels (environ 0,200) | écart ≤ 0,02 | inédit |
+| E3 | part d'atypiques | 5,0 % par construction | entre 4,0 % et 6,0 % au total ; entre 3,0 % et 7,0 % dans chaque segment | déjà observé (4,9 %) |
+| E4 | part de clients à la frontière | 13,3 % | écart ≤ 1,5 point | déjà observé (13,2 %) |
+| E5 | fidélité de l'arbre (profondeur 4) | 87,42 % | au moins 85 % et écart ≤ 2 points | déjà observé (87,75 %) |
+| E6 | part de clients sans avis | 0,67 % | au plus 1,5 % | inédit |
+| E7 | part de satisfaits, tous segments | 78,0 % | écart ≤ 2 points | inédit |
+| E8 | part de satisfaits par segment | S0 85,7 % ; S1 84,0 % ; S2 54,9 % ; S3 63,7 % ; S4 74,1 % | écart ≤ 3 points pour S0 à S3 ; ≤ 5 points pour S4 (environ 480 clients seulement) | inédit |
+| E9 | ordre des segments par satisfaction | S0 > S1 > S4 > S3 > S2 | S2 le moins satisfait, S3 le deuxième moins satisfait ; S0 et S1 tous deux ≥ 80 % (l'ordre entre S0 et S1, séparés de 1,7 point, n'est pas exigé) | inédit |
+| E10 | indices externes contre « satisfait » | ARI 0,067 ; NMI 0,039 | ARI entre 0,04 et 0,10 ; NMI entre 0,02 et 0,06 | inédit |
+| E11 | lien retard / note | 82,0 % de satisfaits à l'heure contre 24,9 % en retard (57,1 points) | écart d'au moins 40 points | inédit |
+| E12 | hypothèse S3 (plusieurs vendeurs moins un seul vendeur, dans S3) | −28,0 points | écart d'au plus −10 points (environ 185 clients concernés : intervalle large) | inédit |
+
+Justification des seuils : ils correspondent à environ deux erreurs-types d'échantillonnage pour
+des groupes de la taille attendue dans les 20 % (environ 16 200 clients ; S4 environ 480,
+S3 environ 1 470), arrondis vers le haut. Une attente non atteinte ne déclenche aucune
+modification : elle est expliquée.
