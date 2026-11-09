@@ -9,7 +9,7 @@ Projet Challenge 3 (Data Mining, ENSI, filière II3-IF).
 
 - **API (FastAPI)** : https://segmentation-xai-api.onrender.com — documentation interactive :
   [`/docs`](https://segmentation-xai-api.onrender.com/docs)
-- **Application (Streamlit)** : lien ajouté après le déploiement.
+- **Application (Streamlit)** : https://segmentation-xai-olist.streamlit.app
 - **Synthèse (2 pages)** : [reports/synthese.pdf](reports/synthese.pdf)
 - **Journal de tous les choix** : [docs/CHOIX.md](docs/CHOIX.md)
 

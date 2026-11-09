@@ -1034,3 +1034,31 @@ unique) ; le défaut est seulement d'affichage.
   même tolérance ; un test vérifie qu'une vraie différence (10⁻⁴) est toujours détectée.
 - **Correction du README** : fidélité de l'arbre sur les 20 % = 87,7 % (valeur exacte
   0,877477 ; une première rédaction disait 87,8 % en arrondissant deux fois).
+
+## 2026-11-09 – Publication
+
+- **Dépôt public** : https://github.com/aljene307/segmentation-xai (passé en public par
+  l'utilisateur après l'audit complet de l'historique : 27 commits, 25 témoins trouvés, gitleaks
+  sans fuite, une seule identité, aucune adresse, aucun chemin du PC, aucune mention d'un
+  assistant, aucun identifiant de client, aucun fichier interdit).
+- **Vérification anonyme** : un clone sans identifiant GitHub réussit ; tous les fichiers
+  attendus sont présents (README, LICENSE, synthèse PDF, journal, captures, modèles, exemples,
+  application, API) ; aucune donnée brute ; la page du dépôt et le README s'ouvrent sans
+  connexion.
+- **Test sur un clone neuf** (avant la publication) : installation exactement comme dans le
+  README, 145 tests réussis et 15 sautés (ceux qui demandent les données), API et application
+  démarrées depuis le clone ; l'application, sans fichier de secrets ni variable `API_URL`,
+  trouve l'API Render par défaut. L'étape 13 lancée seule s'arrêtait sur une erreur Python : elle
+  affiche désormais un message clair (commit séparé).
+- **Application en ligne** (Streamlit Community Cloud) : https://segmentation-xai-olist.streamlit.app ,
+  installée avec `app/requirements.txt`. Vérifiée avec Playwright (navigateur neuf, profil vide) :
+  les 7 pages s'affichent avec leur titre et sans erreur Python ; l'accueil joint l'API (« API en
+  ligne, version 1.1.0, k = 5 ») ; la page 5 explique un client par l'API. Un premier essai de
+  vérification avait échoué parce que le clic simulé par JavaScript n'atteignait pas le bouton
+  dans le cadre de Streamlit Cloud ; un vrai clic a fonctionné.
+- **API en ligne** (Render) : https://segmentation-xai-api.onrender.com (version 1.1.0).
+- **Dépôt GitHub** : description, page d'accueil (l'application) et sujets ajoutés ;
+  étiquette `v1.0` posée sur le dernier commit.
+- **Fin du projet.** Limites principales (détail dans le README) : nuage continu et découpe
+  concurrente, 20 % de la même période (segmentation à refaire régulièrement), S2 lié à la note
+  par construction, axe du temps F4, API gratuite mise en veille.
