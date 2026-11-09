@@ -624,3 +624,33 @@ Détail dans `reports/choix_k.md` (script `scripts/choisir_k.py`). Aucun avis ch
   changeraient de segment, car K-Means s'arrête avant la convergence parfaite. La partition de
   référence (celle sur laquelle k a été choisi) reste la partition officielle des 80 % ; les
   nouveaux clients sont affectés avec les centres enregistrés.
+
+## 2026-11-09 – Évaluation externe sur les 80 % (après le choix de k)
+
+Règle appliquée sans modification ; avis chargés seulement après le push du choix de k ; **avis
+des 20 % non lus** (filtrage aux commandes des clients d'apprentissage, arrêt automatique si un
+client mis de côté apparaissait). Détail dans `reports/evaluation_externe.md`.
+
+- **Couverture** : 64 374 clients d'apprentissage sur 64 805 ont au moins un avis ; 431
+  (0,67 %) n'en ont pas et sont exclus des indices, sans valeur inventée. Leur part par segment
+  va de 0,4 % (S4) à 1,3 % (S2) : pas de concentration gênante. 78,0 % des clients notés sont
+  « satisfaits » (note ≥ 4).
+- **Indices externes** (K-Means, k = 5, contre « satisfait ») : ARI 0,0669 ; NMI 0,0393 ;
+  V-measure 0,0393 (homogénéité 0,0699, complétude 0,0274). Faibles, comme écrit d'avance : une
+  étiquette à deux classes (78 % / 22 %) ne peut pas reproduire 5 segments de comportement.
+  Les autres méthodes au même k donnent des valeurs du même ordre (ARI de 0,039 à 0,100) ; elles
+  ne changent aucune décision.
+- **Taux par segment** (le plus parlant) : satisfaits S0 85,7 % ; S1 84,0 % ; **S2 54,9 %** ;
+  **S3 63,7 %** ; S4 74,1 % (ensemble : 78,0 %). Part de notes à 1 : S2 27,0 % ; S3 20,9 % ;
+  autres segments de 4,3 % à 5,1 %.
+- **S2 lié à la note par construction** (rappelé en tête du rapport) : les clients livrés en
+  retard en moyenne sont 24,9 % de satisfaits (note moyenne 2,22) contre 82,0 % (4,27) pour les
+  autres. La faible satisfaction de S2, défini par la livraison, ne prouve donc pas que la
+  segmentation « découvre » la satisfaction.
+- **S3 n'est pas lié à la note par construction**, et c'est le constat le plus intéressant :
+  ses délais sont normaux (médiane 10,2 jours, 3,0 % de retards), et pourtant seuls 63,7 % de ses
+  clients sont satisfaits, avec 20,9 % de notes à 1. Hypothèse, **non vérifiée** : les commandes
+  de plusieurs articles peuvent être livrées en plusieurs fois ou être incomplètes. À présenter
+  comme une piste, pas comme un résultat.
+- **S4 (clients qui recommandent)** : 74,1 %, un peu sous la moyenne ; leur note est une moyenne
+  sur plusieurs commandes, ce qui rend le seuil de 4 plus difficile à atteindre.
