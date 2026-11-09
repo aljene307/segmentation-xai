@@ -1020,3 +1020,17 @@ unique) ; le défaut est seulement d'affichage.
   sautées, cercle des corrélations étiré en ellipse, légendes « true / false », flèches
   trompeuses des indicateurs, nombres avec un point décimal dans les tableaux de texte. Les
   tableaux numériques des pages 2 et 3 gardent le point décimal pour rester triables.
+
+## 2026-11-09 – Reproduction sur une autre machine : comparaison à une tolérance près
+
+- **Constat** (en vérifiant que les commandes de reproduction du README marchent copiées une par
+  une) : les étapes de préparation et d'ACP comparaient les paramètres recalculés au fichier
+  enregistré par une **égalité exacte**. Sur une autre machine (autre processeur, autre
+  bibliothèque de calcul), les dernières décimales (vers la 16e) d'une ACP peuvent différer : le
+  script se serait arrêté sur « ÉCART » sans raison réelle.
+- **Correction** : comparaison à une tolérance relative et absolue de 10⁻⁹
+  (`segmentation/comparaison.py`), bien plus fine que toute différence utile ; les valeurs
+  **appliquées** restent celles du fichier enregistré. Les tests sur les fichiers réels utilisent la
+  même tolérance ; un test vérifie qu'une vraie différence (10⁻⁴) est toujours détectée.
+- **Correction du README** : fidélité de l'arbre sur les 20 % = 87,7 % (valeur exacte
+  0,877477 ; une première rédaction disait 87,8 % en arrondissant deux fois).

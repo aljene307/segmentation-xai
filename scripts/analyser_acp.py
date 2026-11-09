@@ -29,6 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from segmentation import acp as A  # noqa: E402
 from segmentation import config  # noqa: E402
+from segmentation.comparaison import presque_egaux  # noqa: E402
 from segmentation.console import proteger_sorties  # noqa: E402
 
 COURTS = {
@@ -153,7 +154,7 @@ def main() -> int:
 
     acp = A.apprendre(z_app, variables, config.PART_CUMULEE_MINIMALE)
     if config.ACP.exists():
-        if A.charger(config.ACP) != acp:
+        if not presque_egaux(A.charger(config.ACP), acp):
             raise SystemExit("ÉCART : l'ACP recalculée diffère de models/acp.json")
         etat = "ACP recalculée identique au fichier enregistré"
     else:

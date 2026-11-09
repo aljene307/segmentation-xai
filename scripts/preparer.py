@@ -29,6 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from segmentation import config  # noqa: E402
 from segmentation import preparation as prepa  # noqa: E402
+from segmentation.comparaison import presque_egaux  # noqa: E402
 from segmentation.console import proteger_sorties  # noqa: E402
 
 NOMS = {
@@ -85,7 +86,7 @@ def main() -> int:
     prep = prepa.apprendre(app, variables, config.VARIABLES_BORNEES,
                            config.SEUIL_ASYMETRIE_LOG, config.CENTILES_ECRETAGE)
     if config.PREPARATION.exists():
-        if prepa.charger(config.PREPARATION) != prep:
+        if not presque_egaux(prepa.charger(config.PREPARATION), prep):
             raise SystemExit("ÉCART : les paramètres recalculés diffèrent de models/preparation.json")
         etat = "paramètres recalculés identiques au fichier enregistré"
     else:

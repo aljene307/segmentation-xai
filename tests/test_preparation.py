@@ -120,4 +120,5 @@ def test_fichier_reel_coherent_avec_les_regles():
     assert prep["clients_apprentissage"] == len(app)
     reappris = prepa.apprendre(app, config.VARIABLES_PROFIL, config.VARIABLES_BORNEES,
                                config.SEUIL_ASYMETRIE_LOG, config.CENTILES_ECRETAGE)
-    assert reappris == prep  # appris sur les 80 % exactement
+    from segmentation.comparaison import presque_egaux
+    assert presque_egaux(reappris, prep)  # appris sur les 80 % (tolérance 1e-9)

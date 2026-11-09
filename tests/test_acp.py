@@ -124,7 +124,9 @@ def test_fichier_reel_coherent_avec_les_regles():
     assert acp["decision"] == d and d["retenus"] == max(d["kaiser"], d["part_cumulee"])
     z = pd.read_csv(config.PREPARES_APPRENTISSAGE, index_col="customer_unique_id")
     assert acp["clients_apprentissage"] == len(z)
-    assert A.apprendre(z, config.VARIABLES_PROFIL, config.PART_CUMULEE_MINIMALE) == acp
+    from segmentation.comparaison import presque_egaux
+    assert presque_egaux(A.apprendre(z, config.VARIABLES_PROFIL,
+                                     config.PART_CUMULEE_MINIMALE), acp)
 
 
 def test_cosinus_sous_espaces_invariant_par_rotation_interne():
