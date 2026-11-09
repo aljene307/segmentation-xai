@@ -10,7 +10,7 @@ import math
 
 import numpy as np
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
+from segmentation.geometrie import distances
 
 SEUIL_FRONTIERE = 0.90
 CENTILE_ATYPIQUE = 0.95
@@ -61,6 +61,8 @@ def part_ca(prof: pd.DataFrame, seg: pd.Series) -> pd.Series:
 
 def apprendre_arbre(x: pd.DataFrame, y: pd.Series, profondeur: int, feuille_min: int,
                     graine: int) -> dict:
+    from sklearn.tree import DecisionTreeClassifier  # seulement pour entraîner (pas pour l'API)
+
     m = DecisionTreeClassifier(max_depth=profondeur, min_samples_leaf=feuille_min,
                                criterion="gini", random_state=graine).fit(x.to_numpy(), y.to_numpy())
     t = m.tree_
@@ -86,6 +88,31 @@ def predire_arbre(arbre: dict, x: pd.DataFrame) -> np.ndarray:
                 else arbre["droite"][n]
         sortie[i] = arbre["classes"][int(np.argmax(arbre["effectifs"][n]))]
     return sortie
+
+
+def feuilles_dans_l_ordre(arbre: dict) -> list[int]:
+    """Numéros des feuilles, dans l'ordre de `regles` (parcours en profondeur, gauche d'abord)."""
+    ordre = []
+
+    def parcourir(n):
+        if arbre["gauche"][n] == -1:
+            ordre.append(n)
+            return
+        parcourir(arbre["gauche"][n])
+        parcourir(arbre["droite"][n])
+
+    parcourir(0)
+    return ordre
+
+
+def regle_du_client(arbre: dict, valeurs: dict) -> tuple[int, int]:
+    """(numéro de la règle dans `regles`, segment donné par l'arbre) pour un client."""
+    n = 0
+    while arbre["gauche"][n] != -1:
+        v = arbre["variables"][arbre["variable"][n]]
+        n = arbre["gauche"][n] if valeurs[v] <= arbre["seuil"][n] else arbre["droite"][n]
+    return (feuilles_dans_l_ordre(arbre).index(n),
+            arbre["classes"][int(np.argmax(arbre["effectifs"][n]))])
 
 
 def choisir_profondeur(fidelite_3: float, fidelite_4: float) -> int:
@@ -168,10 +195,6 @@ def phrase(regle: dict, noms_segments: dict[int, str]) -> str:
 
 
 # --- Explication d'un client --------------------------------------------------------------
-
-def distances(z: np.ndarray, centres: np.ndarray) -> np.ndarray:
-    return np.sqrt(((z[:, None, :] - centres[None, :, :]) ** 2).sum(axis=2))
-
 
 def seuils_atypiques(z: np.ndarray, seg: np.ndarray, centres: np.ndarray) -> list[float]:
     d = distances(z, centres)[np.arange(len(z)), seg]

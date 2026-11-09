@@ -892,3 +892,41 @@ unique) ; le défaut est seulement d'affichage.
   pratique, il faudrait surveiller la répartition des nouveaux clients entre segments et la part
   d'atypiques, et refaire la segmentation régulièrement (par exemple chaque trimestre ou chaque
   semestre), avec les mêmes règles écrites d'avance.
+
+## 2026-11-09 – API (module 6), en local
+
+- **Entrée** : les 8 variables du profil client, en unités d'origine (montants en R$), validées
+  par FastAPI/pydantic. Contraintes : récence ≥ 0 ; fréquence entière ≥ 1 ; montant > 0 ; part des
+  frais de port dans [0, 1[ ; mensualités et articles par commande ≥ 1 ; **délai de livraison
+  ≥ 0** (une livraison le jour même est possible) ; écart à la date promise : tout nombre fini.
+  Champs inconnus refusés (fautes de frappe) ; NaN et infini refusés. Une valeur possible mais
+  hors de la plage apprise n'est pas une erreur : elle est écrêtée au seuil appris, et la
+  réponse le signale.
+- **Erreurs** : code 422 avec la liste des erreurs en français, champ par champ (valeur
+  manquante, champ inconnu, nombre attendu, contrainte de la variable avec la valeur reçue) ;
+  404 pour un segment inconnu.
+- **Endpoints** : `GET /health`, `GET /segments`, `GET /segments/{id}`, `GET /regles`,
+  `POST /affecter`, `POST /expliquer`, `GET /exemples` ; documentation interactive `/docs`.
+- **Chaîne figée, sans scikit-learn ni scipy** : préparation, centres, explication, arbre et ACP
+  sont lus dans `models/*.json`. Les fonctions de distance ont été déplacées dans
+  `segmentation/geometrie.py` (sans scikit-learn) et l'import de scikit-learn de
+  `explication.py` n'a lieu que pour entraîner l'arbre : analyses et API font le même calcul.
+  Un test vérifie qu'importer l'API ne charge ni scikit-learn, ni scipy, ni matplotlib.
+- **Empreintes des modèles** : `models/empreintes.json` (SHA-256 des 4 fichiers) ; l'API refuse
+  de démarrer si un fichier diffère. Un test convertit `segments.json` en CRLF (le problème du
+  projet 2) et vérifie le refus.
+- **Chaîne identique** : en partant des valeurs d'origine des 16 201 clients des 20 %, l'API
+  retrouve leurs segments officiels sans aucune différence (test).
+- **Mémoire mesurée** (serveur uvicorn réel, après 200 explications) : environ **84 Mo** pour
+  le processus Python, très en dessous des 512 Mo de Render.
+- **Dépendances** : `requirements-api.txt` (numpy, pandas, fastapi, uvicorn, pydantic) pour
+  Render ; `requirements.txt` complet pour le projet ; httpx ajouté aux outils de test.
+- **Exemples** : `data/demo/exemples.json`, 10 clients des 20 % (pour chaque segment, le premier
+  typique et non frontière, puis le premier atypique ou à la frontière, dans l'ordre des
+  identifiants), **sans identifiant**, avec `data/demo/LICENCE.md` (CC BY-NC-SA 4.0, source
+  Olist, données réelles anonymisées, remerciement). Un test vérifie que chaque exemple retrouve
+  son segment.
+- **Application Streamlit (à venir)** : son fichier de dépendances sera `app/requirements.txt`,
+  dans le dossier du fichier principal, car Streamlit Cloud cherche d'abord à cet endroit puis à
+  la racine (un fichier `requirements-app.txt` serait ignoré et le `requirements.txt` lourd de la
+  racine serait installé).

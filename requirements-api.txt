@@ -1,0 +1,7 @@
+# Dépendances de l'API seule (déploiement sur Render) : ni scikit-learn, ni scipy, ni matplotlib.
+# La chaîne figée lit les fichiers JSON de models/ et ne fait que des calculs numpy/pandas.
+numpy==2.2.6
+pandas==2.3.3
+fastapi==0.115.12
+uvicorn==0.34.2
+pydantic==2.14.3

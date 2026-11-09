@@ -1,0 +1,142 @@
+[
+  {
+    "nom": "Exemple 1 : S0 « Gros achats en plusieurs fois », typique",
+    "segment_attendu": 0,
+    "client": {
+      "recence_j": 433.0,
+      "frequence": 1,
+      "montant_rs": 269.0,
+      "part_frais_port": 0.0947028336810931,
+      "mensualites_moy": 10.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 18.019375,
+      "ecart_prevision_moy_j": -13.0
+    }
+  },
+  {
+    "nom": "Exemple 2 : S0 « Gros achats en plusieurs fois », à la frontière",
+    "segment_attendu": 0,
+    "client": {
+      "recence_j": 52.0,
+      "frequence": 1,
+      "montant_rs": 59.0,
+      "part_frais_port": 0.1788448155880306,
+      "mensualites_moy": 6.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 14.280659722222222,
+      "ecart_prevision_moy_j": -8.0
+    }
+  },
+  {
+    "nom": "Exemple 3 : S1 « Petits achats, livraison chère », typique",
+    "segment_attendu": 1,
+    "client": {
+      "recence_j": 348.0,
+      "frequence": 1,
+      "montant_rs": 13.9,
+      "part_frais_port": 0.5206896551724138,
+      "mensualites_moy": 2.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 16.38864583333333,
+      "ecart_prevision_moy_j": -12.0
+    }
+  },
+  {
+    "nom": "Exemple 4 : S1 « Petits achats, livraison chère », à la frontière",
+    "segment_attendu": 1,
+    "client": {
+      "recence_j": 214.0,
+      "frequence": 1,
+      "montant_rs": 48.9,
+      "part_frais_port": 0.2359375,
+      "mensualites_moy": 4.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 8.932337962962963,
+      "ecart_prevision_moy_j": -19.0
+    }
+  },
+  {
+    "nom": "Exemple 5 : S2 « Livraison lente ou en retard », typique",
+    "segment_attendu": 2,
+    "client": {
+      "recence_j": 205.0,
+      "frequence": 1,
+      "montant_rs": 89.99,
+      "part_frais_port": 0.333802191294048,
+      "mensualites_moy": 1.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 31.48644675925926,
+      "ecart_prevision_moy_j": 0.0
+    }
+  },
+  {
+    "nom": "Exemple 6 : S2 « Livraison lente ou en retard », atypique",
+    "segment_attendu": 2,
+    "client": {
+      "recence_j": 124.0,
+      "frequence": 1,
+      "montant_rs": 199.9,
+      "part_frais_port": 0.0819325801414531,
+      "mensualites_moy": 3.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 58.27553240740741,
+      "ecart_prevision_moy_j": 29.0
+    }
+  },
+  {
+    "nom": "Exemple 7 : S3 « Achats de plusieurs articles », typique",
+    "segment_attendu": 3,
+    "client": {
+      "recence_j": 123.0,
+      "frequence": 1,
+      "montant_rs": 382.0,
+      "part_frais_port": 0.0886969798177394,
+      "mensualites_moy": 3.0,
+      "articles_par_commande": 2.0,
+      "delai_livraison_moy_j": 16.324421296296297,
+      "ecart_prevision_moy_j": -10.0
+    }
+  },
+  {
+    "nom": "Exemple 8 : S3 « Achats de plusieurs articles », à la frontière",
+    "segment_attendu": 3,
+    "client": {
+      "recence_j": 170.0,
+      "frequence": 1,
+      "montant_rs": 37.8,
+      "part_frais_port": 0.4704398991314094,
+      "mensualites_moy": 1.0,
+      "articles_par_commande": 2.0,
+      "delai_livraison_moy_j": 14.417743055555556,
+      "ecart_prevision_moy_j": -19.0
+    }
+  },
+  {
+    "nom": "Exemple 9 : S4 « Clients qui recommandent », typique",
+    "segment_attendu": 4,
+    "client": {
+      "recence_j": 114.0,
+      "frequence": 2,
+      "montant_rs": 41.260000000000005,
+      "part_frais_port": 0.4521311910768821,
+      "mensualites_moy": 2.0,
+      "articles_par_commande": 1.0,
+      "delai_livraison_moy_j": 5.377835648148148,
+      "ecart_prevision_moy_j": -22.5
+    }
+  },
+  {
+    "nom": "Exemple 10 : S4 « Clients qui recommandent », atypique",
+    "segment_attendu": 4,
+    "client": {
+      "recence_j": 137.0,
+      "frequence": 2,
+      "montant_rs": 531.04,
+      "part_frais_port": 0.3404213036565978,
+      "mensualites_moy": 1.0,
+      "articles_par_commande": 4.0,
+      "delai_livraison_moy_j": 31.512922453703705,
+      "ecart_prevision_moy_j": 3.0
+    }
+  }
+]

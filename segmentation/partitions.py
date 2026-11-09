@@ -11,6 +11,7 @@ import pandas as pd
 from scipy.cluster.hierarchy import cophenet, fcluster, linkage
 from scipy.spatial.distance import pdist
 from sklearn.cluster import HDBSCAN, KMeans
+from segmentation.geometrie import affecter  # noqa: F401  (réexporté)
 from sklearn.metrics import (
     adjusted_rand_score,
     calinski_harabasz_score,
@@ -37,12 +38,6 @@ def renumeroter_par_taille(etiquettes: np.ndarray) -> np.ndarray:
     ordre = sorted(tailles.index, key=lambda s: (-tailles[s], s))
     correspondance = {ancien: nouveau for nouveau, ancien in enumerate(ordre)}
     return np.array([correspondance.get(x, -1) for x in e])
-
-
-def affecter(x: np.ndarray, centres: np.ndarray) -> np.ndarray:
-    """Chaque ligne va au centre le plus proche (distance euclidienne)."""
-    d = ((x[:, None, :] - centres[None, :, :]) ** 2).sum(axis=2)
-    return d.argmin(axis=1)
 
 
 def inertie_r2(x: np.ndarray, etiquettes: np.ndarray) -> float:

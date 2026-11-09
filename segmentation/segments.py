@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 
 from segmentation import config
-from segmentation.partitions import affecter
+from segmentation.geometrie import affecter
 
 
 def charger(chemin: Path = config.SEGMENTS) -> dict:
