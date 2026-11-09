@@ -954,3 +954,16 @@ unique) ; le défaut est seulement d'affichage.
 - **Encodage** : les réponses sont en UTF-8 (norme de JSON). Windows PowerShell 5.1
   (`Invoke-RestMethod`) les décode à tort en Latin-1 quand l'en-tête ne précise pas le jeu de
   caractères ; navigateurs, `requests` et Streamlit ne sont pas concernés.
+
+## 2026-11-09 – API 1.1.0 : lot de clients et mémoire dans /health
+
+- **`POST /affecter/lot`** : de 1 à 1 000 clients, au format `{"clients": [...]}`. Chaque ligne
+  est validée **séparément** : une ligne invalide ne bloque pas les autres. La réponse donne,
+  ligne par ligne (numérotées à partir de 1), soit le segment, soit la liste des erreurs en
+  français ; plus le total, le nombre de lignes valides et invalides. Plus de 1 000 clients, ou
+  une liste vide : erreur 422 en français. Les segments d'un lot sont identiques à ceux donnés
+  par `/affecter` un par un (test). Sert à l'import de fichier de l'application (module 1).
+- **Mémoire dans `/health`** : mémoire actuelle et pic du processus, en Mo, lus dans
+  `/proc/self/status` (VmRSS et VmHWM) sous Linux, sans nouvelle bibliothèque ; « non disponible »
+  sous Windows. Raison : la courbe « Memory » de l'onglet Metrics de Render était vide (le
+  service dormait, aucune mesure).

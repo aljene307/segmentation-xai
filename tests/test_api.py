@@ -123,3 +123,61 @@ def test_chaine_figee_identique_sur_les_20_pour_cent():
     officiel = S.affecter_prepares(z, S.charger()).to_numpy()
     api = moteur.affecter(prof[moteur.variables])
     assert len(api) == 16201 and (api == officiel).all()
+
+
+def test_sante_donne_la_memoire():
+    m = client.get("/health").json()["memoire"]
+    assert set(m) == {"actuelle_mo", "pic_mo"}
+    if sys.platform == "win32":
+        assert m["actuelle_mo"] == "non disponible"
+    else:
+        assert isinstance(m["actuelle_mo"], float) and m["pic_mo"] >= m["actuelle_mo"]
+
+
+def test_memoire_lue_dans_proc(monkeypatch, tmp_path):
+    import api.main as M
+    f = tmp_path / "status"
+    f.write_text("Name:\tpython\nVmHWM:\t  204800 kB\nVmRSS:\t  102400 kB\n")
+    vrai = M.Path
+
+    monkeypatch.setattr(M, "Path", lambda p: f if p == "/proc/self/status" else vrai(p))
+    assert M.memoire_processus() == {"actuelle_mo": 100.0, "pic_mo": 200.0}
+
+
+def test_lot_lignes_valides_et_invalides():
+    ex = client.get("/exemples").json()
+    lignes = [ex[0]["client"], {**BON, "part_frais_port": 1.4},
+              {k: v for k, v in BON.items() if k != "frequence"}, ex[4]["client"], "pas un client"]
+    r = client.post("/affecter/lot", json={"clients": lignes})
+    assert r.status_code == 200
+    d = r.json()
+    assert (d["total"], d["valides"], d["invalides"]) == (5, 2, 3)
+    res = d["resultats"]
+    assert [x["ligne"] for x in res] == [1, 2, 3, 4, 5]
+    assert res[0]["segment"]["id"] == ex[0]["segment_attendu"]
+    assert res[3]["segment"]["id"] == ex[4]["segment_attendu"]
+    assert "entre 0 et 1" in res[1]["erreurs"][0]["message"] and "segment" not in res[1]
+    assert res[2]["erreurs"] == [{"champ": "frequence", "message": "valeur manquante"}]
+    assert "objet JSON" in res[4]["erreurs"][0]["message"]
+
+
+def test_lot_identique_aux_appels_un_par_un():
+    ex = [e["client"] for e in client.get("/exemples").json()]
+    lot = client.post("/affecter/lot", json={"clients": ex}).json()["resultats"]
+    assert [x["segment"] for x in lot] == [client.post("/affecter", json=c).json() for c in ex]
+
+
+@pytest.mark.parametrize("corps, attendu", [
+    ({"clients": [BON] * 1001}, "au plus 1 000 clients"),
+    ({"clients": []}, "au moins 1 client"),
+    ({"client": [BON]}, "valeur manquante"),
+])
+def test_lot_refuse_en_francais(corps, attendu):
+    r = client.post("/affecter/lot", json=corps)
+    assert r.status_code == 422
+    assert any(attendu in e["message"] for e in r.json()["erreurs"])
+
+
+def test_lot_de_mille_accepte():
+    r = client.post("/affecter/lot", json={"clients": [BON] * 1000})
+    assert r.status_code == 200 and r.json()["valides"] == 1000

@@ -7,14 +7,17 @@ Documentation interactive : http://127.0.0.1:8000/docs
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from pydantic import ValidationError
 
 from api.moteur import Moteur
-from api.schemas import CONTRAINTES, Client
+from api.schemas import CONTRAINTES, Client, Lot
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 moteur = Moteur()
 app = FastAPI(
     title="Segmentation explicable – clients Olist",
@@ -29,10 +32,13 @@ def _nombre(v) -> str:
     return str(v).replace(".", ",") if isinstance(v, (int, float)) else repr(v)
 
 
-@app.exception_handler(RequestValidationError)
-async def erreurs_en_francais(_: Request, exc: RequestValidationError) -> JSONResponse:
+LOT_MAX = 1000
+
+
+def traduire(erreurs_pydantic) -> list[dict]:
+    """Erreurs de validation pydantic → liste {champ, message} en français."""
     erreurs = []
-    for e in exc.errors():
+    for e in erreurs_pydantic:
         champ = str(e["loc"][-1]) if e["loc"] else "corps"
         t = e["type"]
         if t == "missing":
@@ -45,23 +51,48 @@ async def erreurs_en_francais(_: Request, exc: RequestValidationError) -> JSONRe
             msg = "nombre attendu" if "float" in t else "nombre entier attendu"
         elif t == "int_from_float":
             msg = "nombre entier attendu"
+        elif t == "too_long" and champ == "clients":
+            msg = f"au plus {LOT_MAX:,} clients par lot".replace(",", " ")
+        elif t == "too_short" and champ == "clients":
+            msg = "au moins 1 client attendu"
         elif champ in CONTRAINTES:
             msg = CONTRAINTES[champ]
-        elif t in ("model_attributes_type", "dict_type", "json_invalid"):
+        elif t in ("model_attributes_type", "model_type", "dict_type", "json_invalid"):
             champ, msg = "corps", "un objet JSON avec les 8 variables est attendu"
+        elif t == "list_type":
+            msg = "une liste de clients est attendue"
         else:
             msg = e.get("msg", "valeur invalide")
-        if "input" in e and t not in ("missing", "extra_forbidden") and champ != "corps":
+        if ("input" in e and t not in ("missing", "extra_forbidden", "too_long", "too_short")
+                and champ != "corps"):
             msg += f", reçu {_nombre(e['input'])}"
         erreurs.append({"champ": champ, "message": msg})
+    return erreurs
+
+
+@app.exception_handler(RequestValidationError)
+async def erreurs_en_francais(_: Request, exc: RequestValidationError) -> JSONResponse:
     return JSONResponse(status_code=422, content={"detail": "Données invalides",
-                                                  "erreurs": erreurs})
+                                                  "erreurs": traduire(exc.errors())})
+
+
+def memoire_processus() -> dict:
+    """Mémoire du processus en Mo (actuelle et pic), lue dans /proc/self/status (Linux)."""
+    try:
+        lignes = Path("/proc/self/status").read_text().splitlines()
+    except OSError:
+        return {"actuelle_mo": "non disponible", "pic_mo": "non disponible"}
+    valeurs = {l.split(":")[0]: l.split(":")[1].split()[0] for l in lignes
+               if l.startswith(("VmRSS:", "VmHWM:"))}
+    vers_mo = lambda k: round(int(valeurs[k]) / 1024, 1) if k in valeurs else "non disponible"  # noqa
+    return {"actuelle_mo": vers_mo("VmRSS"), "pic_mo": vers_mo("VmHWM")}
 
 
 @app.get("/health")
 def sante() -> dict:
     return {"statut": "ok", "version": VERSION, "k": moteur.segments["k"],
-            "modeles": {f: h[:12] for f, h in moteur.empreintes.items()}}
+            "modeles": {f: h[:12] for f, h in moteur.empreintes.items()},
+            "memoire": memoire_processus()}
 
 
 @app.get("/segments")
@@ -98,6 +129,28 @@ def affecter(client: Client) -> dict:
 @app.post("/expliquer")
 def expliquer(client: Client) -> dict:
     return moteur.expliquer(client.model_dump())
+
+
+@app.post("/affecter/lot")
+def affecter_lot(lot: Lot) -> dict:
+    """Jusqu'à 1 000 clients ; chaque ligne est validée séparément : une ligne invalide ne
+    bloque pas les autres. Les lignes sont numérotées à partir de 1."""
+    import pandas as pd
+
+    resultats, valides, positions = [], [], []
+    for i, brut in enumerate(lot.clients, start=1):
+        try:
+            valides.append(Client.model_validate(brut).model_dump())
+            positions.append(len(resultats))
+            resultats.append({"ligne": i})
+        except ValidationError as exc:
+            resultats.append({"ligne": i, "erreurs": traduire(exc.errors())})
+    if valides:
+        segs = moteur.affecter(pd.DataFrame(valides))
+        for pos, s in zip(positions, segs):
+            resultats[pos]["segment"] = moteur.segment(int(s))
+    return {"total": len(resultats), "valides": len(valides),
+            "invalides": len(resultats) - len(valides), "resultats": resultats}
 
 
 @app.get("/exemples")

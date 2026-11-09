@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field
 
 # Contrainte de chaque variable, en français (reprise dans les messages d'erreur 422).
@@ -35,3 +37,10 @@ class Client(BaseModel):
     articles_par_commande: float = Field(ge=1, description="Nombre moyen d'articles par commande")
     delai_livraison_moy_j: float = Field(ge=0, description="Délai moyen achat → livraison, en jours")
     ecart_prevision_moy_j: float = Field(description="Livraison − date promise, en jours (> 0 = retard)")
+
+
+class Lot(BaseModel):
+    """Lot de clients pour /affecter/lot (1 à 1 000). Chaque client est validé séparément."""
+
+    model_config = ConfigDict(extra="forbid")
+    clients: list[Any] = Field(min_length=1, max_length=1000)
