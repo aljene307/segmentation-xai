@@ -654,3 +654,43 @@ client mis de côté apparaissait). Détail dans `reports/evaluation_externe.md`
   comme une piste, pas comme un résultat.
 - **S4 (clients qui recommandent)** : 74,1 %, un peu sous la moyenne ; leur note est une moyenne
   sur plusieurs commandes, ce qui rend le seuil de 4 plus difficile à atteindre.
+
+## 2026-11-09 – Segments officiels = centre le plus proche
+
+- **Décision** : le segment officiel de chaque client d'apprentissage est désormais le centre le
+  plus proche de `models/segments.json`, exactement comme l'API le fera pour un nouveau client
+  (une seule règle d'affectation pour tout le projet). Les centres ne changent pas (moyennes de
+  la partition K-Means sur laquelle k a été choisi). Fichiers : `segmentation/segments.py`,
+  `data/processed/segments_apprentissage.csv` (non versionné), `reports/segments_officiels.md`.
+- **34 clients changent de segment sur 64 805 (0,0525 %)**, comme attendu : 20 de S2 vers S0,
+  10 de S2 vers S1, 3 de S1 vers S0, 1 de S0 vers S1 (tous à la frontière de S2) ; S3 et S4 ne
+  changent pas.
+- **Effet négligeable** : écart relatif maximal des médianes des 8 variables 0,098 % ; part du
+  chiffre d'affaires modifiée de 0,04 point au plus (S0 56,97 % → 57,00 %) ; évaluation externe
+  refaite avec les segments officiels : ARI 0,0669 → 0,0670, homogénéité 0,0699 → 0,0698, NMI et
+  V-measure inchangées (0,0393), parts de satisfaits inchangées au dixième près, notes à 1 de S2
+  27,0 % → 27,1 %.
+
+## 2026-11-09 – Hypothèse sur S3 (description seulement)
+
+Rien ne change dans la segmentation. Détail dans `reports/hypothese_s3.md` (clients
+d'apprentissage avec avis ; avis des 20 % non lus). « Plusieurs vendeurs » = au moins une
+commande retenue du client avec des articles de plusieurs vendeurs, donc probablement plusieurs
+colis.
+
+- **Dans S3** : 738 clients avec au moins une commande à plusieurs vendeurs, **39,2 % de
+  satisfaits** (note moyenne 2,83 ; 36,7 % de notes à 1) ; 5 092 clients à un seul vendeur,
+  **67,2 %** (3,76 ; 18,6 %). Écart −28,0 points, intervalle de confiance à 95 % [−31,8 ; −24,3].
+- Critère de lecture fixé dans le script avant le calcul (non validé à l'avance par
+  l'utilisateur) : écart « net » si au moins 10 points et intervalle entièrement sous 0.
+  **L'écart est net : c'est une piste qui soutient l'hypothèse**, sans la prouver (comparaison
+  descriptive ; d'autres différences entre ces clients peuvent jouer).
+- **Ce que l'hypothèse n'explique pas** : même à un seul vendeur, les clients de S3 restent
+  moins satisfaits (67,2 %) que ceux des autres segments à un seul vendeur (79,5 %). Les
+  plusieurs vendeurs ne concernent que 12,7 % des clients de S3 : si ces clients étaient aussi
+  satisfaits que les autres clients de S3, S3 passerait d'environ 63,7 % à environ 67,2 % de
+  satisfaits ; ils n'expliquent donc qu'une partie de l'écart de S3 avec l'ensemble (78,0 %).
+- **Hors de S3**, le même écart existe (−26,0 points, [−35,8 ; −16,3]), mais sur seulement 101
+  clients : les commandes à plusieurs vendeurs sont presque toutes dans S3.
+- **Piste pour l'action de S3** (« lots et ventes croisées ») : privilégier des lots d'un même
+  vendeur, pour éviter les envois en plusieurs colis. À présenter comme une suggestion.

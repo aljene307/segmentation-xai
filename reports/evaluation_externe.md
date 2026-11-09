@@ -2,7 +2,7 @@
 
 > **À lire d'abord.** Les variables de délai (délai de livraison moyen, écart à la date promise) entrent dans le clustering, et un retard entraîne souvent une mauvaise note. Le segment **S2 « Livraison lente ou en retard »**, défini par ces variables, sera donc lié à la note **par construction** : un lien entre S2 et l'insatisfaction ne prouve pas que la segmentation « découvre » la satisfaction. Par ailleurs, avec une étiquette à deux classes et des segments de comportement, l'ARI et la NMI sont faibles par nature ; les taux par segment sont les plus parlants (écrit d'avance dans `docs/CHOIX.md`).
 
-Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (commité et poussé). Clients d'apprentissage (80 %) seulement ; **les avis des 20 % mis de côté n'ont pas été lus**. Note du client = moyenne des notes de ses commandes retenues (avis le plus récent par commande) ; « satisfait » si la note vaut au moins 4 ; clients sans avis exclus des indices.
+Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (commité et poussé). Segment de chaque client = segment officiel (centre le plus proche de `models/segments.json`). Clients d'apprentissage (80 %) seulement ; **les avis des 20 % mis de côté n'ont pas été lus**. Note du client = moyenne des notes de ses commandes retenues (avis le plus récent par commande) ; « satisfait » si la note vaut au moins 4 ; clients sans avis exclus des indices.
 
 ## 1. Couverture
 
@@ -18,10 +18,10 @@ Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (co
 
 | indice | valeur |
 |---|---|
-| ARI | 0.0669 |
+| ARI | 0.0670 |
 | NMI | 0.0393 |
 | V-measure | 0.0393 |
-| homogénéité | 0.0699 |
+| homogénéité | 0.0698 |
 | complétude | 0.0274 |
 
 - **Homogénéité** : à quel point chaque segment ne contient qu'une seule classe (satisfaits ou non).
@@ -32,9 +32,9 @@ Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (co
 
 | segment | clients | avec avis | sans avis (%) | satisfaits (%) | note moyenne | note = 1 (%) |
 |---|---|---|---|---|---|---|
-| S0 Gros achats en plusieurs fois | 26 066 | 25 935 | 0.5 | 85.7 | 4.39 | 5.1 |
-| S1 Petits achats, livraison chère | 20 690 | 20 594 | 0.5 | 84.0 | 4.35 | 5.1 |
-| S2 Livraison lente ou en retard | 10 227 | 10 092 | 1.3 | 54.9 | 3.31 | 27.0 |
+| S0 Gros achats en plusieurs fois | 26 088 | 25 955 | 0.5 | 85.7 | 4.39 | 5.1 |
+| S1 Petits achats, livraison chère | 20 698 | 20 601 | 0.5 | 84.0 | 4.35 | 5.1 |
+| S2 Livraison lente ou en retard | 10 197 | 10 065 | 1.3 | 54.9 | 3.31 | 27.1 |
 | S3 Achats de plusieurs articles | 5 891 | 5 830 | 1.0 | 63.7 | 3.64 | 20.9 |
 | S4 Clients qui recommandent | 1 931 | 1 923 | 0.4 | 74.1 | 4.19 | 4.3 |
 | **Tous les clients d'apprentissage** | 64 805 | 64 374 | 0.7 | 78.0 | 4.13 | 9.9 |
@@ -50,7 +50,7 @@ Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (co
 
 | méthode | clients avec avis | ARI | NMI | V-measure | homogénéité | complétude |
 |---|---|---|---|---|---|---|
-| K-Means 8 variables (retenu), k = 5 | 64 374 | 0.0669 | 0.0393 | 0.0393 | 0.0699 | 0.0274 |
+| K-Means 8 variables, segments officiels, k = 5 | 64 374 | 0.0670 | 0.0393 | 0.0393 | 0.0698 | 0.0274 |
 | Mixte F1–F5, k = 5 | 64 374 | 0.0682 | 0.0406 | 0.0406 | 0.0720 | 0.0282 |
 | Mixte F1–F4 (sensibilité), k = 5 | 64 374 | 0.0392 | 0.0358 | 0.0358 | 0.0708 | 0.0240 |
 | CAH de Ward 8 variables (6 000), k = 5 | 5 963 | 0.0996 | 0.0475 | 0.0475 | 0.0758 | 0.0345 |

@@ -30,6 +30,7 @@ from segmentation.avis import note_client  # noqa: E402
 from segmentation.console import proteger_sorties  # noqa: E402
 from segmentation.donnees import charger_avis, charger_tables  # noqa: E402
 from segmentation.profil import commandes_retenues  # noqa: E402
+from segmentation.segments import segments_apprentissage  # noqa: E402
 
 
 def fmt(v, d=3):
@@ -72,7 +73,7 @@ def main() -> int:
     if set(notes.index) & cote_ids or set(commandes_clients) & cote_ids:
         raise SystemExit("ARRÊT : un client mis de côté apparaît dans l'évaluation.")
 
-    seg = lab[f"kmeans_k{k}"]
+    seg = segments_apprentissage().reindex(lab.index)  # segment officiel (centre le plus proche)
     sat = notes["satisfait"]
     n_app = len(lab)
     sans = n_app - len(notes)
@@ -83,14 +84,14 @@ def main() -> int:
     arbre, _ = P.cah_ward(z.loc[ordre, config.VARIABLES_PROFIL].to_numpy(dtype=float))
     cah = pd.Series(P.couper(arbre, k), index=ordre)
     comparaison = {
-        f"K-Means 8 variables (retenu), k = {k}": indices(seg, sat),
+        f"K-Means 8 variables, segments officiels, k = {k}": indices(seg, sat),
         f"Mixte F1–F5, k = {k}": indices(lab[f"mixte_k{k}"], sat),
         f"Mixte F1–F4 (sensibilité), k = {k}": indices(lab[f"mixte_sensibilite_k{k}"], sat),
         f"CAH de Ward 8 variables (6 000), k = {k}": indices(cah, sat),
         f"HDBSCAN F1–F5 ({lab['hdbscan'].max() + 1} groupes, bruit exclu)":
             indices(lab["hdbscan"], sat),
     }
-    ref = comparaison[f"K-Means 8 variables (retenu), k = {k}"]
+    ref = comparaison[f"K-Means 8 variables, segments officiels, k = {k}"]
 
     # Par segment.
     df = pd.DataFrame({"segment": seg}).join(notes)
@@ -120,7 +121,8 @@ def main() -> int:
         "deux classes et des segments de comportement, l'ARI et la NMI sont faibles par nature ; "
         "les taux par segment sont les plus parlants (écrit d'avance dans `docs/CHOIX.md`).", "",
         "Rapport généré par `scripts/evaluer_externe.py`, après le choix de k = 5 (commité et "
-        "poussé). Clients d'apprentissage (80 %) seulement ; **les avis des 20 % mis de côté "
+        "poussé). Segment de chaque client = segment officiel (centre le plus proche de "
+        "`models/segments.json`). Clients d'apprentissage (80 %) seulement ; **les avis des 20 % mis de côté "
         "n'ont pas été lus**. Note du client = moyenne des notes de ses commandes retenues "
         "(avis le plus récent par commande) ; « satisfait » si la note vaut au moins 4 ; "
         "clients sans avis exclus des indices.", "",

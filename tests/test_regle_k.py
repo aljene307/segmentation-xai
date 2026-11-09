@@ -64,5 +64,5 @@ def test_segments_enregistres_coherents():
     assert s["variables"] == config.VARIABLES_PROFIL
     assert all(len(seg["centre"]) == len(config.VARIABLES_PROFIL) for seg in s["segments"])
     assert len({seg["action"] for seg in s["segments"]}) == s["k"]  # une action par segment
-    assert s["accord_affectation_apprentissage"] > 0.999
+    assert s["accord_avec_kmeans"] > 0.999
     assert b"\r\n" not in config.SEGMENTS.read_bytes()

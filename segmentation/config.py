@@ -45,6 +45,7 @@ PARTITIONS = DOSSIER_PROCESSED / "partitions.csv"
 # Choix de k (règle appliquée sans modification, critère métier validé : docs/CHOIX.md).
 K_RETENU = 5
 SEGMENTS = DOSSIER_MODELES / "segments.json"
+SEGMENTS_APPRENTISSAGE = DOSSIER_PROCESSED / "segments_apprentissage.csv"
 SEGMENTS_NOMS_ACTIONS = {
     0: ("Gros achats en plusieurs fois", "Offres premium et paiement en plusieurs fois"),
     1: ("Petits achats, livraison chère",
